@@ -111,7 +111,7 @@ class Settings extends CI_Controller
 		{
 			$this->load->view('template/header_view');
 			$this->load->view('main_menu');
-			$this->load->view('settings_rooms_show');
+			$this->load->view('settings_rooms_edit');
 		}
 	}
 	
