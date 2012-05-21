@@ -38,9 +38,9 @@ class Main extends CI_Controller
 		$this->load->helper('url');
 		$this->db->select('setting_value as allow_local_login from settings');
  		$this->db->where('setting_name = \'allow_local_login\'');
-			$query = $this->db->get();
- 			$row = $query->row_array();
-			$allow_local_login = $row['allow_local_login'];
+		$query = $this->db->get();
+ 		$row = $query->row_array();
+		$allow_local_login = $row['allow_local_login'];
 		
 		if ($_POST['username'] == 'bookme_admin' && $_POST['password'] == 'cr3ation' && $allow_local_login == true)
 		{

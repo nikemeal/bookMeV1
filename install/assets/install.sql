@@ -74,7 +74,8 @@ CREATE TABLE IF NOT EXISTS `rooms` (
   `room_id` int(11) NOT NULL AUTO_INCREMENT,
   `room_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `room_pc_count` int(11) DEFAULT NULL COMMENT 'Can be left null if needed',
-  `room_image` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+  `room_image` varchar(255) COLLATE utf8_unicode_ci NULL,
+  `room_image_tn` varchar(255) COLLATE utf8_unicode_ci NULL,
   PRIMARY KEY (`room_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 

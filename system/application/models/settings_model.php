@@ -141,11 +141,29 @@ class Settings_model extends CI_Model {
 			$this->db->update('settings',$data, 'setting_name = \'bg_colour\'');
 		}
 		
-		function add_room($room_name, $pc_count, $image)
+		function add_room($room_name, $pc_count, $image, $image_tn)
 		{
-			$data = array('room_name' => $room_name, 'room_pc_count' => $pc_count, 'room_image' => $image);
+			$data = array('room_name' => $room_name, 'room_pc_count' => $pc_count, 'room_image' => $image, 'room_image_tn' => $image_tn);
 			$this->db->insert('rooms',$data);
 		}
 		
-		
+		function get_room_info($room_id)
+		{
+			$query = $this->db->get_where('rooms',array('room_id' => $room_id));
+			$result = $query->row_array();
+			return $result;
+		}
+
+		function update_room($room_id, $room_name, $pc_count, $image, $image_tn)
+		{
+			$data = array(
+                'room_name' => $room_name,
+                'room_pc_count' => $pc_count,
+                'room_image' => '',
+				'room_image_tn' => $image_tn
+             );
+
+ 			$this->db->update('rooms', $data, "room_id = $room_id"); 
+			
+		}
 }
