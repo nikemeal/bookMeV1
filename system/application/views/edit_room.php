@@ -5,7 +5,12 @@
 				&nbsp;
 			</div>
 
+			<?php if ($room_image <> 'no-image.png'){?>
+			<div class="span6 well">
+			<?php }else{?>
 			<div class="span10 well">
+			<?php }?>
+			
 			<center>
 				<div class="alert alert-info"><h3>Edit room - <?php echo $room_name; ?></h3></div>
 			</center>
@@ -30,7 +35,7 @@
             					<label class="control-label" for="input03">Room picture</label>
             					<div class="controls">
               						<input type="file" class="span4" name="userfile" value="<?php echo $room_image;?>"><br>
-					            	<p class="help-block"><i class="icon-question-sign"rel="tooltip" title="If left blank, current image is used"></i></p>
+					            	<p class="help-block"><i class="icon-question-sign"rel="tooltip" title="If left blank, currently stored image is used"></i></p>
             					</div>
           					</div>
           		
@@ -55,6 +60,10 @@
       			</form>
 				
 			</div>
+			
+			<?php if ($room_image <> 'no-image.png'){?>
+			<div class="span4 well"><img src="<?php echo base_url();?>img/room_images/<?php echo $room_image;?>"></div>
+			<?php }?>
 			
 				<script type="text/javascript"> 
   					$(document).ready(function () { 

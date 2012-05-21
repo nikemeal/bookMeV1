@@ -187,7 +187,7 @@ class Settings extends CI_Controller
 			$room_name = $this->input->post('room_name');
 			$pc_count = $this->input->post('pc_count');
 			$image = '';
-			$image_tn = 'test.png';
+			$image_tn = 'no-image.png';
 			$this->Settings_model->add_room($room_name, $pc_count, $image, $image_tn);
 			
 			//load the views
@@ -208,12 +208,6 @@ class Settings extends CI_Controller
 	
 	function edit_room()
 	{
-		/*
-		 * need to find a way that clicking on an image will forward to here and
-		 * pass through the room_id.
-		 * then load a room_edit view with prefilled data and when submitted goes
-		 * to a room_update function
-		 */
 		$this->load->model('Settings_model');
 		$room_id = $this->uri->segment(3);
 		
@@ -229,31 +223,44 @@ class Settings extends CI_Controller
 	{
 		$this->load->model('Main_model');
 		$this->load->model('Settings_model');
+
+//check to see if user selected delete images
+//if so, set image data to previous setting and submit rest
+//of info
+		if ($this->input->post('deleteimage') == 1)
+		{
+
+			$room_id = $this->input->post('room_id');
+			$room_name = $this->input->post('room_name');
+			$pc_count = $this->input->post('pc_count');
+
+			//get the original image filenames ready to delete the files
+			$imagetemp = $this->Settings_model->get_room_info($room_id);
+			$image_todel = $imagetemp['room_image'];
+			$image_tn_todel = $imagetemp['room_image_tn'];
+			
+			//set the images in the DB to no-image and update all details
+			$image = 'no-image.png';
+			$image_tn = 'no-image.png';
+			$this->Settings_model->update_room($room_id, $room_name, $pc_count, $image, $image_tn);
+			
+			//uncomment line below when i can successfully get unlink to delete the
+			//files from room_images
+			//unlink('../img/room_images/'.$image_todel);
+			
+			//all done, so lets load the views	
+			$this->load->view('template/header_view');
+			$this->load->view('main_menu');
+			$this->load->view('settings_rooms_update');
+
+		} else {
+
+		//otherwise carry on as normal
 		$config['upload_path'] = './img/room_images/';
 		$config['allowed_types'] = 'gif|jpg|png';
 		$config['max_size']	= '1024';
 		$config['max_width']  = '1024';
 		$config['max_height']  = '768';
-
-//check to see if user selected delete images
-//if so, set image data to '' and process rest
-//of info.  otherwise carry on as normal
-		if ($this->input->post('deleteimage' == 1))
-		{
-			$room_id = $this->input->post('room_id');
-			$room_name = $this->input->post('room_name');
-			$pc_count = $this->input->post('pc_count');
-			$image = 'no-image.png';
-			$image_tn = 'no-image.png';
-			$this->Settings_model->update_room($room_id, $room_name, $pc_count, $image, $image_tn);
-		
-			$this->load->view('template/header_view');
-			$this->load->view('main_menu');
-			$this->load->view('settings_rooms_update');
-			echo "image delete set to yes";
-		} else {
-		
-		
 		$this->load->library('upload', $config);
 	
 		/*
@@ -274,7 +281,7 @@ class Settings extends CI_Controller
 			$this->load->view('template/header_view');
 			$this->load->view('main_menu');
 			$this->load->view('settings_rooms_add', $error);
-			echo "1";
+
 		}
 			else
 		{
@@ -308,7 +315,7 @@ class Settings extends CI_Controller
 			$this->load->view('template/header_view');
 			$this->load->view('main_menu');
 			$this->load->view('settings_rooms_update');
-			echo "2";
+
 		}
 
 		}else 
@@ -320,16 +327,26 @@ class Settings extends CI_Controller
 			$room_id = $this->input->post('room_id');
 			$room_name = $this->input->post('room_name');
 			$pc_count = $this->input->post('pc_count');
-			$image = 'no-image.png';
-			$image_tn = 'no-image.png';
+			$imagetemp = $this->Settings_model->get_room_info($room_id);
+			$image = $imagetemp['room_image'];
+			$image_tn = $imagetemp['room_image_tn'];
 			$this->Settings_model->update_room($room_id, $room_name, $pc_count, $image, $image_tn);
 			
 			//load the views
 			$this->load->view('template/header_view');
 			$this->load->view('main_menu');
 			$this->load->view('settings_rooms_update');
-			echo "3";
+
 		}
 	}
+	}
+	
+	function deleteallbookings()
+	{
+		$this->load->model('Settings_model');
+		$result['success'] = $this->Settings_model->wipebookings();
+		$this->load->view('template/header_view');
+		$this->load->view('main_menu');
+		$this->load->view('delete_all_bookings_result', $result);
 	}
 }

@@ -50,11 +50,11 @@
 							</div>
 							<div class="form-actions">
             					<button type="submit" class="btn btn-primary">Save changes</button>
+            					<a class="btn btn-danger pull-right" data-toggle="modal" href="#loginbox" id="loginhint" data-content="Click here to log in">Delete all bookings</a>
             				</div>
             			</div>
         			</fieldset>
       			</form>
-				
 			</div>
 			
 				<script type="text/javascript"> 
@@ -62,6 +62,31 @@
     				$("[rel=tooltip]").tooltip(); 
   					}); 
 				</script> 
+				<div id="loginbox" class="modal hide fade">
+	<div class="modal-body">
+		<button class="close" data-dismiss="modal">×</button>
+		<br><br>
+		<center>
+			<button class="btn btn-danger span5" >WARNING!</button>
+		<br><br>
+			<form class="well" action="<?php echo site_url(); ?>/settings/deleteallbookings" method="post" id="deleteallbookings" name="login">
+				Clicking OK will wipe ALL the bookings in the database.  
+				<br><br>
+				Other settings such as holidays, periods, 
+				subjects, etc. will be kept
+					<br>
+					<br>
+				<button type="submit" class="btn">OK</button>
+			</form>
+		</center>
+	</div>
+</div>
+	<script type="text/javascript" language="JavaScript">
+		$('#loginbox').on('shown', function () {
+		$("input#username").focus();
+		});
+		
+	</script>
 
 			<div class="span1">
 				&nbsp;

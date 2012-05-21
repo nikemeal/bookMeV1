@@ -159,11 +159,17 @@ class Settings_model extends CI_Model {
 			$data = array(
                 'room_name' => $room_name,
                 'room_pc_count' => $pc_count,
-                'room_image' => '',
+                'room_image' => $image,
 				'room_image_tn' => $image_tn
              );
 
  			$this->db->update('rooms', $data, "room_id = $room_id"); 
 			
+		}
+		
+		function wipebookings()
+		{
+			$result = $this->db->truncate('bookings');
+			return $result; 
 		}
 }
