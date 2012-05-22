@@ -35,15 +35,13 @@
               					<p class="help-block"><i class="icon-question-sign"rel="tooltip" title="When does the period end?  This is displayed next to the period name to remind users, and is used to order the periods"></i></p>
             				</div>
             				<br>
-            				          					<div class="control-group">
+            				<div class="control-group">
             					<label class="control-label" for="bookable">Is period bookable</label>
             					<div class="controls">
               						<select name= "period_bookable" id="period_bookable">
 										<option value="1">Yes</option>
 										<option value="0">No</option>
-                						
-            					
-	               				    </select>
+		        				    </select>
 					            	<p class="help-block"><i class="icon-question-sign"rel="tooltip" title="Should BookMe display the period (such as 'Lunch') just for layout purposes but block users being able to book it"></i></p>
             					</div>
           					</div>

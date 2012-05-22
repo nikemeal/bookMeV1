@@ -357,16 +357,6 @@ class Settings extends CI_Controller
 	
 	function period_settings()
 	{
-		/*
-		 * 1. get number of periods from db
-		 * 2. if 0 - show page to add first period - go to 7
-		 * 3. if >0 - get list of periods from db
-		 * 4. show list of periods on page, use sortable jquery to re-order
-		 * 5. link on each period goes to edit_period page
-		 * 6. add period button links to settings_periods_add
-		 * 7. adding new period page shows form and submission button
-		 */
-		
 		$this->load->model('Settings_model');
 		$data['period_count'] = $this->Settings_model->get_period_count();
 
@@ -416,7 +406,6 @@ class Settings extends CI_Controller
 		$this->load->view('template/header_view');
 		$this->load->view('main_menu');
 		$this->load->view('edit_period', $data);
-		
 	}
 	
 	function update_period()
@@ -444,6 +433,81 @@ class Settings extends CI_Controller
 		$this->load->view('template/header_view');
 		$this->load->view('main_menu');
 		$this->load->view('settings_periods_add', array('error' => ' ' ));
+	}
+	
+	function subject_settings()
+	{
+		$this->load->model('Settings_model');
+		$data['subject_count'] = $this->Settings_model->get_subject_count();
+
+		//if no subjects exist, load a view to show subject add page
+		
+		if ($data['subject_count'] == 0)
+		{
+			$this->load->view('template/header_view');
+			$this->load->view('main_menu');
+			$this->load->view('settings_subjects_add', array('error' => ' ' ));
+		} else 
+
+		//else get the list of subjects in the database and show them
+		{
+			$query = $this->db->get('subjects');
+			$result = $query->result_array();
+			$data['subjects'] = $result;
+		
+			$this->load->view('template/header_view');
+			$this->load->view('main_menu');
+			$this->load->view('settings_subjects_edit',$data);
+		}
+	}
+	
+	function submit_new_subject()
+	{
+		$this->load->model('Settings_model');
+		//update the database with the details given
+		$subject_name = $this->input->post('subject_name');
+		$subject_use_shading = $this->input->post('subject_use_shading');
+		$subject_colour = $this->input->post('subject_colour');
+		$this->Settings_model->add_subject($subject_name, $subject_use_shading, $subject_colour);
+			
+		//then load the views
+		$this->load->view('template/header_view');
+		$this->load->view('main_menu');
+		$this->load->view('settings_subjects_update');
+	}
+	
+	function edit_subject()
+	{
+		$this->load->model('Settings_model');
+		$subject_id = $this->uri->segment(3);
+		$data = $this->Settings_model->get_subject_info($subject_id);
+		$this->load->view('template/header_view');
+		$this->load->view('main_menu');
+		$this->load->view('edit_subject', $data);
+	}
+	
+	function update_subject()
+	{
+		$this->load->model('Settings_model');
+		$subject_id = $this->input->post('subject_id');
+		$subject_name = $this->input->post('subject_name');
+		$subject_use_shading = $this->input->post('subject_use_shading');
+		$subject_colour = $this->input->post('subject_colour');
+		
+		$this->Settings_model->update_subject($subject_id, $subject_name, $subject_use_shading, $subject_colour);
+		
+		//load the views
+		$this->load->view('template/header_view');
+		$this->load->view('main_menu');
+		$this->load->view('settings_subjects_update');
+	}
+	
+	function add_subject()
+	{
+		$this->load->model('Settings_model');
+		$this->load->view('template/header_view');
+		$this->load->view('main_menu');
+		$this->load->view('settings_subjects_add', array('error' => ' ' ));
 	}
 	
 }

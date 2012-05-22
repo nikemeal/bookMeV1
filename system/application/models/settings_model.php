@@ -210,4 +210,34 @@ class Settings_model extends CI_Model {
  			$this->db->update('periods', $data, "period_id = $period_id"); 
 			
 		}
+		
+		function get_subject_count()
+		{
+			$query = $this->db->get('subjects');
+			return $query->num_rows();
+		}
+		
+		function add_subject($subject_name, $subject_use_shading, $subject_colour)
+		{
+			$data = array('subject_name' => $subject_name, 'subject_use_shading' => $subject_use_shading, 'subject_colour' => $subject_colour);
+			$this->db->insert('subjects',$data);
+		}
+		
+		function get_subject_info($subject_id)
+		{
+			$query = $this->db->get_where('subjects',array('subject_id' => $subject_id));
+			$result = $query->row_array();
+			return $result;
+		}
+		
+		function update_subject($subject_id, $subject_name, $subject_use_shading, $subject_colour)
+		{
+			$data = array(
+                'subject_name' => $subject_name,
+                'subject_use_shading' => $subject_use_shading,
+                'subject_colour' => $subject_colour
+             );
+
+ 			$this->db->update('subjects', $data, "subject_id = $subject_id"); 
+		}
 }

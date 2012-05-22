@@ -1,12 +1,4 @@
 <?php
-/* this page will need a view for non logged in users
- * showing a login box which will forward on to a login
- * processor.  that will then redirect back to this page
- * 
- * once logged in, the page will show the main body of
- * the site with thumbnail pictures for each bookable room
- */
-
 
 // is the user authenticated and logged in?
 	$authenticated = $this->session->userdata('authenticated'); 
@@ -25,42 +17,37 @@ if ($authenticated == 1) {
 			</div>
 
 			
-				<?php 
-				if ($accesslevel == 'admin')
-				{
-				?>
-					<div class="span10">
-						<a class="btn span12 btn-warning" href="settings/add_room">
-						<h4><center>There are no rooms defined, click this button to add one</center></h4>
-						</a>
-							
-						<div class="span1">&nbsp;</div>
-														
-						<a class="btn span12 btn-warning" href="settings/add_period">
-						<h4><center>There are no periods defined, click this button to add one</center></h4>
-						</a>
 				
-						<div class="span1">&nbsp;</div>
-										
-						<a class="btn span12 btn-warning" href="settings/add_subject">
-						<h4><center>There are no subjects defined, click this button to add one</center></h4>
-						</a>
-					</div>
-				
-				<?php
-				}
-				elseif ($accesslevel == 'staff')
-				{
-				?>
-					<div class="span10">
-									
-						<div class="alert span12 alert-error">
-						<h4><center>BookMe has not been fully configured, please contact your administrator</center></h4>
-						</div>
-	
-					</div>
+					<div class="span10 well">
+			
+			<div class="alert alert-info"><h4>Click on a room to make a booking for it</h4></div>
+			<br>
+
+				<?php foreach ($rooms as $room){ ?>
+
 					
-				<?php } ?>
+					<a class="btn span2" href="#"> 
+					
+					<h4><?php echo $room['room_name'] ?></h4>
+					
+					<?php if ($room['room_pc_count'] > 1)
+					{?>
+					<h5><?php echo $room['room_pc_count'] ?> machines available</h5>
+			  		<?php } elseif ($room['room_pc_count'] ==1) { ?>
+					<h5><?php echo $room['room_pc_count'] ?> machine available</h5>
+					<?php }else {?> 
+					<br><?php }?>
+					
+					<img src="<?php echo base_url('/img/room_images')?>/<?php echo $room['room_image_tn'];?>">
+					
+					</a>
+
+				<?php }?>
+				
+				
+			</div>
+					
+				
 	
 			<div class="span1">
 				&nbsp;

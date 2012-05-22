@@ -20,9 +20,13 @@
 					
 					<h4><?php echo $room['room_name'] ?></h4>
 					
-					<?php if ($room['room_pc_count'] > 0){?>
+					<?php if ($room['room_pc_count'] > 1)
+					{?>
 					<h5><?php echo $room['room_pc_count'] ?> machines available</h5>
-					<?php }else{ echo "<br>";}?>
+			  		<?php } elseif ($room['room_pc_count'] ==1) { ?>
+					<h5><?php echo $room['room_pc_count'] ?> machine available</h5>
+					<?php }else {?> 
+					<br><?php }?>
 					
 					<img src="<?php echo base_url('/img/room_images')?>/<?php echo $room['room_image_tn'];?>">
 					
@@ -32,7 +36,7 @@
 				
 				<div class="span10">
 					<br>
-					<a class="btn btn-primary" href="add_period"><i class="icon-plus"></i> Add a new room</a>
+					<a class="btn btn-primary" href="add_room"><i class="icon-plus"></i> Add a new room</a>
 
 				</div>
 				

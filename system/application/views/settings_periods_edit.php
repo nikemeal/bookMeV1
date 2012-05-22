@@ -17,12 +17,14 @@
 
 
 					<a class="btn span4" href="edit_period/<?php echo $period['period_id'];?>"> 
-						<h4><?php echo $period['period_name'] ?></h4>
+						
 						
 						<?php if ($period['period_bookable'] == 1){ ?>
+						<h4><?php echo $period['period_name'] ?></h4>
 						<h5>Start Time : <?php echo $period['period_start'] ?></h5>
 						<h5>End Time : <?php echo $period['period_end'] ?></h5>
 						<?php }else{?>
+						<h6><?php echo $period['period_name'] ?></h6>
 						<h6>Start Time : <?php echo $period['period_start'] ?></h6>
 						<h6>End Time : <?php echo $period['period_end'] ?></h6>
 						<?php }?>

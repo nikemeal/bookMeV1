@@ -8,16 +8,41 @@ class Main extends CI_Controller
 	 * menu items for admin users such as
 	 * block bookings and settings
 	 */
+	
+	function __construct()
+	{
+		parent::__construct();
+		$this->load->helper('url');
+	}
+	
 	function index()
 	{
-		$this->load->helper('url');
 		$this->load->model('Main_model');
 		$this->load->model('Settings_model');
 		$data['room_count'] = $this->Main_model->get_room_count();
+		$data['period_count'] = $this->Settings_model->get_period_count();
+		$data['subject_count'] = $this->Settings_model->get_subject_count();
+		//$data['year_count'] = $this->Main_model->get_year_count();
+		//$data['holiday_count'] = $this->Main_model->get_holiday_count();
+
+		//once last two settings areas are done, uncomment above two lines
+		//and add the if checks below
+		
 		$this->load->view('template/header_view');
 		$this->load->view('main_menu', $data);
-		$this->load->view('main_body', $data);	
 		
+		//need to make sure this if checks if ALL variables are set
+		if ($data['room_count'] > 0 || $data['period_count'] > 0 || $data['subject_count'] > 0){
+			
+			$query = $this->db->get('rooms');
+			$result = $query->result_array();
+			$info['rooms'] = $result;
+			$this->load->view('main_body_booking', $info);
+		}
+		else
+		{
+			$this->load->view('main_body', $data);	
+		}
 	}
 	
 	function login()
@@ -35,7 +60,6 @@ class Main extends CI_Controller
 		 * page which should now show other info 
 		 */
 		$this->load->model('Main_model');
-		$this->load->helper('url');
 		$this->db->select('setting_value as allow_local_login from settings');
  		$this->db->where('setting_name = \'allow_local_login\'');
 		$query = $this->db->get();
@@ -91,7 +115,6 @@ class Main extends CI_Controller
 	function logout()
 		{
 			$this->session->sess_destroy();
-			$this->load->helper('url');
 			redirect('/', 'refresh');
 		}
 }

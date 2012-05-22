@@ -117,6 +117,7 @@ CREATE TABLE IF NOT EXISTS `subjects` (
   `subject_id` int(11) NOT NULL AUTO_INCREMENT,
   `subject_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `subject_colour` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `subject_use_shading` tinyint(1) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`subject_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
