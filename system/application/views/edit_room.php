@@ -54,6 +54,7 @@
           					 <input type="hidden" name="room_id" value="<?php echo $room_id;?>">
 							<div class="form-actions">
             					<button type="submit" class="btn btn-primary">Update room</button>
+            					<a class="btn btn-info" href="../room_settings">back</a>
             				</div>
             			</div>
         			</fieldset>

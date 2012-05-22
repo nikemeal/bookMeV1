@@ -32,7 +32,7 @@
 				
 				<div class="span10">
 					<br>
-					<a class="btn btn-primary" href="add_room"><i class="icon-plus"></i> Add a new room</a>
+					<a class="btn btn-primary" href="add_period"><i class="icon-plus"></i> Add a new room</a>
 
 				</div>
 				

@@ -32,7 +32,8 @@ class Settings extends CI_Controller
 		$data['school_name'] = $this->Settings_model->get_school_name();
 		$data['bookme_version'] = $this->Settings_model->get_bookme_version();
 		$data['allow_local_login'] = $this->Settings_model->get_allow_local_login();
-		$data['bg_colour'] = $this->Settings_model->get_bg_colour();				
+		$data['bg_colour'] = $this->Settings_model->get_bg_colour();
+		$data['booking_count'] = $this->Settings_model->get_booking_count();				
 		$this->load->view('template/header_view');
 		$this->load->view('main_menu');
 		
@@ -91,7 +92,7 @@ class Settings extends CI_Controller
 		$this->load->model('Settings_model');
 		$data['room_count'] = $this->Main_model->get_room_count();
 
-		//if no rooms exist, load a view to show button linking to room add page
+		//if no rooms exist, load a view to show room add page
 		
 		if ($data['room_count'] == 0)
 		{
@@ -224,9 +225,9 @@ class Settings extends CI_Controller
 		$this->load->model('Main_model');
 		$this->load->model('Settings_model');
 
-//check to see if user selected delete images
-//if so, set image data to previous setting and submit rest
-//of info
+		//check to see if user selected delete images
+		//if so, set image data to previous setting and submit rest
+		//of info
 		if ($this->input->post('deleteimage') == 1)
 		{
 
@@ -239,14 +240,17 @@ class Settings extends CI_Controller
 			$image_todel = $imagetemp['room_image'];
 			$image_tn_todel = $imagetemp['room_image_tn'];
 			
+			//delete the files from room_images
+			$del_image = 'img/room_images/'.$image_todel;
+			$del_image_tn = 'img/room_images/'.$image_tn_todel;
+			unlink($del_image);
+			unlink($del_image_tn);
+			
+			
 			//set the images in the DB to no-image and update all details
 			$image = 'no-image.png';
 			$image_tn = 'no-image.png';
 			$this->Settings_model->update_room($room_id, $room_name, $pc_count, $image, $image_tn);
-			
-			//uncomment line below when i can successfully get unlink to delete the
-			//files from room_images
-			//unlink('../img/room_images/'.$image_todel);
 			
 			//all done, so lets load the views	
 			$this->load->view('template/header_view');
@@ -255,75 +259,76 @@ class Settings extends CI_Controller
 
 		} else {
 
-		//otherwise carry on as normal
-		$config['upload_path'] = './img/room_images/';
-		$config['allowed_types'] = 'gif|jpg|png';
-		$config['max_size']	= '1024';
-		$config['max_width']  = '1024';
-		$config['max_height']  = '768';
-		$this->load->library('upload', $config);
+			//otherwise carry on as normal
+			$config['upload_path'] = './img/room_images/';
+			$config['allowed_types'] = 'gif|jpg|png';
+			$config['max_size']	= '1024';
+			$config['max_width']  = '1024';
+			$config['max_height']  = '768';
+			$this->load->library('upload', $config);
 	
-		/*
-		 * check to see if user selected an image file
-		 */
-		if ($_FILES['userfile']['name']!="") {
+		   /*
+			* check to see if user selected an image file
+			*/
+			if ($_FILES['userfile']['name']!="") {
 		
-		/*
-		 * if yes, run the following - checking other image related errors
-		 */
-		if ( ! $this->upload->do_upload())
-		{
-			/*
-			 * if there is an error with the file being uploaded, return
-			 * the user to the previous page with the error to be shown
-			 */ 
-			$error = array('error' => $this->upload->display_errors());
-			$this->load->view('template/header_view');
-			$this->load->view('main_menu');
-			$this->load->view('settings_rooms_add', $error);
+		   /*
+		 	* if yes, run the following - checking other image related errors
+		 	*/
+			if ( ! $this->upload->do_upload())
+			{
+			   /*
+			 	* if there is an error with the file being uploaded, return
+			 	* the user to the previous page with the error to be shown
+			 	*/ 
+				$error = array('error' => $this->upload->display_errors());
+				$this->load->view('template/header_view');
+				$this->load->view('main_menu');
+				$this->load->view('settings_rooms_add', $error);
 
-		}
+			}
 			else
-		{
-			/*
-			 * no errors with the image, carry on
-			 */
-			$data = array('upload_data' => $this->upload->data());	
-			$imagepath = $data['upload_data']['full_path'];
+			{
+			   /*
+			 	* no errors with the image, carry on
+			 	*/
+				$data = array('upload_data' => $this->upload->data());	
+				$imagepath = $data['upload_data']['full_path'];
 
-			//create/move the image and create thumbnail
-			$tn['image_library'] = 'gd2';
-			$tn['source_image'] = $imagepath;
-			$tn['new_image'] = "tn_".$data['upload_data']['file_name'];
- 			$tn['create_thumb'] = FALSE;
- 			$tn['maintain_ratio'] = TRUE;
- 			$tn['width'] = 100;
- 			$tn['height'] = 75;
+				//save and move the image and create thumbnail
+				$tn['image_library'] = 'gd2';
+				$tn['source_image'] = $imagepath;
+				$tn['new_image'] = "tn_".$data['upload_data']['file_name'];
+ 				$tn['create_thumb'] = FALSE;
+ 				$tn['maintain_ratio'] = TRUE;
+ 				$tn['width'] = 100;
+ 				$tn['height'] = 75;
  			
- 			$this->load->library('image_lib', $tn); 
-			$this->image_lib->resize();
+ 				$this->load->library('image_lib', $tn); 
+				$this->image_lib->resize();
 
-			//update the database with the details given
-			$room_id = $this->input->post('room_id');
-			$room_name = $this->input->post('room_name');
-			$pc_count = $this->input->post('pc_count');
-			$image = $data['upload_data']['file_name'];
-			$image_tn = $tn['new_image'];
-			$this->Settings_model->update_room($room_id, $room_name, $pc_count, $image, $image_tn);
+				//update the database with the details given
+				$room_id = $this->input->post('room_id');
+				$room_name = $this->input->post('room_name');
+				$pc_count = $this->input->post('pc_count');
+				$image = $data['upload_data']['file_name'];
+				$image_tn = $tn['new_image'];
+				$this->Settings_model->update_room($room_id, $room_name, $pc_count, $image, $image_tn);
 			
-			//then load the views
-			$this->load->view('template/header_view');
-			$this->load->view('main_menu');
-			$this->load->view('settings_rooms_update');
+				//then load the views
+				$this->load->view('template/header_view');
+				$this->load->view('main_menu');
+				$this->load->view('settings_rooms_update');
+
+			}
 
 		}
-
-		}else 
+		else 
 		{
-		/*
-		 * no image was selected so just add the rest of the details
-		 * to the database and leave the image as is
-		 */	
+		   /*
+			* no image was selected so just add the rest of the details
+		 	* to the database and leave the image as is
+		 	*/	
 			$room_id = $this->input->post('room_id');
 			$room_name = $this->input->post('room_name');
 			$pc_count = $this->input->post('pc_count');
@@ -338,7 +343,7 @@ class Settings extends CI_Controller
 			$this->load->view('settings_rooms_update');
 
 		}
-	}
+		}
 	}
 	
 	function deleteallbookings()
@@ -349,4 +354,96 @@ class Settings extends CI_Controller
 		$this->load->view('main_menu');
 		$this->load->view('delete_all_bookings_result', $result);
 	}
+	
+	function period_settings()
+	{
+		/*
+		 * 1. get number of periods from db
+		 * 2. if 0 - show page to add first period - go to 7
+		 * 3. if >0 - get list of periods from db
+		 * 4. show list of periods on page, use sortable jquery to re-order
+		 * 5. link on each period goes to edit_period page
+		 * 6. add period button links to settings_periods_add
+		 * 7. adding new period page shows form and submission button
+		 */
+		
+		$this->load->model('Settings_model');
+		$data['period_count'] = $this->Settings_model->get_period_count();
+
+		//if no periods exist, load a view to show period add page
+		
+		if ($data['period_count'] == 0)
+		{
+			$this->load->view('template/header_view');
+			$this->load->view('main_menu');
+			$this->load->view('settings_periods_add', array('error' => ' ' ));
+		} else 
+		//else get the list of periods in the database, order them
+		//by period_start ascending and show them
+		{
+			$query = $this->db->order_by('period_start', 'asc')->get('periods');
+			$result = $query->result_array();
+			$data['periods'] = $result;
+		
+			$this->load->view('template/header_view');
+			$this->load->view('main_menu');
+			$this->load->view('settings_periods_edit',$data);
+
+		}
+	}
+	
+	function submit_new_period()
+	{
+		$this->load->model('Settings_model');
+		//update the database with the details given
+		$period_name = $this->input->post('period_name');
+		$period_start = $this->input->post('period_start');
+		$period_end = $this->input->post('period_end');
+		$period_bookable = $this->input->post('period_bookable');
+		$this->Settings_model->add_period($period_name, $period_start, $period_end, $period_bookable);
+			
+		//then load the views
+		$this->load->view('template/header_view');
+		$this->load->view('main_menu');
+		$this->load->view('settings_periods_update');
+	}
+	
+	function edit_period()
+	{
+		$this->load->model('Settings_model');
+		$period_id = $this->uri->segment(3);
+		$data = $this->Settings_model->get_period_info($period_id);
+		$this->load->view('template/header_view');
+		$this->load->view('main_menu');
+		$this->load->view('edit_period', $data);
+		
+	}
+	
+	function update_period()
+	{
+		$this->load->model('Settings_model');
+		$period_id = $this->input->post('period_id');
+		
+		$periodtimes = $this->Settings_model->get_period_info($period_id);
+		
+		$period_name = $this->input->post('period_name');
+		$period_start = $periodtimes['period_start'];
+		$period_end = $periodtimes['period_end'];
+		$period_bookable = $this->input->post('period_bookable');
+		$this->Settings_model->update_period($period_id, $period_name, $period_start, $period_end, $period_bookable);
+		
+		//load the views
+		$this->load->view('template/header_view');
+		$this->load->view('main_menu');
+		$this->load->view('settings_periods_update');
+	}
+	
+	function add_period()
+	{
+		$this->load->model('Settings_model');
+		$this->load->view('template/header_view');
+		$this->load->view('main_menu');
+		$this->load->view('settings_periods_add', array('error' => ' ' ));
+	}
+	
 }

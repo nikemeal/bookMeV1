@@ -172,4 +172,42 @@ class Settings_model extends CI_Model {
 			$result = $this->db->truncate('bookings');
 			return $result; 
 		}
+		
+		function get_booking_count()
+		{
+			$query = $this->db->get('bookings');
+			return $query->num_rows();
+		}
+		
+		function get_period_count()
+		{
+			$query = $this->db->get('periods');
+			return $query->num_rows();
+		}
+		
+		function add_period($period_name, $period_start, $period_end, $period_bookable)
+		{
+			$data = array('period_name' => $period_name, 'period_start' => $period_start, 'period_end' => $period_end, 'period_bookable' => $period_bookable);
+			$this->db->insert('periods',$data);
+		}
+		
+		function get_period_info($period_id)
+		{
+			$query = $this->db->get_where('periods',array('period_id' => $period_id));
+			$result = $query->row_array();
+			return $result;
+		}
+		
+		function update_period($period_id, $period_name, $period_start, $period_end, $period_bookable)
+		{
+			$data = array(
+                'period_name' => $period_name,
+                'period_start' => $period_start,
+                'period_end' => $period_end,
+				'period_bookable' => $period_bookable
+             );
+
+ 			$this->db->update('periods', $data, "period_id = $period_id"); 
+			
+		}
 }

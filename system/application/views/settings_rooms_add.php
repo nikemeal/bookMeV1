@@ -38,6 +38,7 @@
           					</div>
 							<div class="form-actions">
             					<button type="submit" class="btn btn-primary">Add room</button>
+            					<a class="btn btn-info" href="room_settings">back</a>
             				</div>
             			</div>
         			</fieldset>

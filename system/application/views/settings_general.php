@@ -50,7 +50,13 @@
 							</div>
 							<div class="form-actions">
             					<button type="submit" class="btn btn-primary">Save changes</button>
-            					<a class="btn btn-danger pull-right" data-toggle="modal" href="#loginbox" id="loginhint" data-content="Click here to log in">Delete all bookings</a>
+            					
+            					<?php if ($booking_count == 0){?>
+            					<div class="btn btn-danger pull-right disabled">Delete all bookings</div>
+            					<?php }else{?>
+            					<a class="btn btn-danger pull-right" data-toggle="modal" href="#deletebox" id="deletehint" data-content="Click here to log in">Delete all bookings</a>
+            					<?php }?>
+            					
             				</div>
             			</div>
         			</fieldset>
@@ -62,7 +68,7 @@
     				$("[rel=tooltip]").tooltip(); 
   					}); 
 				</script> 
-				<div id="loginbox" class="modal hide fade">
+				<div id="deletebox" class="modal hide fade">
 	<div class="modal-body">
 		<button class="close" data-dismiss="modal">×</button>
 		<br><br>

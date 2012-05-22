@@ -58,8 +58,8 @@ CREATE TABLE IF NOT EXISTS `holidays` (
 CREATE TABLE IF NOT EXISTS `periods` (
   `period_id` int(11) NOT NULL AUTO_INCREMENT,
   `period_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `period_start` time NOT NULL,
-  `period_end` time NOT NULL,
+  `period_start` varchar(255) NOT NULL,
+  `period_end` varchar(255) NOT NULL,
   `period_bookable` tinyint(1) NOT NULL,
   PRIMARY KEY (`period_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
