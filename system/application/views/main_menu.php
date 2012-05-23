@@ -58,7 +58,6 @@
                 				<li><a href="<?php echo site_url(); ?>/settings/period_settings">Periods</a></li>
                 				<li><a href="<?php echo site_url(); ?>/settings/subject_settings">Subjects</a></li>
                 				<li><a href="<?php echo site_url(); ?>/settings/holiday_settings">Holidays</a></li>
-                				<li><a href="<?php echo site_url(); ?>/settings/year_settings">Years</a></li>
                 			</ul>
             			</li>
             			<?php } ?>

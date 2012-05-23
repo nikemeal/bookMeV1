@@ -510,4 +510,95 @@ class Settings extends CI_Controller
 		$this->load->view('settings_subjects_add', array('error' => ' ' ));
 	}
 	
+function holiday_settings()
+	{
+		$this->load->model('Settings_model');
+		$data['holiday_count'] = $this->Settings_model->get_holiday_count();
+
+		//if no subjects exist, load a view to show subject add page
+		
+		if ($data['holiday_count'] == 0)
+		{
+			$this->load->view('template/header_view');
+			$this->load->view('main_menu');
+			$this->load->view('settings_holidays_add', array('error' => ' ' ));
+		} else 
+
+		//else get the list of subjects in the database and show them
+		{
+			$query = $this->db->get('holidays');
+			$result = $query->result_array();
+			$data['holidays'] = $result;
+		
+			$this->load->view('template/header_view');
+			$this->load->view('main_menu');
+			$this->load->view('settings_holidays_edit',$data);
+		}
+	}
+	
+	function submit_new_holiday()
+	{
+		$this->load->model('Settings_model');
+		//update the database with the details given
+		$holiday_name = $this->input->post('holiday_name');
+			
+			$temp_start_date= $this->input->post('holiday_start');
+ 			$arr =explode("-",$temp_start_date);
+ 			$arr=array_reverse($arr);
+ 		$holiday_start =implode($arr,"-");
+			
+ 			$temp_end_date= $this->input->post('holiday_end');
+ 			$arr =explode("-",$temp_end_date);
+ 			$arr=array_reverse($arr);
+ 		$holiday_end =implode($arr,"-");
+
+		$this->Settings_model->add_holiday($holiday_name, $holiday_start, $holiday_end);
+			
+		//then load the views
+		$this->load->view('template/header_view');
+		$this->load->view('main_menu');
+		$this->load->view('settings_holidays_update');
+	}
+	
+	function edit_holiday()
+	{
+		$this->load->model('Settings_model');
+		$holiday_id = $this->uri->segment(3);
+		$data = $this->Settings_model->get_holiday_info($holiday_id);
+		$this->load->view('template/header_view');
+		$this->load->view('main_menu');
+		$this->load->view('edit_holiday', $data);
+	}
+	
+	function update_holiday()
+	{
+		$this->load->model('Settings_model');
+		$holiday_id = $this->input->post('holiday_id');
+		$holiday_name = $this->input->post('holiday_name');
+		
+		$temp_start_date= $this->input->post('holiday_start');
+ 			$arr =explode("-",$temp_start_date);
+ 			$arr=array_reverse($arr);
+ 		$holiday_start =implode($arr,"-");
+			
+ 			$temp_end_date= $this->input->post('holiday_end');
+ 			$arr =explode("-",$temp_end_date);
+ 			$arr=array_reverse($arr);
+ 		$holiday_end =implode($arr,"-");
+		
+		$this->Settings_model->update_holiday($holiday_id, $holiday_name, $holiday_start, $holiday_end);
+		
+		//load the views
+		$this->load->view('template/header_view');
+		$this->load->view('main_menu');
+		$this->load->view('settings_holidays_update');
+	}
+	
+	function add_holiday()
+	{
+		$this->load->model('Settings_model');
+		$this->load->view('template/header_view');
+		$this->load->view('main_menu');
+		$this->load->view('settings_holidays_add', array('error' => ' ' ));
+	}
 }

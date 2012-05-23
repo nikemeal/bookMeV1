@@ -62,6 +62,12 @@
 				
 			</div>
 			
+			<script type="text/javascript"> 
+  				$(document).ready(function () { 
+    			$("[rel=tooltip]").tooltip(); 
+  				}); 
+			</script> 
+			
 			<div class="span1">
 				&nbsp;
 			</div>

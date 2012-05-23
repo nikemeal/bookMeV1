@@ -240,4 +240,34 @@ class Settings_model extends CI_Model {
 
  			$this->db->update('subjects', $data, "subject_id = $subject_id"); 
 		}
+		
+		function get_holiday_count()
+		{
+			$query = $this->db->get('holidays');
+			return $query->num_rows();
+		}
+		
+		function add_holiday($holiday_name, $holiday_start, $holiday_end)
+		{
+			$data = array('holiday_name' => $holiday_name, 'holiday_start' => $holiday_start, 'holiday_end' => $holiday_end);
+			$this->db->insert('holidays',$data);
+		}
+		
+		function get_holiday_info($holiday_id)
+		{
+			$query = $this->db->get_where('holidays',array('holiday_id' => $holiday_id));
+			$result = $query->row_array();
+			return $result;
+		}
+		
+		function update_holiday($holiday_id, $holiday_name, $holiday_start, $holiday_end)
+		{
+			$data = array(
+                'holiday_name' => $holiday_name,
+                'holiday_start' => $holiday_start,
+                'holiday_end' => $holiday_end
+             );
+
+ 			$this->db->update('holidays', $data, "holiday_id = $holiday_id"); 
+		}
 }

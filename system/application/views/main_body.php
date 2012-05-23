@@ -30,21 +30,28 @@ if ($authenticated == 1) {
 				{
 				?>
 					<div class="span10">
-						<a class="btn span12 btn-warning" href="settings/add_room">
+						<?php if ($room_count == 0){?>
+						<a class="btn span12 btn-warning" href="<?php echo index_page();?>/settings/add_room">
 						<h4><center>There are no rooms defined, click this button to add one</center></h4>
 						</a>
-							
+						<?php }?>
+
 						<div class="span1">&nbsp;</div>
-														
-						<a class="btn span12 btn-warning" href="settings/add_period">
+						
+						<?php if ($period_count == 0){?>								
+						<a class="btn span12 btn-warning" href="<?php echo index_page();?>/settings/add_period">
 						<h4><center>There are no periods defined, click this button to add one</center></h4>
 						</a>
-				
+						<?php }?>
+						
 						<div class="span1">&nbsp;</div>
-										
-						<a class="btn span12 btn-warning" href="settings/add_subject">
+						
+						<?php if ($subject_count == 0){?>				
+						<a class="btn span12 btn-warning" href="<?php echo index_page();?>/settings/add_subject">
 						<h4><center>There are no subjects defined, click this button to add one</center></h4>
 						</a>
+						<?php }?>
+						
 					</div>
 				
 				<?php

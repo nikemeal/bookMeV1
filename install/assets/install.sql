@@ -21,7 +21,6 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `bookings` (
   `booking_id` int(11) NOT NULL AUTO_INCREMENT,
-  `year_id` int(11) NOT NULL,
   `subject_id` int(11) NOT NULL,
   `period_id` int(11) NOT NULL,
   `booking_username` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -30,7 +29,6 @@ CREATE TABLE IF NOT EXISTS `bookings` (
   `booking_isblock` tinyint(1) NOT NULL,
   `booking_date` date NOT NULL,
   PRIMARY KEY (`booking_id`),
-  KEY `yearid` (`year_id`),
   KEY `subjectid` (`subject_id`),
   KEY `periodid` (`period_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
@@ -124,19 +122,6 @@ CREATE TABLE IF NOT EXISTS `subjects` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `years`
---
-
-CREATE TABLE IF NOT EXISTS `years` (
-  `year_id` int(11) NOT NULL AUTO_INCREMENT,
-  `year_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `year_start` date NOT NULL,
-  `year_end` date NOT NULL,
-  `year_isactive` tinyint(1) NOT NULL,
-  PRIMARY KEY (`year_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
-
---
 -- Constraints for dumped tables
 --
 
@@ -144,7 +129,6 @@ CREATE TABLE IF NOT EXISTS `years` (
 -- Constraints for table `bookings`
 --
 ALTER TABLE `bookings`
-  ADD CONSTRAINT `bookings_ibfk_1` FOREIGN KEY (`year_id`) REFERENCES `years` (`year_id`) ON UPDATE NO ACTION,
   ADD CONSTRAINT `bookings_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`) ON UPDATE NO ACTION,
   ADD CONSTRAINT `bookings_ibfk_3` FOREIGN KEY (`period_id`) REFERENCES `periods` (`period_id`) ON UPDATE NO ACTION;
 

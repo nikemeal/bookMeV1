@@ -22,18 +22,12 @@ class Main extends CI_Controller
 		$data['room_count'] = $this->Main_model->get_room_count();
 		$data['period_count'] = $this->Settings_model->get_period_count();
 		$data['subject_count'] = $this->Settings_model->get_subject_count();
-		//$data['year_count'] = $this->Main_model->get_year_count();
-		//$data['holiday_count'] = $this->Main_model->get_holiday_count();
-
-		//once last two settings areas are done, uncomment above two lines
-		//and add the if checks below
 		
 		$this->load->view('template/header_view');
 		$this->load->view('main_menu', $data);
 		
-		//need to make sure this if checks if ALL variables are set
-		if ($data['room_count'] > 0 || $data['period_count'] > 0 || $data['subject_count'] > 0){
-			
+		if ($data['room_count'] > 0 && $data['period_count'] > 0 && $data['subject_count'] > 0)
+		{
 			$query = $this->db->get('rooms');
 			$result = $query->result_array();
 			$info['rooms'] = $result;
