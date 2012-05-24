@@ -424,12 +424,9 @@ class Settings extends CI_Controller
 	{
 		$this->load->model('Settings_model');
 		$period_id = $this->input->post('period_id');
-		
-		$periodtimes = $this->Settings_model->get_period_info($period_id);
-		
 		$period_name = $this->input->post('period_name');
-		$period_start = $periodtimes['period_start'];
-		$period_end = $periodtimes['period_end'];
+		$period_start = $this->input->post('period_start');
+		$period_end = $this->input->post('period_end');
 		$period_bookable = $this->input->post('period_bookable');
 		$this->Settings_model->update_period($period_id, $period_name, $period_start, $period_end, $period_bookable);
 		

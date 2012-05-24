@@ -26,7 +26,7 @@ if ($authenticated == 1) {
 				<?php foreach ($rooms as $room){ ?>
 
 					
-					<a class="btn span2" href="#"> 
+					<a class="btn span2" href="booking/booking_room_overview/<?php echo $room['room_id'];?>"> 
 					
 					<h4><?php echo $room['room_name'] ?></h4>
 					

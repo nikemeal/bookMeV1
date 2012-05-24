@@ -22,12 +22,12 @@
             				<br>
             				<label class="control-label" for="input02">Period start time</label>
             				<div class="controls">
-              					<input type="text" class="input-xlarge" disabled id="periodstart" value="<?php echo $period_start;?>" name="period_start">
+              					<input type="text" class="input-xlarge" id="periodstart" value="<?php echo $period_start;?>" name="period_start">
               				</div>
             				<br>
             				<label class="control-label" for="input02">Period end time</label>
             				<div class="controls">
-              					<input type="text" class="input-xlarge" disabled id="periodend" value="<?php echo $period_end;?>" name="period_end">
+              					<input type="text" class="input-xlarge" id="periodend" value="<?php echo $period_end;?>" name="period_end">
               					
             				</div>
             				<br>
@@ -93,6 +93,8 @@
 				<script type="text/javascript" language="JavaScript">
 					$('#deletebox').on('shown', function () {
 					});
+  					$('#periodstart').timepicker({});
+  					$('#periodend').timepicker({});
 				</script>
 			
 			<div class="span1">
