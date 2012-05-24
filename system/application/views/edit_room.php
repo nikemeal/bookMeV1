@@ -54,6 +54,7 @@
           					 <input type="hidden" name="room_id" value="<?php echo $room_id;?>">
 							<div class="form-actions">
             					<button type="submit" class="btn btn-primary">Update room</button>
+            					<a class="btn btn-danger" data-toggle="modal" href="#deletebox" id="deletehint" data-content="Delete room">Delete room</a>
             					<a class="btn btn-info" href="../room_settings">back</a>
             				</div>
             			</div>
@@ -71,6 +72,31 @@
     				$("[rel=tooltip]").tooltip(); 
   					}); 
 				</script> 
+				<div id="deletebox" class="modal hide fade">
+					<div class="modal-body">
+						<button class="close" data-dismiss="modal">×</button>
+					<br><br>
+						<center>
+						<button class="btn btn-danger span5" >WARNING!</button>
+					<br><br>
+						<form class="well" action="<?php echo site_url(); ?>/settings/room_delete/<?php echo $room_id;?>" method="post" id="room_delete" name="room_delete">
+							Are you sure you want to delete this room? 
+					<br><br>
+							Deleting this room will remove all bookings
+							currently made for it.
+					<br><br>
+							This cannot be undone!
+					<br><br>
+						<button type="submit" class="btn btn-danger">OK</button>
+						<button class="btn btn-info" data-dismiss="modal">Cancel</button>
+						</form>
+						</center>
+					</div>
+				</div>
+				<script type="text/javascript" language="JavaScript">
+					$('#deletebox').on('shown', function () {
+					});
+				</script>
 
 			<div class="span1">
 				&nbsp;

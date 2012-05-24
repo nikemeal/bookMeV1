@@ -12,11 +12,11 @@
 					<?php 
 					if ($school_name == '') 
 					{ ?>
-					<a class="brand" href="<?php echo base_url();?>">Book<i class="icon-calendar icon-white"></i>Me</a>
+					<a class="brand" href="<?php echo base_url().index_page();?>">Book<i class="icon-calendar icon-white"></i>Me</a>
 					<?php 
 					} else {
 					?>
-					<a class="brand" href="<?php echo base_url();?>">Book<i class="icon-calendar icon-white"></i>Me @ <?php echo $school_name;?></a>
+					<a class="brand" href="<?php echo base_url().index_page();?>">Book<i class="icon-calendar icon-white"></i>Me @ <?php echo $school_name;?></a>
 					<?php 
 					}
 					?>

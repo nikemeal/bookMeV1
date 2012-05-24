@@ -54,6 +54,7 @@
           					<input type="hidden" name="period_id" value="<?php echo $period_id;?>">
 							<div class="form-actions">
             					<button type="submit" class="btn btn-primary">Update period</button>
+            					<a class="btn btn-danger" data-toggle="modal" href="#deletebox" id="deletehint" data-content="Delete room">Delete period</a>
             					<a class="btn btn-info" href="../period_settings">back</a>
             				</div>
             			</div>
@@ -67,6 +68,32 @@
     			$("[rel=tooltip]").tooltip(); 
   				}); 
 			</script> 
+			<div id="deletebox" class="modal hide fade">
+					<div class="modal-body">
+						<button class="close" data-dismiss="modal">×</button>
+					<br><br>
+						<center>
+						<button class="btn btn-danger span5" >WARNING!</button>
+					<br><br>
+						<form class="well" action="<?php echo site_url(); ?>/settings/period_delete/<?php echo $period_id;?>" method="post" id="room_delete" name="room_delete">
+							Are you sure you want to delete this period? 
+					<br><br>
+							Deleting this period after bookings have been made
+							will cause BookMe to display bookings in wrong
+							columns
+					<br><br>
+							This cannot be undone!
+					<br><br>
+						<button type="submit" class="btn btn-danger">OK</button>
+						<button class="btn btn-info" data-dismiss="modal">Cancel</button>
+						</form>
+						</center>
+					</div>
+				</div>
+				<script type="text/javascript" language="JavaScript">
+					$('#deletebox').on('shown', function () {
+					});
+				</script>
 			
 			<div class="span1">
 				&nbsp;

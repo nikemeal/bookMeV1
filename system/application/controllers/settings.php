@@ -187,7 +187,7 @@ class Settings extends CI_Controller
 
 			$room_name = $this->input->post('room_name');
 			$pc_count = $this->input->post('pc_count');
-			$image = '';
+			$image = 'no-image.png';
 			$image_tn = 'no-image.png';
 			$this->Settings_model->add_room($room_name, $pc_count, $image, $image_tn);
 			
@@ -346,6 +346,18 @@ class Settings extends CI_Controller
 		}
 	}
 	
+	function room_delete()
+	{
+		$this->load->model('Main_model');
+		$this->load->model('Settings_model');
+		$room_id = $this->uri->segment(3);
+		$query = $this->db->delete('rooms', array('room_id' => $room_id)); 
+		
+		$this->load->view('template/header_view');
+		$this->load->view('main_menu');
+		$this->load->view('settings_rooms_update');	
+	}
+	
 	function deleteallbookings()
 	{
 		$this->load->model('Settings_model');
@@ -435,6 +447,18 @@ class Settings extends CI_Controller
 		$this->load->view('settings_periods_add', array('error' => ' ' ));
 	}
 	
+	function period_delete()
+	{
+		$this->load->model('Main_model');
+		$this->load->model('Settings_model');
+		$period_id = $this->uri->segment(3);
+		$query = $this->db->delete('periods', array('period_id' => $period_id)); 
+		
+		$this->load->view('template/header_view');
+		$this->load->view('main_menu');
+		$this->load->view('settings_periods_update');	
+	}
+	
 	function subject_settings()
 	{
 		$this->load->model('Settings_model');
@@ -508,6 +532,18 @@ class Settings extends CI_Controller
 		$this->load->view('template/header_view');
 		$this->load->view('main_menu');
 		$this->load->view('settings_subjects_add', array('error' => ' ' ));
+	}
+	
+	function subject_delete()
+	{
+		$this->load->model('Main_model');
+		$this->load->model('Settings_model');
+		$subject_id = $this->uri->segment(3);
+		$query = $this->db->delete('subjects', array('subject_id' => $subject_id)); 
+		
+		$this->load->view('template/header_view');
+		$this->load->view('main_menu');
+		$this->load->view('settings_subjects_update');	
 	}
 	
 function holiday_settings()
@@ -600,5 +636,17 @@ function holiday_settings()
 		$this->load->view('template/header_view');
 		$this->load->view('main_menu');
 		$this->load->view('settings_holidays_add', array('error' => ' ' ));
+	}
+	
+	function holiday_delete()
+	{
+		$this->load->model('Main_model');
+		$this->load->model('Settings_model');
+		$holiday_id = $this->uri->segment(3);
+		$query = $this->db->delete('holidays', array('holiday_id' => $holiday_id)); 
+		
+		$this->load->view('template/header_view');
+		$this->load->view('main_menu');
+		$this->load->view('settings_holidays_update');	
 	}
 }
