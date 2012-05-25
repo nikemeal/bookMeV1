@@ -9,7 +9,6 @@ class Holidays extends CI_Controller
 		$this->load->model('Settings_model');
 		$this->load->view('template/header_view', array( 'bg_colour' => $this->Settings_model->get_bg_colour()));
 		$this->load->view('main_menu', array( 'school_name' => $this->Settings_model->get_school_name()));
-		
 	}
 	
 	function index()
@@ -24,7 +23,7 @@ class Holidays extends CI_Controller
 		//if no subjects exist, load a view to show holiday add page
 		if ($data['holiday_count'] == 0)
 		{
-			$this->load->view('settings_holidays_add', array('error' => ' ' ));
+			$this->load->view('settings/settings_holidays_add', array('error' => ' ' ));
 		} else 
 
 		//else get the list of holidays in the database and show them
@@ -33,7 +32,7 @@ class Holidays extends CI_Controller
 			$result = $query->result_array();
 			$data['holidays'] = $result;
 		
-			$this->load->view('settings_holidays_edit',$data);
+			$this->load->view('settings/settings_holidays_edit',$data);
 		}
 	}
 	
@@ -54,14 +53,14 @@ class Holidays extends CI_Controller
 		$this->Settings_model->add_holiday($holiday_name, $holiday_start, $holiday_end);
 			
 		//then load the view
-		$this->load->view('settings_holidays_update');
+		$this->load->view('settings/settings_holidays_update');
 	}
 	
 	function edit_holiday()
 	{
 		$holiday_id = $this->uri->segment(4);
 		$data = $this->Settings_model->get_holiday_info($holiday_id);
-		$this->load->view('edit_holiday', $data);
+		$this->load->view('settings/edit_holiday', $data);
 	}
 	
 	function update_holiday()
@@ -81,12 +80,12 @@ class Holidays extends CI_Controller
 		$this->Settings_model->update_holiday($holiday_id, $holiday_name, $holiday_start, $holiday_end);
 		
 		//load the view
-		$this->load->view('settings_holidays_update');
+		$this->load->view('settings/settings_holidays_update');
 	}
 	
 	function add_holiday()
 	{
-		$this->load->view('settings_holidays_add', array('error' => ' ' ));
+		$this->load->view('settings/settings_holidays_add', array('error' => ' ' ));
 	}
 	
 	function holiday_delete()
@@ -95,7 +94,7 @@ class Holidays extends CI_Controller
 		$holiday_id = $this->uri->segment(4);
 		$query = $this->db->delete('holidays', array('holiday_id' => $holiday_id)); 
 		
-		$this->load->view('settings_holidays_update');	
+		$this->load->view('settings/settings_holidays_update');	
 	}
 	
 }

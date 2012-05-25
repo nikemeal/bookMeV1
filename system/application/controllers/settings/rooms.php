@@ -25,7 +25,7 @@ function room_settings()
 		//if no rooms exist, load a view to show room add page
 		if ($data['room_count'] == 0)
 		{
-			$this->load->view('settings_rooms_add', array('error' => ' ' ));
+			$this->load->view('settings/settings_rooms_add', array('error' => ' ' ));
 		} else 
 		//else get the list of rooms in the database and show them
 		{
@@ -33,7 +33,7 @@ function room_settings()
 			$result = $query->result_array();
 			$data['rooms'] = $result;
 
-			$this->load->view('settings_rooms_edit',$data);
+			$this->load->view('settings/settings_rooms_edit',$data);
 		}
 	}
 	
@@ -63,7 +63,7 @@ function room_settings()
 			 * the user to the previous page with the error to be shown
 			 */ 
 			$error = array('error' => $this->upload->display_errors());
-			$this->load->view('settings_rooms_add', $error);
+			$this->load->view('settings/settings_rooms_add', $error);
 		}
 			else
 		{
@@ -93,7 +93,7 @@ function room_settings()
 			$this->Settings_model->add_room($room_name, $pc_count, $image, $image_tn);
 			
 			//then load the view
-			$this->load->view('settings_rooms_update');
+			$this->load->view('settings/settings_rooms_update');
 		}
 
 		}else 
@@ -110,20 +110,20 @@ function room_settings()
 			$this->Settings_model->add_room($room_name, $pc_count, $image, $image_tn);
 			
 			//load the view
-			$this->load->view('settings_rooms_update');
+			$this->load->view('settings/settings_rooms_update');
 		}
 	}
 	
 	function add_room()
 	{
-		$this->load->view('settings_rooms_add', array('error' => ' ' ));
+		$this->load->view('settings/settings_rooms_add', array('error' => ' ' ));
 	}
 	
 	function edit_room()
 	{
 		$room_id = $this->uri->segment(4);
 		$data = $this->Settings_model->get_room_info($room_id);
-		$this->load->view('edit_room', $data);
+		$this->load->view('settings/edit_room', $data);
 	}
 	
 	function update_room()
@@ -157,7 +157,7 @@ function room_settings()
 			$this->Settings_model->update_room($room_id, $room_name, $pc_count, $image, $image_tn);
 			
 			//all done, so lets load the view
-			$this->load->view('settings_rooms_update');
+			$this->load->view('settings/settings_rooms_update');
 
 		} else {
 
@@ -184,7 +184,7 @@ function room_settings()
 			 	* the user to the previous page with the error to be shown
 			 	*/ 
 				$error = array('error' => $this->upload->display_errors());
-				$this->load->view('settings_rooms_add', $error);
+				$this->load->view('settings/settings_rooms_add', $error);
 			}
 			else
 			{
@@ -215,7 +215,7 @@ function room_settings()
 				$this->Settings_model->update_room($room_id, $room_name, $pc_count, $image, $image_tn);
 			
 				//then load the view
-				$this->load->view('settings_rooms_update');
+				$this->load->view('settings/settings_rooms_update');
 			}
 		}
 		else 
@@ -233,7 +233,7 @@ function room_settings()
 			$this->Settings_model->update_room($room_id, $room_name, $pc_count, $image, $image_tn);
 			
 			//load the view
-			$this->load->view('settings_rooms_update');
+			$this->load->view('settings/settings_rooms_update');
 		}
 		}
 	}
@@ -243,7 +243,7 @@ function room_settings()
 		$this->load->model('Main_model');
 		$room_id = $this->uri->segment(4);
 		$query = $this->db->delete('rooms', array('room_id' => $room_id)); 
-		$this->load->view('settings_rooms_update');	
+		$this->load->view('settings/settings_rooms_update');	
 	}
 
 }

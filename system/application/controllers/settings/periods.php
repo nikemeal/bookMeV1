@@ -24,7 +24,7 @@ class Periods extends CI_Controller
 		//if no periods exist, load a view to show period add page
 		if ($data['period_count'] == 0)
 		{
-			$this->load->view('settings_periods_add', array('error' => ' ' ));
+			$this->load->view('settings/settings_periods_add', array('error' => ' ' ));
 		} else 
 		//else get the list of periods in the database, order them
 		//by period_start ascending and show them
@@ -32,7 +32,7 @@ class Periods extends CI_Controller
 			$query = $this->db->order_by('period_start', 'asc')->get('periods');
 			$result = $query->result_array();
 			$data['periods'] = $result;
-			$this->load->view('settings_periods_edit',$data);
+			$this->load->view('settings/settings_periods_edit',$data);
 		}
 	}
 	
@@ -46,14 +46,14 @@ class Periods extends CI_Controller
 		$this->Settings_model->add_period($period_name, $period_start, $period_end, $period_bookable);
 			
 		//then load the view
-		$this->load->view('settings_periods_update');
+		$this->load->view('settings/settings_periods_update');
 	}
 	
 	function edit_period()
 	{
 		$period_id = $this->uri->segment(4);
 		$data = $this->Settings_model->get_period_info($period_id);
-		$this->load->view('edit_period', $data);
+		$this->load->view('settings/edit_period', $data);
 	}
 	
 	function update_period()
@@ -66,12 +66,12 @@ class Periods extends CI_Controller
 		$this->Settings_model->update_period($period_id, $period_name, $period_start, $period_end, $period_bookable);
 		
 		//load the view
-		$this->load->view('settings_periods_update');
+		$this->load->view('settings/settings_periods_update');
 	}
 	
 	function add_period()
 	{
-		$this->load->view('settings_periods_add', array('error' => ' ' ));
+		$this->load->view('settings/settings_periods_add', array('error' => ' ' ));
 	}
 	
 	function period_delete()
@@ -80,7 +80,7 @@ class Periods extends CI_Controller
 		$period_id = $this->uri->segment(4);
 		$query = $this->db->delete('periods', array('period_id' => $period_id)); 
 		
-		$this->load->view('settings_periods_update');	
+		$this->load->view('settings/settings_periods_update');	
 	}
 	
 }

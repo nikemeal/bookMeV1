@@ -31,7 +31,7 @@ class General extends CI_Controller
 		$data['booking_count'] = $this->Settings_model->get_booking_count();				
 		
 		//load body with data
-		$this->load->view('settings_general', $data);
+		$this->load->view('settings/settings_general', $data);
 	}
 	
 	function submit_general_settings()
@@ -47,7 +47,7 @@ class General extends CI_Controller
 		 * if not then load an error page detailing why, otherwise load the relevant 
 		 * settings update page
 		 */
-		$this->load->view('settings_general_update');
+		$this->load->view('settings/settings_general_update');
 	}
 	
 	function deleteallbookings()
@@ -55,7 +55,7 @@ class General extends CI_Controller
 		if ($this->input->post('action') == 'delete_all_bookings')
 		{
 		$result['success'] = $this->Settings_model->wipebookings();
-		$this->load->view('delete_all_bookings_result', $result);
+		$this->load->view('settings/delete_all_bookings_result', $result);
 		}
 	}
 	

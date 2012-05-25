@@ -72,10 +72,20 @@ class Main extends CI_Controller
 			$this->session->set_userdata('fullname', 'BookMe Local Admin');
 			$this->session->set_userdata('username', 'bookme_admin');
 			redirect('/', 'refresh');
-		} else {
+		} 
+		elseif ($_POST['username'] == 'bookme_staff' && $_POST['password'] == 'cr3ation' && $allow_local_login == true)
+		{			
+			$this->session->set_userdata('authenticated', true);
+			$this->session->set_userdata('accesslevel', 'staff');
+			$this->session->set_userdata('fullname', 'BookMe Local Staff');
+			$this->session->set_userdata('username', 'bookme_staff');
+			redirect('/', 'refresh');
+		} 
+		else 
+		{
 		$this->Main_model->authenticate_user($_POST['username'],$_POST['password']);
 		$authenticated = $this->session->userdata('authenticated');
-		
+		}
 		/*
 		 * If user is authenticated, let's get their group membership and then
 		 * check that membership against the allowed groups
@@ -91,10 +101,12 @@ class Main extends CI_Controller
 			$group2 = "Junior Teaching Staff - Security Group";
 			$ingroup1 = $this->Main_model->user_ingroup($_POST['username'],$group1);
 			$ingroup2 = $this->Main_model->user_ingroup($_POST['username'],$group2);	 
-			if ($ingroup1 == 1) {
+			if ($ingroup1 == 1) 
+			{
 				$this->session->set_userdata('accesslevel', 'admin');
 			}
-			if ($ingroup2 == 1) {
+			if ($ingroup2 == 1) 
+			{
 				$this->session->set_userdata('accesslevel', 'staff');
 			}
 			//end of function that needs to be cleaned up
@@ -105,7 +117,6 @@ class Main extends CI_Controller
 		{
 			$this->load->view('main_body');
  			$this->load->view('login_failed');
-		}
 		}
 	}
 	

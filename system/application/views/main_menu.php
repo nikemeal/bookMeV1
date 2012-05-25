@@ -53,7 +53,7 @@
               				<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-cog icon-white"></i> Settings <b class="caret"></b></a>
               				<ul class="dropdown-menu">
               					<li><a href="<?php echo site_url('settings/general/general_settings'); ?>">General</a></li>
-                				<li><a href="<?php echo site_url('settings/authentication/auth_settings'); ?>">Authorisation</a></li>
+                				<li><a href="<?php echo site_url('settings/authentication/auth_settings'); ?>">Authentication</a></li>
                 				<li><a href="<?php echo site_url('settings/rooms/room_settings'); ?>">Rooms</a></li>
                 				<li><a href="<?php echo site_url('settings/periods/period_settings'); ?>">Periods</a></li>
                 				<li><a href="<?php echo site_url('settings/subjects/subject_settings'); ?>">Subjects</a></li>

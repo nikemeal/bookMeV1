@@ -24,7 +24,7 @@ function subject_settings()
 		//if no subjects exist, load a view to show subject add page
 		if ($data['subject_count'] == 0)
 		{
-			$this->load->view('settings_subjects_add', array('error' => ' ' ));
+			$this->load->view('settings/settings_subjects_add', array('error' => ' ' ));
 		} else 
 
 		//else get the list of subjects in the database and show them
@@ -32,7 +32,7 @@ function subject_settings()
 			$query = $this->db->get('subjects');
 			$result = $query->result_array();
 			$data['subjects'] = $result;
-			$this->load->view('settings_subjects_edit',$data);
+			$this->load->view('settings/settings_subjects_edit',$data);
 		}
 	}
 	
@@ -45,14 +45,14 @@ function subject_settings()
 		$this->Settings_model->add_subject($subject_name, $subject_use_shading, $subject_colour);
 			
 		//then load the view
-		$this->load->view('settings_subjects_update');
+		$this->load->view('settings/settings_subjects_update');
 	}
 	
 	function edit_subject()
 	{
 		$subject_id = $this->uri->segment(4);
 		$data = $this->Settings_model->get_subject_info($subject_id);
-		$this->load->view('edit_subject', $data);
+		$this->load->view('settings/edit_subject', $data);
 	}
 	
 	function update_subject()
@@ -64,12 +64,12 @@ function subject_settings()
 		$this->Settings_model->update_subject($subject_id, $subject_name, $subject_use_shading, $subject_colour);
 		
 		//load the view
-		$this->load->view('settings_subjects_update');
+		$this->load->view('settings/settings_subjects_update');
 	}
 	
 	function add_subject()
 	{
-		$this->load->view('settings_subjects_add', array('error' => ' ' ));
+		$this->load->view('settings/settings_subjects_add', array('error' => ' ' ));
 	}
 	
 	function subject_delete()
@@ -78,7 +78,7 @@ function subject_settings()
 		$subject_id = $this->uri->segment(4);
 		$query = $this->db->delete('subjects', array('subject_id' => $subject_id)); 
 		
-		$this->load->view('settings_subjects_update');	
+		$this->load->view('settings/settings_subjects_update');	
 	}
 	
 }
