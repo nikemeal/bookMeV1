@@ -6,8 +6,8 @@
 	<link rel="stylesheet" href="<?php echo base_url(); ?>css/jquery-ui.css">
 	<link rel="stylesheet" href="<?php echo base_url(); ?>css/jquery-ui-timepicker-addon.css">
 		
-	<?php $data['bg_colour'] = $this->Settings_model->get_bg_colour(); ?>
-	<style type="text/css">body {background-color: #<?php echo $data['bg_colour'];?>;}</style>
+
+	<style type="text/css">body {background-color: #<?php echo $bg_colour;?>;}</style>
 	
 	<script src="<?php echo base_url(); ?>javascript/jquery.js"></script>
 	<script src="<?php echo base_url(); ?>javascript/jquery-ui.js"></script>

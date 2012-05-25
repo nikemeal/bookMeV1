@@ -50,6 +50,7 @@
 							</div>
 							<div class="form-actions">
             					<button type="submit" class="btn btn-primary">Save changes</button>
+            					<a class="btn btn-info" href="<?php echo base_url().index_page();?>">back</a>
             					
             					<?php if ($booking_count == 0){?>
             					<div class="btn btn-danger pull-right disabled">Delete all bookings</div>
@@ -75,7 +76,8 @@
 						<center>
 						<button class="btn btn-danger span5" >WARNING!</button>
 					<br><br>
-						<form class="well" action="<?php echo site_url(); ?>/settings/deleteallbookings" method="post" id="deleteallbookings" name="login">
+						<form class="well" action="<?php echo site_url(); ?>/settings/general/deleteallbookings" method="post" id="deleteallbookings" name="delete">
+						<input type="hidden" name="action" value="delete_all_bookings">
 							Clicking OK will wipe ALL the bookings in the database.  
 					<br><br>
 							Other settings such as holidays, periods, 

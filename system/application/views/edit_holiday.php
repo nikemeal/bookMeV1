@@ -89,7 +89,7 @@
 						<center>
 						<button class="btn btn-danger span5" >WARNING!</button>
 					<br><br>
-						<form class="well" action="<?php echo site_url(); ?>/settings/holiday_delete/<?php echo $holiday_id;?>" method="post" id="holiday_delete" name="holiday_delete">
+						<form class="well" action="<?php echo site_url('settings/holidays/holiday_delete/'.$holiday_id); ?>" method="post" id="holiday_delete" name="holiday_delete">
 							Are you sure you want to delete this holiday? 
 					<br><br>
 							Users will now be able to make bookings for the 

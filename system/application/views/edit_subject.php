@@ -67,7 +67,7 @@
 						<center>
 						<button class="btn btn-danger span5" >WARNING!</button>
 					<br><br>
-						<form class="well" action="<?php echo site_url(); ?>/settings/subject_delete/<?php echo $subject_id;?>" method="post" id="room_delete" name="room_delete">
+						<form class="well" action="<?php echo site_url('settings/subjects/subject_delete/'.$subject_id); ?>" method="post" id="subject_delete" name="subject_delete">
 							Are you sure you want to delete this subject? 
 					<br><br>
 							Deleting this subject after bookings have been made

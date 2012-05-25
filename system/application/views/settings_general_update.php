@@ -1,3 +1,2 @@
 <?php 
-$this->load->helper('url');
-redirect('/settings/general_settings;/', 'refresh');
+redirect('/settings/general/general_settings;/', 'refresh');

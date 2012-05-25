@@ -13,19 +13,20 @@ class Main extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->helper('url');
+		$this->load->model('Main_model');
+		$this->load->model('Settings_model');
+		$this->load->view('template/header_view', array( 'bg_colour' => $this->Settings_model->get_bg_colour()));
+		$this->load->view('main_menu', array( 'school_name' => $this->Settings_model->get_school_name()));
 	}
 	
 	function index()
 	{
-		$this->load->model('Main_model');
-		$this->load->model('Settings_model');
 		$data['room_count'] = $this->Main_model->get_room_count();
 		$data['period_count'] = $this->Settings_model->get_period_count();
 		$data['subject_count'] = $this->Settings_model->get_subject_count();
-		
-		$this->load->view('template/header_view');
-		$this->load->view('main_menu', $data);
-		
+		/*
+		 * if at least one room, subject and period exists, show the booking page
+		 */
 		if ($data['room_count'] > 0 && $data['period_count'] > 0 && $data['subject_count'] > 0)
 		{
 			$query = $this->db->get('rooms');
@@ -35,6 +36,11 @@ class Main extends CI_Controller
 		}
 		else
 		{
+			/*
+			 * perhaps in the future before a user logs in, they can view the rooms
+			 * but not make bookings until they log in.
+			 * until then, if not logged in, show main page blank
+			 */
 			$this->load->view('main_body', $data);	
 		}
 	}
@@ -53,7 +59,6 @@ class Main extends CI_Controller
 		 * if login success, load login success view then redirect back to main 
 		 * page which should now show other info 
 		 */
-		$this->load->model('Main_model');
 		$this->db->select('setting_value as allow_local_login from settings');
  		$this->db->where('setting_name = \'allow_local_login\'');
 		$query = $this->db->get();
@@ -98,8 +103,6 @@ class Main extends CI_Controller
 		
 		else 
 		{
-			$this->load->view('template/header_view');
-			$this->load->view('main_menu');
 			$this->load->view('main_body');
  			$this->load->view('login_failed');
 		}

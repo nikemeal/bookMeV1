@@ -1,7 +1,7 @@
 	<?php 
 	$authenticated = $this->session->userdata('authenticated'); 
 	$accesslevel = $this->session->userdata('accesslevel');
-	$school_name = $data['school_name'] = $this->Settings_model->get_school_name();
+	
 	?>
 	
 	<div class="container-fluid">
@@ -52,12 +52,12 @@
            				<li class="dropdown">
               				<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-cog icon-white"></i> Settings <b class="caret"></b></a>
               				<ul class="dropdown-menu">
-              					<li><a href="<?php echo site_url(); ?>/settings/general_settings">General</a></li>
-                				<li><a href="<?php echo site_url(); ?>/settings/auth_settings">Authorisation</a></li>
-                				<li><a href="<?php echo site_url(); ?>/settings/room_settings">Rooms</a></li>
-                				<li><a href="<?php echo site_url(); ?>/settings/period_settings">Periods</a></li>
-                				<li><a href="<?php echo site_url(); ?>/settings/subject_settings">Subjects</a></li>
-                				<li><a href="<?php echo site_url(); ?>/settings/holiday_settings">Holidays</a></li>
+              					<li><a href="<?php echo site_url('settings/general/general_settings'); ?>">General</a></li>
+                				<li><a href="<?php echo site_url('settings/authentication/auth_settings'); ?>">Authorisation</a></li>
+                				<li><a href="<?php echo site_url('settings/rooms/room_settings'); ?>">Rooms</a></li>
+                				<li><a href="<?php echo site_url('settings/periods/period_settings'); ?>">Periods</a></li>
+                				<li><a href="<?php echo site_url('settings/subjects/subject_settings'); ?>">Subjects</a></li>
+                				<li><a href="<?php echo site_url('settings/holidays/holiday_settings'); ?>">Holidays</a></li>
                 			</ul>
             			</li>
             			<?php } ?>

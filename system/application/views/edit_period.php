@@ -75,7 +75,7 @@
 						<center>
 						<button class="btn btn-danger span5" >WARNING!</button>
 					<br><br>
-						<form class="well" action="<?php echo site_url(); ?>/settings/period_delete/<?php echo $period_id;?>" method="post" id="room_delete" name="room_delete">
+						<form class="well" action="<?php echo site_url('settings/periods/period_delete/'.$period_id); ?>" method="post" id="period_delete" name="period_delete">
 							Are you sure you want to delete this period? 
 					<br><br>
 							Deleting this period after bookings have been made

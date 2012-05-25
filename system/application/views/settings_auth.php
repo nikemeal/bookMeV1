@@ -8,7 +8,7 @@
 
 			<div class="span10 well">
 			<center>
-				<div class="alert alert-info"><h3>Authorisation Settings</h3></div>
+				<div class="alert alert-info"><h3>Autentication Settings</h3></div>
 			</center>
 				 <form class="form-horizontal" method="get" action="submit_auth_settings">
         			<fieldset>

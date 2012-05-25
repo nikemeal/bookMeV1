@@ -1,3 +1,3 @@
 <?php 
 $this->load->helper('url');
-redirect('/settings/holiday_settings;/', 'refresh');
+redirect('/settings/holidays/holiday_settings;/', 'refresh');

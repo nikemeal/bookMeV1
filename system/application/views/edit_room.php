@@ -79,7 +79,7 @@
 						<center>
 						<button class="btn btn-danger span5" >WARNING!</button>
 					<br><br>
-						<form class="well" action="<?php echo site_url(); ?>/settings/room_delete/<?php echo $room_id;?>" method="post" id="room_delete" name="room_delete">
+						<form class="well" action="<?php echo site_url('settings/rooms/room_delete/'.$room_id); ?>" method="post" id="room_delete" name="room_delete">
 							Are you sure you want to delete this room? 
 					<br><br>
 							Deleting this room will remove all bookings
