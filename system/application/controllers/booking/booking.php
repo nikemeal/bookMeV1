@@ -30,7 +30,20 @@ class Booking extends CI_Controller
 
 	function booking_room_overview()
 	{
-		$this->load->view('booking/booking_room_overview');
+		//lets get how the data we need to show the booking timetable
+		
+		//periods first
+		$query = $this->db->order_by('period_start', 'asc')->get('periods');
+		$result = $query->result_array();
+		$data['periods'] = $result;
+		
+		//then subjects
+		$query = $this->db->get('subjects');
+		$result = $query->result_array();
+		$data['subjects'] = $result;
+			
+		//now lets load the view with the data 
+		$this->load->view('booking/booking_room_overview', $data);
 	}
 	
 }
