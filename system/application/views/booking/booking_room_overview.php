@@ -114,7 +114,9 @@
 						// we will show an add link, allowing the user to book this available space
 						if ($bookable == 1 && $period['period_bookable'] == true && $this->session->userdata('authenticated'))
 						{
-							echo 'style="height:90px"><div class="tdItem" style="height:100%;"></div>';
+							echo 'style="height:90px"><div class="tdItem" style="height:100%;">';
+							echo '<center><br><br><i class="icon-plus"></i></center>';
+							echo '</div>';
 						}
 			
 					   /*
