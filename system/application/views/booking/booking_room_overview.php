@@ -3,7 +3,6 @@
 .ui-selecting { background: #FECA40; }
 .ui-selected { background: #F39814; color: white; }
 
-
 	</style>
 
 <div class="row-fluid">
@@ -14,17 +13,19 @@
 				&nbsp;
 			</div>
 
-			<table class="span10" border="1">
-  				<tbody>
-   					<tr style="background-color:#ABABAB;">
-						<th width="5%">&nbsp;</th>
-						<th width="10%"><div class="btn btn-inverse ">Monday</div></th>
-						<th width="10%"><div class="btn btn-inverse ">Tuesday</div></th>
-						<th width="10%"><div class="btn btn-inverse ">Wednesday</div></th>
-						<th width="10%"><div class="btn btn-inverse ">Thursday</div></th>
-						<th width="10%"><div class="btn btn-inverse ">Friday</div></th>
+			<table class="table table-bordered">
+  				<thead>
+   					<tr style="width:60px;">
+						<th width="9%">&nbsp;</th>
+						<th width="13%"><div>Monday</div></th>
+						<th width="13%"><div>Tuesday</div></th>
+						<th width="13%"><div>Wednesday</div></th>
+						<th width="13%"><div>Thursday</div></th>
+						<th width="13%"><div>Friday</div></th>
 					</tr>
-
+				</thead>
+				
+				<tbody>
 				<?php foreach ($periods as $period)
 				{
 				?>
@@ -32,21 +33,21 @@
 					<?php
 	 				if ($period['period_bookable'] == true) 
 					{
-						echo 'style="height:60px;"';
+						echo 'style="height:60px"';
 					}
 					else
 					{
-						echo 'style="background-color:#D0D0D0;"';
+						echo 'style="background-color:#000000; height:10px"';
 					}
 					?>
 					>
 	
 					<td>		
 					<?php
-					echo '<center><div class="btn btn-inverse">'.$period['period_name'].'<br />';
+					echo '<center><div>'.$period['period_name'].'<br />';
 					if ($period['period_bookable'] == true)
 					{
-						echo '<i><small>'.$period['period_start'].' - '.$period['period_end'].'</small></i>';
+						echo '<em><small>'.$period['period_start'].' - '.$period['period_end'].'</small></em>';
 					}
 					echo '</div></center>';
 					?>
@@ -96,7 +97,7 @@
 									if ($this->session->userdata('accesslevel') == 'admin' || $this->session->userdata('username') == $booking['booking_username'])
 									{
 										//echo '<div>';
-										echo '<a href="#delete" title="Delete Booking">';
+										echo '<a href="delete" title="Delete Booking">';
 										echo '<i class="icon-minus pull-right"></i>';
 										echo '</a>';
 									}
@@ -114,7 +115,7 @@
 						// we will show an add link, allowing the user to book this available space
 						if ($bookable == 1 && $period['period_bookable'] == true && $this->session->userdata('authenticated'))
 						{
-							echo 'style="height:90px"><div class="tdItem" style="height:100%;">';
+							echo 'style="height:90px"><div class="bookable" style="height:100%;">';
 							echo '<center><br><br><i class="icon-plus"></i></center>';
 							echo '</div>';
 						}
@@ -150,6 +151,6 @@
 
 <script>
 $("table").selectable({
-  filter: ".tdItem"
+  filter: ".bookable"
 });
 </script>
