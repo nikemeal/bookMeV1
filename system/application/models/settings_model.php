@@ -208,7 +208,13 @@ class Settings_model extends CI_Model {
              );
 
  			$this->db->update('periods', $data, "period_id = $period_id"); 
-			
+		}
+		
+		function get_all_periods()
+		{
+			$query = $this->db->order_by('period_start', 'asc')->get('periods');
+			$result = $query->result_array();
+			return $result;
 		}
 		
 		function get_subject_count()
@@ -239,6 +245,13 @@ class Settings_model extends CI_Model {
              );
 
  			$this->db->update('subjects', $data, "subject_id = $subject_id"); 
+		}
+		
+		function get_all_subjects()
+		{
+			$query = $this->db->get('subjects');
+			$result = $query->result_array();
+			return $result;
 		}
 		
 		function get_holiday_count()

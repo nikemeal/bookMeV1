@@ -29,9 +29,7 @@ class Periods extends CI_Controller
 		//else get the list of periods in the database, order them
 		//by period_start ascending and show them
 		{
-			$query = $this->db->order_by('period_start', 'asc')->get('periods');
-			$result = $query->result_array();
-			$data['periods'] = $result;
+			$data['periods'] = $this->Settings_model->get_all_periods();
 			$this->load->view('settings/settings_periods_edit',$data);
 		}
 	}

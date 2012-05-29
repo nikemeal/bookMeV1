@@ -28,22 +28,50 @@ class Booking extends CI_Controller
 		echo "Index function of bookings";
 	}
 
-	function booking_room_overview()
+function booking_room_overview($room_id=1, $date='')
 	{
-		//lets get how the data we need to show the booking timetable
-		
-		//periods first
-		$query = $this->db->order_by('period_start', 'asc')->get('periods');
-		$result = $query->result_array();
-		$data['periods'] = $result;
-		
-		//then subjects
-		$query = $this->db->get('subjects');
-		$result = $query->result_array();
-		$data['subjects'] = $result;
+	
+		$this->load->model('Booking_model');
+		$this->load->model('Settings_model');
+		if ($date == '') 
+		{
+			// If todays date is a Wednesday, we still need to show the start of the week
+			// i.e. Monday - this code does that
+			$data['date'] = date('Y-m-d', mktime(0,0,0,date('m'), date('d')-date('w')+1, date('Y')));
 			
-		//now lets load the view with the data 
+			// Also need to add 7 days onto this to get the last day of the week
+			$enddate = date('Y-m-d', mktime(0,0,0,date('m'), date('d')-date('w')+7, date('Y')));
+		}
+		
+		// A date has been given (through the URL). We need to split this down, find the start
+		// of the week for the given date and then piece it all back together
+		else 
+		{
+			// Split the given date down into day, month, and year values
+			list($year,$month,$day) = explode('-', $date);
+			
+			// Our temporary date is used to find out the day number of the chosen date
+			// i.e. Friday return number 5
+			$tmpdate = new DateTime($date);
+			$dayname = $tmpdate->format('w');
+			
+			// Piece together the date, changing the date to that of the start of the week
+			$data['date'] = date('Y-m-d', mktime(0,0,0,$month, $day-$dayname+1, $year));
+			
+			// Also, we need the date for the last day of the week too
+			$enddate = date('Y-m-d', mktime(0,0,0,$month, $day-$dayname+7, $year));
+		}
+		
+		
+		
+		$data['periods'] = $this->Settings_model->get_all_periods();
+		$data['bookings'] = $this->Booking_model->get_bookings($room_id,$data['date'],$enddate);
+
+		
+		// Load the header, view, and footer, passing in all collected data
+
 		$this->load->view('booking/booking_room_overview', $data);
+
 	}
 	
 }
