@@ -37,7 +37,7 @@
 					}
 					else
 					{
-						echo 'style="background-color:#000000; height:10px"';
+						echo 'style="height:10px"';
 					}
 					?>
 					>
