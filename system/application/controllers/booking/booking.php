@@ -62,11 +62,17 @@ function booking_room_overview($room_id=1, $date='')
 			$enddate = date('Y-m-d', mktime(0,0,0,$month, $day-$dayname+7, $year));
 		}
 		
-		
-		
+		//get the first day of the week and give it a readable format to display
+		$arr =explode("-",$data['date']);
+ 		$arr=array_reverse($arr);
+ 		$displayday = $arr['0'];
+		$displaymonth = $arr['1'];
+		$displayyear = $arr['2'];
+		$data['week_commencing'] = date('jS \o\f F Y', mktime(0,0,0,$displaymonth, $displayday, $displayyear));
+ 		
+		$data['room_id'] = $room_id;
 		$data['periods'] = $this->Settings_model->get_all_periods();
 		$data['bookings'] = $this->Booking_model->get_bookings($room_id,$data['date'],$enddate);
-
 		
 		// Load the header, view, and footer, passing in all collected data
 

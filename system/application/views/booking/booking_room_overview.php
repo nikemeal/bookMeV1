@@ -9,11 +9,10 @@
 	<div class="span12">
 		<div class="row-fluid">
 
-			<div class="span1">
-				&nbsp;
-			</div>
+<input type="text" id="datepicker" style="display:none">
+			<center><label class="label">Bookings for the week commencing <?php echo $week_commencing;?></label></center>
+			<table class="table span10 table-bordered">
 
-			<table class="table table-bordered">
   				<thead>
    					<tr style="width:60px;">
 						<th width="9%">&nbsp;</th>
@@ -140,6 +139,7 @@
 				?>
 				</tbody>
 			</table>
+			
 
 			<div class="span1">
 				&nbsp;
@@ -149,8 +149,29 @@
 	</div>
 </div>
 
-<script>
-$("table").selectable({
-  filter: ".bookable"
-});
-</script>
+
+	
+	
+	<script>
+	$(function() 
+	{
+		$("table").selectable({
+			  filter: ".bookable"
+			});
+		$( "#datepicker" ).datepicker(
+		{
+			dateFormat: 'yy-mm-dd',
+			showOtherMonths: true,
+			selectOtherMonths: true,
+			beforeShowDay: $.datepicker.noWeekends,
+			showOn: "button",
+			buttonImage: "<?php echo base_url('javascript/images/calendar.gif');?>",
+			buttonImageOnly: true,
+			onSelect: function(date, instance) 
+			{
+				window.location = "<?php echo site_url('booking/booking/booking_room_overview/' . $room_id) ?>/" + date;
+    		}
+		});
+	});
+	</script>
+
