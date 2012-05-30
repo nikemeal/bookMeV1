@@ -1,7 +1,7 @@
 <style>
 
 .ui-selecting { background: #FECA40; }
-.ui-selected { background: #F39814; color: white; }
+.ui-selected { background: #F39814;  }
 
 	</style>
 
@@ -9,9 +9,15 @@
 	<div class="span12">
 		<div class="row-fluid">
 
-<input type="text" id="datepicker" style="display:none">
-			<center><label class="label">Bookings for the week commencing <?php echo $week_commencing;?></label></center>
-			<table class="table span10 table-bordered">
+			<div class="span1">
+				&nbsp;
+			</div>
+
+			<div class="span10">
+
+				<center><h4 class="span8">Bookings for the week commencing <?php echo $week_commencing;?></h4></center>
+				<br><br>
+				<table class="table span8 table-bordered" id="selectable">
 
   				<thead>
    					<tr style="width:60px;">
@@ -79,9 +85,17 @@
 							// Find out if the user wants booked lessons to be shaded differently
 								if ($booking['subject_use_shading'] == 1)
 								{
-									echo 'style="background-color:#'.$booking['subject_colour'].';">';
+									echo 'style="background-color:#'.$booking['subject_colour'].';height:90px;">';
 								}
-								echo '<div>';
+								else 
+								{
+							//if no shading, just close the <td>
+									echo 'style="height:90px">';
+								}
+
+								
+								
+								echo '<div class="bookable" style="height:100%;">';
 								echo $booking['booking_classname'].'<br />'.$booking['subject_name'].'<br />'.$booking['booking_displayname'];
 								if ($booking['booking_isblock'] == true)
 								{
@@ -91,16 +105,16 @@
 								}
 								echo '</div>';
 						
-								if ($this->session->userdata('authenticated'))
-								{
-									if ($this->session->userdata('accesslevel') == 'admin' || $this->session->userdata('username') == $booking['booking_username'])
-									{
+								//if ($this->session->userdata('authenticated'))
+								//{
+//									if ($this->session->userdata('accesslevel') == 'admin' || $this->session->userdata('username') == $booking['booking_username'])
+									//{
 										//echo '<div>';
-										echo '<a href="delete" title="Delete Booking">';
-										echo '<i class="icon-minus pull-right"></i>';
-										echo '</a>';
-									}
-								}
+										//echo '<a href="delete" title="Delete Booking">';
+										//echo '<i class="icon-minus pull-right"></i>';
+										//echo '</a>';
+									//}
+								//}
 						
 						
 								// This cell is not bookable now, so we mark it as such and break
@@ -140,6 +154,14 @@
 				</tbody>
 			</table>
 			
+				<div class="span2">
+<p id="feedback">
+<span>You've selected:</span> <span id="select-result">none</span>.
+</p>
+				</div>
+			
+			</div>
+			
 
 			<div class="span1">
 				&nbsp;
@@ -156,7 +178,14 @@
 	$(function() 
 	{
 		$("table").selectable({
-			  filter: ".bookable"
+			  filter: ".bookable",
+				stop: function() {
+					var result = $( "#select-result" ).empty();
+					$( ".ui-selected", this ).each(function() {
+						var index = $( "#selectable div" ).index( this );
+						result.append( " #" + ( index + 1 ) );
+					});
+				}
 			});
 		$( "#datepicker" ).datepicker(
 		{
