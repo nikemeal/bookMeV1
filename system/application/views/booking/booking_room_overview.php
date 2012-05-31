@@ -154,18 +154,12 @@
 				</div>
 				&nbsp;
 			<center>
-					<form  method="get" action="../test">
-            			<input type="hidden" name="">
+					<form  method="get" action="../test" id="add">
             			<button type="submit" class="btn btn-primary">Book selected period(s)</button>
       				</form>
       				</center>
       			
-      				<center>
-      				<form  method="get" action="../test">
-            			<button type="submit" class="btn btn-danger">Delete selected period(s)</button>
-      				</form>
-				</center>
-				
+			
 				</div>
 			
 			</div>
@@ -185,11 +179,23 @@
 		 $( "#selectable" ).selectable({
 			 filter: ".selectable",
 	            stop: function() {
-	                var result = $( "#select-result" ).empty();
-	                $( ".ui-selected", this ).each(function() {
+	            	$( ".ui-selected", this ).each(function() {
 	                    var data = $(this).data();
-	                    console.log(data);
-	                    document.write("hi");
+	                    
+	                    $(data).each(function(key, value){
+	                    	var period_id = document.createElement("input");
+	                    	period_id.setAttribute("type", "hidden");
+	                    	period_id.setAttribute("name", "period_id");
+	                    	period_id.setAttribute("value", data.period);
+	                    	document.getElementById("add").appendChild(period_id);
+	                      	var day_id = document.createElement("input");
+	                    	day_id.setAttribute("type", "hidden");
+	                    	day_id.setAttribute("name", "day_id");
+	                    	day_id.setAttribute("value", data.day);
+	                    	document.getElementById("add").appendChild(day_id);
+							
+	                    });
+
 	                });
 	            }
 	        });
@@ -200,7 +206,7 @@
 			showOtherMonths: true,
 			selectOtherMonths: true,
 			beforeShowDay: $.datepicker.noWeekends,
-			maxDate: "+1M +10D",
+			
 			onSelect: function(date, instance) 
 			{
 				window.location = "<?php echo site_url('booking/booking/booking_room_overview/' . $room_id) ?>/" + date;
