@@ -1,4 +1,10 @@
+<!DOCTYPE html>
 <head>
+	<!--[if lt IE 9]>
+	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<style type="text/css">.clear{ zoom: 1; display: block; }</style>
+	<![endif]-->
+	
 	<title>BookMe - Booking System</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<link rel="stylesheet" href="<?php echo base_url(); ?>css/bootstrap.css">

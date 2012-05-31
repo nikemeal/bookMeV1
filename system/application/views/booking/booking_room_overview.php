@@ -9,15 +9,10 @@
 	<div class="span12">
 		<div class="row-fluid">
 
-			<div class="span1">
-				&nbsp;
-			</div>
-
-			<div class="span10">
-
-				<center><h4 class="span8">Bookings for the week commencing <?php echo $week_commencing;?></h4></center>
+			<div class="span12">
+				<center><h4 class="span10">Bookings for the week commencing <?php echo $week_commencing;?></h4></center>
 				<br><br>
-				<table class="table span8 table-bordered" id="selectable">
+				<table class="table span10 table-bordered" id="selectable">
 
   				<thead>
    					<tr style="width:60px;">
@@ -95,7 +90,7 @@
 
 								
 								
-								echo '<div class="bookable" style="height:100%;">';
+								echo '<div class="selectable" data-day="'.$i.'" data-period="'.$period['period_id'].'" data-room="'.$room_id.'" style="height:100%;">';
 								echo $booking['booking_classname'].'<br />'.$booking['subject_name'].'<br />'.$booking['booking_displayname'];
 								if ($booking['booking_isblock'] == true)
 								{
@@ -128,7 +123,7 @@
 						// we will show an add link, allowing the user to book this available space
 						if ($bookable == 1 && $period['period_bookable'] == true && $this->session->userdata('authenticated'))
 						{
-							echo 'style="height:90px"><div class="bookable" style="height:100%;">';
+							echo 'style="height:90px"><div data-day="'.$i.'" data-period="'.$period['period_id'].'" data-room="'.$room_id.'" class="selectable" style="height:100%;">';
 							echo '<center><br><br><i class="icon-plus"></i></center>';
 							echo '</div>';
 						}
@@ -155,17 +150,28 @@
 			</table>
 			
 				<div class="span2">
-<p id="feedback">
-<span>You've selected:</span> <span id="select-result">none</span>.
-</p>
+				<div id="datepicker">
+				</div>
+				&nbsp;
+			<center>
+					<form  method="get" action="../test">
+            			<input type="hidden" name="">
+            			<button type="submit" class="btn btn-primary">Book selected period(s)</button>
+      				</form>
+      				</center>
+      			
+      				<center>
+      				<form  method="get" action="../test">
+            			<button type="submit" class="btn btn-danger">Delete selected period(s)</button>
+      				</form>
+				</center>
+				
 				</div>
 			
 			</div>
 			
 
-			<div class="span1">
-				&nbsp;
-			</div>
+
 			
 		</div>
 	</div>
@@ -173,29 +179,28 @@
 
 
 	
-	
 	<script>
 	$(function() 
 	{
-		$("table").selectable({
-			  filter: ".bookable",
-				stop: function() {
-					var result = $( "#select-result" ).empty();
-					$( ".ui-selected", this ).each(function() {
-						var index = $( "#selectable div" ).index( this );
-						result.append( " #" + ( index + 1 ) );
-					});
-				}
-			});
+		 $( "#selectable" ).selectable({
+			 filter: ".selectable",
+	            stop: function() {
+	                var result = $( "#select-result" ).empty();
+	                $( ".ui-selected", this ).each(function() {
+	                    var data = $(this).data();
+	                    console.log(data);
+	                    document.write("hi");
+	                });
+	            }
+	        });
+
 		$( "#datepicker" ).datepicker(
 		{
 			dateFormat: 'yy-mm-dd',
 			showOtherMonths: true,
 			selectOtherMonths: true,
 			beforeShowDay: $.datepicker.noWeekends,
-			showOn: "button",
-			buttonImage: "<?php echo base_url('javascript/images/calendar.gif');?>",
-			buttonImageOnly: true,
+			maxDate: "+1M +10D",
 			onSelect: function(date, instance) 
 			{
 				window.location = "<?php echo site_url('booking/booking/booking_room_overview/' . $room_id) ?>/" + date;
