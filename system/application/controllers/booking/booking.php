@@ -72,9 +72,12 @@ function booking_room_overview($room_id=1, $date='')
  		
 		$data['room_id'] = $room_id;
 		$data['periods'] = $this->Settings_model->get_all_periods();
+		
+		// in future the block bookings won't be added as a single item so 
+		// the checks done for what a block booking is will need to change
 		$data['bookings'] = $this->Booking_model->get_bookings($room_id,$data['date'],$enddate);
 		
-		// Load the header, view, and footer, passing in all collected data
+		// Load the view passing in all collected data
 
 		$this->load->view('booking/booking_room_overview', $data);
 

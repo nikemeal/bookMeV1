@@ -164,9 +164,6 @@
 			
 			</div>
 			
-
-
-			
 		</div>
 	</div>
 </div>
@@ -176,29 +173,26 @@
 	<script>
 	$(function() 
 	{
-		 $( "#selectable" ).selectable({
-			 filter: ".selectable",
-	            stop: function() {
-	            	$( ".ui-selected", this ).each(function() {
-	                    var data = $(this).data();
-	                    
-	                    $(data).each(function(key, value){
-	                    	var period_id = document.createElement("input");
-	                    	period_id.setAttribute("type", "hidden");
-	                    	period_id.setAttribute("name", "period_id");
-	                    	period_id.setAttribute("value", data.period);
-	                    	document.getElementById("add").appendChild(period_id);
-	                      	var day_id = document.createElement("input");
-	                    	day_id.setAttribute("type", "hidden");
-	                    	day_id.setAttribute("name", "day_id");
-	                    	day_id.setAttribute("value", data.day);
-	                    	document.getElementById("add").appendChild(day_id);
-							
-	                    });
-
-	                });
-	            }
-	        });
+		 $( "#selectable" ).selectable({ 
+		     filter: ".selectable", 
+		        stop: function() { 
+		            $( ".ui-selected", this ).each(function() { 
+		                var data = $(this).data(); 
+		                $(data).each(function(key, value){ 
+		                    var period_id = document.createElement("input"); 
+		                    period_id.setAttribute("type", "hidden"); 
+		                    period_id.setAttribute("name", "booking["+key+"][period]"); 
+		                    period_id.setAttribute("value", data.period); 
+		                    document.getElementById("add").appendChild(period_id); 
+		                    var day_id = document.createElement("input"); 
+		                    day_id.setAttribute("type", "hidden"); 
+		                    day_id.setAttribute("name", "booking["+key+"][day]"); 
+		                    day_id.setAttribute("value", data.day); 
+		                    document.getElementById("add").appendChild(day_id); 
+		               }); 
+		 	       }); 
+		        } 
+		    });
 
 		$( "#datepicker" ).datepicker(
 		{
