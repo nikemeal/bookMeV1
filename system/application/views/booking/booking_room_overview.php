@@ -10,18 +10,19 @@
 		<div class="row-fluid">
 
 			<div class="span12">
+			<?php echo $datepicker;?>
 				<center><h4 class="span10">Bookings for the week commencing <?php echo $week_commencing;?></h4></center>
 				<br><br>
 				<table class="table span10 table-bordered" id="selectable">
 
   				<thead>
-   					<tr style="width:60px;">
-						<th width="9%">&nbsp;</th>
-						<th width="13%"><div>Monday</div></th>
-						<th width="13%"><div>Tuesday</div></th>
-						<th width="13%"><div>Wednesday</div></th>
-						<th width="13%"><div>Thursday</div></th>
-						<th width="13%"><div>Friday</div></th>
+   					<tr style="width:100px;">
+						<th width="6%">&nbsp;</th>
+						<th width="10%"><div>Monday</div></th>
+						<th width="10%"><div>Tuesday</div></th>
+						<th width="10%"><div>Wednesday</div></th>
+						<th width="10%"><div>Thursday</div></th>
+						<th width="10%"><div>Friday</div></th>
 					</tr>
 				</thead>
 				
@@ -154,7 +155,7 @@
 				</div>
 				&nbsp;
 			<center>
-					<form  method="get" action="../test" id="add">
+					<form  method="get" action="../make_booking" id="add">
             			<button type="submit" class="btn btn-primary">Book selected period(s)</button>
       				</form>
       				</center>
@@ -176,19 +177,32 @@
 		 $( "#selectable" ).selectable({ 
 		     filter: ".selectable", 
 		        stop: function() { 
+			 var result = $( "#select-result" ).empty();
+             $( ".ui-selected", this ).each(function() {
+                 var data = $(this).data();
+                 console.log(data);
+             });
+             var count = 0;
 		            $( ".ui-selected", this ).each(function() { 
+
+		            	var result = $( "#select-result" ).empty();
+		        		$( ".ui-selected", this ).each(function() {
+		        			console.log($(this));
+		        		});
+
 		                var data = $(this).data(); 
 		                $(data).each(function(key, value){ 
 		                    var period_id = document.createElement("input"); 
 		                    period_id.setAttribute("type", "hidden"); 
-		                    period_id.setAttribute("name", "booking["+key+"][period]"); 
+		                    period_id.setAttribute("name", "booking["+count+"][period]"); 
 		                    period_id.setAttribute("value", data.period); 
 		                    document.getElementById("add").appendChild(period_id); 
 		                    var day_id = document.createElement("input"); 
 		                    day_id.setAttribute("type", "hidden"); 
-		                    day_id.setAttribute("name", "booking["+key+"][day]"); 
+		                    day_id.setAttribute("name", "booking["+count+"][day]"); 
 		                    day_id.setAttribute("value", data.day); 
 		                    document.getElementById("add").appendChild(day_id); 
+		                    count = count + 1;
 		               }); 
 		 	       }); 
 		        } 

@@ -72,6 +72,7 @@ function booking_room_overview($room_id=1, $date='')
  		
 		$data['room_id'] = $room_id;
 		$data['periods'] = $this->Settings_model->get_all_periods();
+		$data['datepicker'] = $date;
 		
 		// in future the block bookings won't be added as a single item so 
 		// the checks done for what a block booking is will need to change
@@ -83,4 +84,18 @@ function booking_room_overview($room_id=1, $date='')
 
 	}
 	
+	function make_booking()
+	{
+		
+		foreach ($_GET as $booking1)
+		{
+			foreach ($booking1 as $booking)
+			{
+				echo "Period : " . $booking['period'];
+				echo "<br>";
+				echo "Day : " . $booking['day'];
+				echo "<br><br>";
+			}
+		}
+	}
 }
