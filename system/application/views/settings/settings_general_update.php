@@ -1,2 +1,2 @@
 <?php 
-redirect('/settings/general/general_settings;/', 'refresh');
+redirect('/settings/general/general_settings/', 'refresh');

@@ -84,18 +84,62 @@ function booking_room_overview($room_id=1, $date='')
 
 	}
 	
-	function make_booking()
+	function process_booking()
 	{
+		//this is the URL they came from, and will be used to redirect
+		//back to after success or an error
+		$data['previous_url'] = $_POST['url'];
 		
-		foreach ($_GET as $booking1)
+		// check booking count
+		$initialcount = count($_POST);
+
+		//if there are no bookings (user possibly hit button by mistake) 
+		//show error modal and return them to previous page
+		if ($initialcount == '1')
 		{
-			foreach ($booking1 as $booking)
+			$data['error_reason'] = "no period selected";
+			$this->load->view('booking/booking_error', $data);
+		}
+		
+		//if there is at least 1 booking, we carry on
+		elseif ($initialcount > '1')
+		{
+			//now we know there are actual bookings we can count them
+			$bookingcount = count($_POST['booking']);
+			
+			//if only one period is to be booked
+			if ($bookingcount == '1')
 			{
-				echo "Period : " . $booking['period'];
-				echo "<br>";
-				echo "Day : " . $booking['day'];
-				echo "<br><br>";
+				foreach ($_POST['booking'] as $bookings)
+				{
+					//if the period selected has already been booked
+					//load the error page and explain this
+					if ($bookings['bookable'] == 0)
+					{
+						$data['error_reason'] = "period already booked";
+						$this->load->view('booking/booking_error', $data);
+					}
+					else 
+					{
+						//period is bookable, so now we will get the details of 
+						//the booking then load the booking form view
+						$data['bookingday'] = $bookings['day'];
+						$data['bookingperiod'] = $bookings['period'];
+						$data['bookingroom'] = $bookings['room'];
+						$this->load->view('booking/booking_form', $data);
+					}
+
+				}	
 			}
+			else 
+			{
+				//functions here for multibookings
+			}
+			
+				
+				
+		
+			
 		}
 	}
 }

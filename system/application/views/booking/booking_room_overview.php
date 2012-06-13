@@ -10,7 +10,7 @@
 		<div class="row-fluid">
 
 			<div class="span12">
-			<?php echo $datepicker;?>
+
 				<center><h4 class="span10">Bookings for the week commencing <?php echo $week_commencing;?></h4></center>
 				<br><br>
 				<table class="table span10 table-bordered" id="selectable">
@@ -91,7 +91,7 @@
 
 								
 								
-								echo '<div class="selectable" data-day="'.$i.'" data-period="'.$period['period_id'].'" data-room="'.$room_id.'" style="height:100%;">';
+								echo '<div class="selectable" data-day="'.$i.'" data-period="'.$period['period_id'].'" data-room="'.$room_id.'" data-bookable="0" style="height:100%;">';
 								echo $booking['booking_classname'].'<br />'.$booking['subject_name'].'<br />'.$booking['booking_displayname'];
 								if ($booking['booking_isblock'] == true)
 								{
@@ -124,7 +124,7 @@
 						// we will show an add link, allowing the user to book this available space
 						if ($bookable == 1 && $period['period_bookable'] == true && $this->session->userdata('authenticated'))
 						{
-							echo 'style="height:90px"><div data-day="'.$i.'" data-period="'.$period['period_id'].'" data-room="'.$room_id.'" class="selectable" style="height:100%;">';
+							echo 'style="height:90px"><div data-day="'.$i.'" data-period="'.$period['period_id'].'" data-room="'.$room_id.'" data-bookable="1" class="selectable" style="height:100%;">';
 							echo '<center><br><br><i class="icon-plus"></i></center>';
 							echo '</div>';
 						}
@@ -155,7 +155,8 @@
 				</div>
 				&nbsp;
 			<center>
-					<form  method="get" action="../make_booking" id="add">
+					<form  method="post" action="<?php echo site_url('booking/booking/process_booking'); ?>" id="add">
+						<input type="hidden" name="url" value="<?php echo current_url()?>">
             			<button type="submit" class="btn btn-primary">Book selected period(s)</button>
       				</form>
       				</center>
@@ -170,7 +171,6 @@
 </div>
 
 
-	
 	<script>
 	$(function() 
 	{
@@ -185,13 +185,13 @@
              var count = 0;
 		            $( ".ui-selected", this ).each(function() { 
 
-		            	var result = $( "#select-result" ).empty();
-		        		$( ".ui-selected", this ).each(function() {
-		        			console.log($(this));
-		        		});
-
-		                var data = $(this).data(); 
+		            	var data = $(this).data(); 
 		                $(data).each(function(key, value){ 
+		                	var room_id = document.createElement("input"); 
+		                    room_id.setAttribute("type", "hidden"); 
+		                    room_id.setAttribute("name", "booking["+count+"][room]"); 
+		                    room_id.setAttribute("value", data.room); 
+		                    document.getElementById("add").appendChild(room_id);
 		                    var period_id = document.createElement("input"); 
 		                    period_id.setAttribute("type", "hidden"); 
 		                    period_id.setAttribute("name", "booking["+count+"][period]"); 
@@ -202,6 +202,11 @@
 		                    day_id.setAttribute("name", "booking["+count+"][day]"); 
 		                    day_id.setAttribute("value", data.day); 
 		                    document.getElementById("add").appendChild(day_id); 
+		                    var bookable_id = document.createElement("input"); 
+		                    bookable_id.setAttribute("type", "hidden"); 
+		                    bookable_id.setAttribute("name", "booking["+count+"][bookable]"); 
+		                    bookable_id.setAttribute("value", data.bookable); 
+		                    document.getElementById("add").appendChild(bookable_id); 
 		                    count = count + 1;
 		               }); 
 		 	       }); 
@@ -212,9 +217,15 @@
 		{
 			dateFormat: 'yy-mm-dd',
 			showOtherMonths: true,
+			showButtonPanel: true,
 			selectOtherMonths: true,
 			beforeShowDay: $.datepicker.noWeekends,
-			
+			<?php 
+				if (!$datepicker == '')
+				{
+					echo "defaultDate: '".$datepicker."',";
+				}
+			?>
 			onSelect: function(date, instance) 
 			{
 				window.location = "<?php echo site_url('booking/booking/booking_room_overview/' . $room_id) ?>/" + date;
