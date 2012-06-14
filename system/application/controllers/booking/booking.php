@@ -14,6 +14,7 @@ class Booking extends CI_Controller
 		parent::__construct();
 		$this->load->helper('url');
 		$this->load->model('Settings_model');
+		$this->load->model('Booking_model');
 		$this->load->view('template/header_view', array( 'bg_colour' => $this->Settings_model->get_bg_colour()));
 		$this->load->view('main_menu', array( 'school_name' => $this->Settings_model->get_school_name()));
 	}
@@ -104,6 +105,7 @@ function booking_room_overview($room_id=1, $date='')
 		//if there is at least 1 booking, we carry on
 		elseif ($initialcount > '1')
 		{
+			
 			//now we know there are actual bookings we can count them
 			$bookingcount = count($_POST['booking']);
 			
@@ -123,9 +125,16 @@ function booking_room_overview($room_id=1, $date='')
 					{
 						//period is bookable, so now we will get the details of 
 						//the booking then load the booking form view
-						$data['bookingday'] = $bookings['day'];
-						$data['bookingperiod'] = $bookings['period'];
-						$data['bookingroom'] = $bookings['room'];
+						
+						//lets get the data in a printable format as well as the IDs
+ 						$period = $this->Settings_model->get_period_info($bookings['period']);
+						$room = $this->Settings_model->get_room_info($bookings['room']);
+ 						$data['bookingperiod'] = $period['period_name'];
+ 						$data['period_id'] = $period['period_id'];
+ 						$data['bookingroom'] = $room['room_name'];
+ 						$data['room_id'] = $room['room_id'];
+ 						$data['bookingdate'] = $this->Booking_model->get_pretty_date($bookings['date']);
+ 						$data['bookingdayname'] = $this->Booking_model->get_dayname($bookings['day']);
 						$this->load->view('booking/booking_form', $data);
 					}
 

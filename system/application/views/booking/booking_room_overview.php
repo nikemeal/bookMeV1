@@ -124,7 +124,7 @@
 						// we will show an add link, allowing the user to book this available space
 						if ($bookable == 1 && $period['period_bookable'] == true && $this->session->userdata('authenticated'))
 						{
-							echo 'style="height:90px"><div data-day="'.$i.'" data-period="'.$period['period_id'].'" data-room="'.$room_id.'" data-bookable="1" class="selectable" style="height:100%;">';
+							echo 'style="height:90px"><div data-day="'.$i.'" data-date="'.$newdate.'" data-period="'.$period['period_id'].'" data-room="'.$room_id.'" data-bookable="1" class="selectable" style="height:100%;">';
 							echo '<center><br><br><i class="icon-plus"></i></center>';
 							echo '</div>';
 						}
@@ -157,7 +157,7 @@
 			<center>
 					<form  method="post" action="<?php echo site_url('booking/booking/process_booking'); ?>" id="add">
 						<input type="hidden" name="url" value="<?php echo current_url()?>">
-            			<button type="submit" class="btn btn-primary">Book selected period(s)</button>
+						<button type="submit" class="btn btn-primary">Book selected period(s)</button>
       				</form>
       				</center>
       			
@@ -177,11 +177,7 @@
 		 $( "#selectable" ).selectable({ 
 		     filter: ".selectable", 
 		        stop: function() { 
-			 var result = $( "#select-result" ).empty();
-             $( ".ui-selected", this ).each(function() {
-                 var data = $(this).data();
-                 console.log(data);
-             });
+		
              var count = 0;
 		            $( ".ui-selected", this ).each(function() { 
 
@@ -192,6 +188,11 @@
 		                    room_id.setAttribute("name", "booking["+count+"][room]"); 
 		                    room_id.setAttribute("value", data.room); 
 		                    document.getElementById("add").appendChild(room_id);
+		                    var date_id = document.createElement("input"); 
+		                    date_id.setAttribute("type", "hidden"); 
+		                    date_id.setAttribute("name", "booking["+count+"][date]"); 
+		                    date_id.setAttribute("value", data.date); 
+		                    document.getElementById("add").appendChild(date_id);
 		                    var period_id = document.createElement("input"); 
 		                    period_id.setAttribute("type", "hidden"); 
 		                    period_id.setAttribute("name", "booking["+count+"][period]"); 

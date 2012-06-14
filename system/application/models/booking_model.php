@@ -26,4 +26,39 @@ class Booking_model extends CI_Model {
 		return $query->result_array();
 	}
 	
+	function get_dayname($day_id)
+	{
+		if ($day_id == 0)
+		{
+			$result = "Monday";
+		}  
+		elseif ($day_id == 1)
+		{
+			$result = "Tuesday";
+		} 
+		elseif ($day_id == 2)
+		{
+			$result = "Wednesday";
+		} 
+		elseif ($day_id == 3)
+		{
+			$result = "Thursday";
+		} 
+		elseif ($day_id == 4)
+		{
+			$result = "Friday";
+		} 
+		return $result;
+	}
+	
+	function get_pretty_date($date)
+	{
+		$arr =explode("-",$date);
+ 		$displayday = $arr['2'];
+		$displaymonth = $arr['1'];
+		$displayyear = $arr['0'];
+		$result = date('jS F Y', mktime(0,0,0,$displaymonth, $displayday, $displayyear));
+		return $result;
+	}
+	
 }
