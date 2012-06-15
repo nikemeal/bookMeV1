@@ -129,12 +129,14 @@ function booking_room_overview($room_id=1, $date='')
 						//lets get the data in a printable format as well as the IDs
  						$period = $this->Settings_model->get_period_info($bookings['period']);
 						$room = $this->Settings_model->get_room_info($bookings['room']);
- 						$data['bookingperiod'] = $period['period_name'];
+ 						$data['booking_period'] = $period['period_name'];
  						$data['period_id'] = $period['period_id'];
- 						$data['bookingroom'] = $room['room_name'];
+ 						$data['booking_room'] = $room['room_name'];
  						$data['room_id'] = $room['room_id'];
- 						$data['bookingdate'] = $this->Booking_model->get_pretty_date($bookings['date']);
- 						$data['bookingdayname'] = $this->Booking_model->get_dayname($bookings['day']);
+ 						$data['booking_date'] = $bookings['date'];
+ 						$data['prettydate'] = $this->Booking_model->get_pretty_date($bookings['date']);
+ 						$data['booking_dayname'] = $this->Booking_model->get_dayname($bookings['day']);
+ 						$data['booking_type'] = "single";
 						$this->load->view('booking/booking_form', $data);
 					}
 
@@ -144,11 +146,32 @@ function booking_room_overview($room_id=1, $date='')
 			{
 				//functions here for multibookings
 			}
-			
-				
-				
-		
-			
+		}
+	}
+	
+	function add_booking()
+	{
+		//first we'll get all the variables that apply to both single and multi bookings
+		$subject_id = $_POST['subject_id'];
+		$period_id = $_POST['period_id'];
+		$room_id = $_POST['room_id'];
+		$booking_username = $_POST['booking_username'];
+		$booking_displayname = $_POST['booking_displayname'];
+		$booking_classname = $_POST['booking_classname'];
+		$booking_date = $_POST['booking_date'];
+		$previous_url = $_POST['previous_url'];
+		//we need to check if this is a single booking or a multi booking
+		if ($_POST['booking_type'] == "single")
+		{
+			//add the booking with all the relevant data
+			$this->Booking_model->add_single_booking($subject_id, $period_id, $room_id, $booking_username, $booking_displayname, $booking_classname, $booking_date);
+			//redirect back to the booking_overview page they came from
+			redirect($previous_url, 'refresh');
+			//need to add section for block booking from admins here
+		}
+		else
+		{
+			//this space for multi booking features
 		}
 	}
 }

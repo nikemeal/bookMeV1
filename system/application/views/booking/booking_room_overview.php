@@ -153,14 +153,23 @@
 				<div class="span2">
 				<div id="datepicker">
 				</div>
-				&nbsp;
-			<center>
+				<br>
+
+					
 					<form  method="post" action="<?php echo site_url('booking/booking/process_booking'); ?>" id="add">
 						<input type="hidden" name="url" value="<?php echo current_url()?>">
-						<button type="submit" class="btn btn-primary">Book selected period(s)</button>
+						<button type="submit" class="btn btn-success">Book selected period(s)</button>
       				</form>
-      				</center>
+      				
+      				<button  class="btn btn-danger">Delete selected booking/s</button>
+      				<br><br>
+      				<button onclick="clearselection()" class="btn btn-primary">Clear selection</button>
+      				
       			
+      			<!-- 
+      			need buttons for an admin that can delete selected bookings and block book 
+      			single bookings (don't allow block bookings as more possibility to go wrong
+      			 -->
 			
 				</div>
 			
@@ -186,33 +195,38 @@
 		                	var room_id = document.createElement("input"); 
 		                    room_id.setAttribute("type", "hidden"); 
 		                    room_id.setAttribute("name", "booking["+count+"][room]"); 
-		                    room_id.setAttribute("value", data.room); 
+		                    room_id.setAttribute("value", data.room);
+		                    room_id.setAttribute("class", "js-added");  
 		                    document.getElementById("add").appendChild(room_id);
 		                    var date_id = document.createElement("input"); 
 		                    date_id.setAttribute("type", "hidden"); 
 		                    date_id.setAttribute("name", "booking["+count+"][date]"); 
 		                    date_id.setAttribute("value", data.date); 
+		                    date_id.setAttribute("class", "js-added");
 		                    document.getElementById("add").appendChild(date_id);
 		                    var period_id = document.createElement("input"); 
 		                    period_id.setAttribute("type", "hidden"); 
 		                    period_id.setAttribute("name", "booking["+count+"][period]"); 
-		                    period_id.setAttribute("value", data.period); 
+		                    period_id.setAttribute("value", data.period);
+		                    period_id.setAttribute("class", "js-added"); 
 		                    document.getElementById("add").appendChild(period_id); 
 		                    var day_id = document.createElement("input"); 
 		                    day_id.setAttribute("type", "hidden"); 
 		                    day_id.setAttribute("name", "booking["+count+"][day]"); 
-		                    day_id.setAttribute("value", data.day); 
+		                    day_id.setAttribute("value", data.day);
+		                    day_id.setAttribute("class", "js-added"); 
 		                    document.getElementById("add").appendChild(day_id); 
 		                    var bookable_id = document.createElement("input"); 
 		                    bookable_id.setAttribute("type", "hidden"); 
 		                    bookable_id.setAttribute("name", "booking["+count+"][bookable]"); 
-		                    bookable_id.setAttribute("value", data.bookable); 
+		                    bookable_id.setAttribute("value", data.bookable);
+		                    bookable_id.setAttribute("class", "js-added"); 
 		                    document.getElementById("add").appendChild(bookable_id); 
 		                    count = count + 1;
 		               }); 
 		 	       }); 
 		        } 
-		    });
+	        });
 
 		$( "#datepicker" ).datepicker(
 		{
@@ -233,5 +247,10 @@
     		}
 		});
 	});
+	function clearselection()
+	{
+		$('div').removeClass('ui-selected');
+		$(".js-added").remove();
+	}	
 	</script>
 
