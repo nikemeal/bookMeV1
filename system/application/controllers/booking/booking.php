@@ -144,34 +144,112 @@ function booking_room_overview($room_id=1, $date='')
 			}
 			else 
 			{
-				//functions here for multibookings
+				/*
+				 * 1. get list of bookings
+				 * 2. check to see if any are already booked - if so, fail with error
+				 * 3. if all are ok, add each to new [booking] array with $count number
+				 * 4. pass new array to $data to load into page
+				 */
+				$count = '1';
+				foreach ($_POST['booking'] as $bookings)
+				{
+					//first lets check to see if any periods selected are already booked
+					if ($bookings['bookable'])
+					{
+						$period = $this->Settings_model->get_period_info($bookings['period']);
+						$room = $this->Settings_model->get_room_info($bookings['room']);
+ 						$data['bookings'][$count]['booking_period'] = $period['period_name'];
+ 						$data['bookings'][$count]['period_id'] = $period['period_id'];
+ 						$data['bookings'][$count]['booking_room'] = $room['room_name'];
+ 						$data['bookings'][$count]['room_id'] = $room['room_id'];
+ 						$data['bookings'][$count]['booking_date'] = $bookings['date'];
+ 						$data['bookings'][$count]['prettydate'] = $this->Booking_model->get_pretty_date($bookings['date']);
+ 						$data['bookings'][$count]['booking_dayname'] = $this->Booking_model->get_dayname($bookings['day']);
+ 						$count = $count + 1;
+					}
+					else 
+					{
+						$data['error_reason'] = "period already booked";
+						$this->load->view('booking/booking_error', $data);	
+					}
+					
+ 					
+				}
+				$data['booking_type'] = "multi";
+				$this->load->view('booking/booking_form_multi', $data);
 			}
 		}
 	}
 	
 	function add_booking()
 	{
-		//first we'll get all the variables that apply to both single and multi bookings
-		$subject_id = $_POST['subject_id'];
-		$period_id = $_POST['period_id'];
-		$room_id = $_POST['room_id'];
-		$booking_username = $_POST['booking_username'];
-		$booking_displayname = $_POST['booking_displayname'];
-		$booking_classname = $_POST['booking_classname'];
-		$booking_date = $_POST['booking_date'];
-		$previous_url = $_POST['previous_url'];
 		//we need to check if this is a single booking or a multi booking
 		if ($_POST['booking_type'] == "single")
 		{
-			//add the booking with all the relevant data
-			$this->Booking_model->add_single_booking($subject_id, $period_id, $room_id, $booking_username, $booking_displayname, $booking_classname, $booking_date);
-			//redirect back to the booking_overview page they came from
-			redirect($previous_url, 'refresh');
-			//need to add section for block booking from admins here
+			//set all the variables we'll need first
+			$subject_id = $_POST['subject_id'];
+			$period_id = $_POST['period_id'];
+			$room_id = $_POST['room_id'];
+			$booking_username = $_POST['booking_username'];
+			$booking_displayname = $_POST['booking_displayname'];
+			$booking_classname = $_POST['booking_classname'];
+			$booking_date = $_POST['booking_date'];
+			$previous_url = $_POST['previous_url'];
+			
+			//if this is a single booking, and is not a block booking
+			if (!isset($_POST['booking_isblock']))
+			{
+				//add the booking with all the relevant data
+				$this->Booking_model->add_booking($subject_id, $period_id, $room_id, $booking_username, $booking_displayname, $booking_classname, $booking_date);
+				//redirect back to the booking_overview page they came from
+				redirect($previous_url, 'refresh');
+			 }
+			 else 
+			 {
+			 	//this is a block booking
+			 	
+			 	/*
+			 	
+	
+			 	 * 3. add the booking, using the block_booking id in the normal booking
+			 	 */
+			 	//add an entry to the block_bookings table with some info on the booking
+			 	$block_array = array
+				 	(
+				 		'subject_id' => $subject_id,
+				 		'booking_classname' => $booking_classname
+				 	);
+			 	$this->db->insert('block_bookings',$block_array);
+			 	//get the id from that insert to use in the main booking
+			  	$block_booking_id = $this->db->insert_id();
+			 	$booking_isblock = '1';
+			 	for ($i=0; $i == 60; $i++)
+				{
+					$this->Booking_model->add_booking($subject_id, $period_id, $room_id, $booking_username, $booking_displayname, $booking_classname, $booking_date, $booking_isblock, $block_booking_id);
+				}
+			 	 	
+			 	//redirect back to the booking_overview page they came from
+				redirect($previous_url, 'refresh');
+			 }
 		}
 		else
 		{
-			//this space for multi booking features
+			//this is a multi booking, so we'll loop through the bookings and add
+			//each one in turn
+			foreach($_POST['booking'] as $booking)
+			{
+				$subject_id = $_POST['subject_id'];
+				$period_id = $booking['period_id'];
+				$room_id = $booking['room_id'];
+				$booking_username = $booking['booking_username'];
+				$booking_displayname = $booking['booking_displayname'];
+				$booking_classname = $_POST['booking_classname'];
+				$booking_date = $booking['booking_date'];
+				$this->Booking_model->add_booking($subject_id, $period_id, $room_id, $booking_username, $booking_displayname, $booking_classname, $booking_date);
+			}
+			//redirect back to the booking_overview page they came from
+			$previous_url = $_POST['previous_url'];
+			redirect($previous_url, 'refresh');
 		}
 	}
 }

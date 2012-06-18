@@ -61,7 +61,7 @@ class Booking_model extends CI_Model {
 		return $result;
 	}
 	
-	function add_single_booking($subject_id, $period_id, $room_id, $booking_username, $booking_displayname, $booking_classname, $booking_date, $booking_isblock='0')
+	function add_booking($subject_id, $period_id, $room_id, $booking_username, $booking_displayname, $booking_classname, $booking_date, $booking_isblock='0', $block_booking_id='')
 	{
 		$data = array(
 		'subject_id' => $subject_id,

@@ -162,15 +162,10 @@
       				</form>
       				
       				<button  class="btn btn-danger">Delete selected booking/s</button>
-      				<br><br>
-      				<button onclick="clearselection()" class="btn btn-primary">Clear selection</button>
+      				
       				
       			
-      			<!-- 
-      			need buttons for an admin that can delete selected bookings and block book 
-      			single bookings (don't allow block bookings as more possibility to go wrong
-      			 -->
-			
+		
 				</div>
 			
 			</div>
@@ -185,7 +180,16 @@
 	{
 		 $( "#selectable" ).selectable({ 
 		     filter: ".selectable", 
-		        stop: function() { 
+
+			unselected: (function(){
+				//in the future, see if there's a way to allow de-selection
+				//of individual cells rather than blanket removal
+					$('div').removeClass('ui-selected');
+					$(".js-added").remove();
+	
+			}),
+				    
+		     stop: function() { 
 		
              var count = 0;
 		            $( ".ui-selected", this ).each(function() { 
