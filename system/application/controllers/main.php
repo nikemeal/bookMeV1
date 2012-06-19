@@ -24,10 +24,11 @@ class Main extends CI_Controller
 		$data['room_count'] = $this->Main_model->get_room_count();
 		$data['period_count'] = $this->Settings_model->get_period_count();
 		$data['subject_count'] = $this->Settings_model->get_subject_count();
+		$data['year_count'] = $this->Settings_model->get_year_count();
 		/*
 		 * if at least one room, subject and period exists, show the booking page
 		 */
-		if ($data['room_count'] > 0 && $data['period_count'] > 0 && $data['subject_count'] > 0)
+		if ($data['year_count'] > 0 && $data['room_count'] > 0 && $data['period_count'] > 0 && $data['subject_count'] > 0)
 		{
 			$query = $this->db->get('rooms');
 			$result = $query->result_array();

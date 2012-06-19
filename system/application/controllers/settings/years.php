@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Subjects extends CI_Controller
+class Years extends CI_Controller
 {
 	function __construct()
 	{
@@ -9,7 +9,6 @@ class Subjects extends CI_Controller
 		$this->load->model('Settings_model');
 		$this->load->view('template/header_view', array( 'bg_colour' => $this->Settings_model->get_bg_colour()));
 		$this->load->view('main_menu', array( 'school_name' => $this->Settings_model->get_school_name()));
-		
 	}
 	
 	function index()
@@ -17,68 +16,85 @@ class Subjects extends CI_Controller
 
 	}
 	
-function subject_settings()
+	function year_settings()
 	{
-		$data['subject_count'] = $this->Settings_model->get_subject_count();
+		$data['year_count'] = $this->Settings_model->get_year_count();
 
-		//if no subjects exist, load a view to show subject add page
-		if ($data['subject_count'] == 0)
+		//if no years exist, load a view to show year add page
+		if ($data['year_count'] == 0)
 		{
-			$this->load->view('settings/settings_subjects_add', array('error' => ' ' ));
+			$this->load->view('settings/settings_year_add', array('error' => ' ' ));
 		} else 
 
-		//else get the list of subjects in the database and show them
+		//else get the list of holidays in the database and show them
 		{
-			$query = $this->db->get('subjects');
+			$query = $this->db->order_by('year_start', 'asc')->get('years');
 			$result = $query->result_array();
-			$data['subjects'] = $result;
-			$this->load->view('settings/settings_subjects_edit',$data);
+			$data['years'] = $result;
+		
+			$this->load->view('settings/settings_year_edit',$data);
 		}
 	}
 	
-	function submit_new_subject()
+	function submit_new_year()
 	{
 		//update the database with the details given
-		$subject_name = $this->input->post('subject_name');
-		$subject_use_shading = $this->input->post('subject_use_shading');
-		$subject_colour = $this->input->post('subject_colour');
-		$this->Settings_model->add_subject($subject_name, $subject_use_shading, $subject_colour);
+		$year_name = $this->input->post('year_name');
+		//reverse the start and end dates before submitting them for UK method
+		$temp_start_date= $this->input->post('year_start');
+ 		$arr =explode("-",$temp_start_date);
+ 		$arr=array_reverse($arr);
+ 		$year_start =implode($arr,"-");
+ 		$temp_end_date= $this->input->post('year_end');
+ 		$arr =explode("-",$temp_end_date);
+ 		$arr=array_reverse($arr);
+ 		$year_end =implode($arr,"-");
+		 		
+		$this->Settings_model->add_year($year_name, $year_start, $year_end);
 			
 		//then load the view
-		$this->load->view('settings/settings_subjects_update');
+		$this->load->view('settings/settings_year_update');
 	}
 	
-	function edit_subject()
+	function edit_year()
 	{
-		$subject_id = $this->uri->segment(4);
-		$data = $this->Settings_model->get_subject_info($subject_id);
-		$this->load->view('settings/edit_subject', $data);
+		$year_id = $this->uri->segment(4);
+		$data = $this->Settings_model->get_year_info($year_id);
+		$this->load->view('settings/edit_year', $data);
 	}
 	
-	function update_subject()
+	function update_year()
 	{
-		$subject_id = $this->input->post('subject_id');
-		$subject_name = $this->input->post('subject_name');
-		$subject_use_shading = $this->input->post('subject_use_shading');
-		$subject_colour = $this->input->post('subject_colour');
-		$this->Settings_model->update_subject($subject_id, $subject_name, $subject_use_shading, $subject_colour);
+		$year_id = $this->input->post('year_id');
+		$year_name = $this->input->post('year_name');
+		//reverse the start and end dates before submitting them for UK method
+		$temp_start_date= $this->input->post('year_start');
+ 		$arr =explode("-",$temp_start_date);
+ 		$arr=array_reverse($arr);
+ 		$year_start =implode($arr,"-");
+		$temp_end_date= $this->input->post('year_end');
+ 		$arr =explode("-",$temp_end_date);
+ 		$arr=array_reverse($arr);
+ 		$year_end =implode($arr,"-");
+		
+		$this->Settings_model->update_year($year_id, $year_name, $year_start, $year_end);
 		
 		//load the view
-		$this->load->view('settings/settings_subjects_update');
+		$this->load->view('settings/settings_year_update');
 	}
 	
-	function add_subject()
+	function add_year()
 	{
-		$this->load->view('settings/settings_subjects_add', array('error' => ' ' ));
+		$this->load->view('settings/settings_year_add', array('error' => ' ' ));
 	}
 	
-	function subject_delete()
+	function year_delete()
 	{
 		$this->load->model('Main_model');
-		$subject_id = $this->uri->segment(4);
-		$query = $this->db->delete('subjects', array('subject_id' => $subject_id)); 
+		$year_id = $this->uri->segment(4);
+		$query = $this->db->delete('years', array('year_id' => $year_id)); 
 		
-		$this->load->view('settings/settings_subjects_update');	
+		$this->load->view('settings/settings_year_update');	
 	}
-	
+
 }

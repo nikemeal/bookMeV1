@@ -44,6 +44,25 @@
 					            	<p class="help-block"><i class="icon-question-sign"rel="tooltip" title="If set to yes, 'bookme_admin' can log in even if LDAP isn't configured.  If set to no, 'bookme_admin' is denied login completely"></i></p>
             					</div>
           					</div>
+            					<label class="control-label" for="subject_id">Active academic year</label>
+            					<div class="controls">
+              						<select name= "year_id">
+                		            <?php 
+	                					foreach ($active_year as $year)
+	                					{	
+	                		           		echo '<option value="'.$year['year_id'].'">'.$year['year_name'].'</option>';
+	                					}
+	                					foreach ($inactive_years as $year)
+	                					{	
+	                		            	echo '<option value="'.$year['year_id'].'">'.$year['year_name'].'</option>';
+	                					}
+                					?>	         					
+                				
+                					
+                				    </select>
+					            	
+            					</div>
+							<br>
             				<label class="control-label" for="disabledInput">BookMe version</label>
       						<div class="controls">
               					<input class="input-xlarge disabled" id="disabledInput" value="<?php echo $bookme_version;?>" type="text" disabled>

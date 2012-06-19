@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jun 19, 2012 at 06:32 AM
+-- Generation Time: Jun 19, 2012 at 03:11 PM
 -- Server version: 5.5.20
 -- PHP Version: 5.3.10
 
@@ -30,8 +30,10 @@ CREATE TABLE IF NOT EXISTS `block_bookings` (
   `block_booking_id` int(11) NOT NULL AUTO_INCREMENT,
   `subject_id` int(11) NOT NULL,
   `booking_classname` varchar(255) NOT NULL,
+  `year_id` int(11) NOT NULL,
   PRIMARY KEY (`block_booking_id`),
-  KEY `subjectid` (`subject_id`)
+  KEY `subjectid` (`subject_id`),
+  KEY `yearid` (`year_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
@@ -186,6 +188,30 @@ INSERT INTO `subjects` (`subject_id`, `subject_name`, `subject_colour`, `subject
 (5, 'ICT', 'FFBFBA', 1),
 (6, 'PE', 'BDFFBF', 1);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `years`
+--
+
+CREATE TABLE IF NOT EXISTS `years` (
+  `year_id` int(11) NOT NULL AUTO_INCREMENT,
+  `year_name` varchar(255) NOT NULL,
+  `year_start` date NOT NULL,
+  `year_end` date NOT NULL,
+  `year_isactive` tinyint(1) NOT NULL,
+  PRIMARY KEY (`year_id`),
+  KEY `yearid` (`year_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+--
+-- Dumping data for table `years`
+--
+
+INSERT INTO `years` (`year_id`, `year_name`, `year_start`, `year_end`, `year_isactive`) VALUES
+(5, '2010-2011', '2010-06-16', '2011-09-22', 0),
+(6, '2012-2013', '2012-06-11', '2013-02-14', 1);
+
 --
 -- Constraints for dumped tables
 --
@@ -194,6 +220,7 @@ INSERT INTO `subjects` (`subject_id`, `subject_name`, `subject_colour`, `subject
 -- Constraints for table `block_bookings`
 --
 ALTER TABLE `block_bookings`
+  ADD CONSTRAINT `block_bookings_ibfk_2` FOREIGN KEY (`year_id`) REFERENCES `years` (`year_id`) ON UPDATE NO ACTION,
   ADD CONSTRAINT `block_bookings_ibfk_1` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`) ON UPDATE NO ACTION;
 
 --

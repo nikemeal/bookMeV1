@@ -54,9 +54,10 @@
               				<ul class="dropdown-menu">
               					<li><a href="<?php echo site_url('settings/general/general_settings'); ?>">General</a></li>
                 				<li><a href="<?php echo site_url('settings/authentication/auth_settings'); ?>">Authentication</a></li>
-                				<li><a href="<?php echo site_url('settings/rooms/room_settings'); ?>">Rooms</a></li>
+                				<li><a href="<?php echo site_url('settings/rooms/room_settings'); ?>">Rooms &amp; Resources</a></li>
                 				<li><a href="<?php echo site_url('settings/periods/period_settings'); ?>">Periods</a></li>
                 				<li><a href="<?php echo site_url('settings/subjects/subject_settings'); ?>">Subjects</a></li>
+								<li><a href="<?php echo site_url('settings/years/year_settings'); ?>">Academic Years</a></li>
                 				<li><a href="<?php echo site_url('settings/holidays/holiday_settings'); ?>">Holidays</a></li>
                 			</ul>
             			</li>

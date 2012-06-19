@@ -29,7 +29,7 @@ class Booking extends CI_Controller
 		echo "Index function of bookings";
 	}
 
-function booking_room_overview($room_id=1, $date='')
+	function booking_room_overview($room_id=1, $date='')
 	{
 	
 		$this->load->model('Booking_model');
@@ -208,26 +208,31 @@ function booking_room_overview($room_id=1, $date='')
 			 {
 			 	//this is a block booking
 			 	
-			 	/*
-			 	
-	
-			 	 * 3. add the booking, using the block_booking id in the normal booking
-			 	 */
 			 	//add an entry to the block_bookings table with some info on the booking
+			 	$active_year = $this->Settings_model_get_active_year();
+			 	$year_id = $active_year['year_id'];
 			 	$block_array = array
 				 	(
 				 		'subject_id' => $subject_id,
-				 		'booking_classname' => $booking_classname
+				 		'booking_classname' => $booking_classname,
+				 		'year_id' => $year_id
 				 	);
 			 	$this->db->insert('block_bookings',$block_array);
 			 	//get the id from that insert to use in the main booking
 			  	$block_booking_id = $this->db->insert_id();
 			 	$booking_isblock = '1';
+			 	
+			 	/////////////////
+			 	//1. get end of active year date
+			 	//2. while loop to add booking until booking date > end_date
+			 	//3. use add_date to add 7 days on to booking_date
+			 	
 			 	for ($i=0; $i == 60; $i++)
 				{
 					$this->Booking_model->add_booking($subject_id, $period_id, $room_id, $booking_username, $booking_displayname, $booking_classname, $booking_date, $booking_isblock, $block_booking_id);
 				}
-			 	 	
+			 	//////////////////
+				
 			 	//redirect back to the booking_overview page they came from
 				redirect($previous_url, 'refresh');
 			 }

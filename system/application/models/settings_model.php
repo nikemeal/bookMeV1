@@ -283,4 +283,62 @@ class Settings_model extends CI_Model {
 
  			$this->db->update('holidays', $data, "holiday_id = $holiday_id"); 
 		}
+		
+		function get_year_count()
+		{
+			$query = $this->db->get('years');
+			return $query->num_rows();
+		}
+		
+		function add_year($year_name, $year_start, $year_end, $year_isactive='0')
+		{
+			$data = array('year_name' => $year_name, 'year_start' => $year_start, 'year_end' => $year_end, 'year_isactive' => $year_isactive);
+			$this->db->insert('years',$data);
+		}
+		
+		function get_year_info($year_id)
+		{
+			$query = $this->db->get_where('years',array('year_id' => $year_id));
+			$result = $query->row_array();
+			return $result;
+		}
+		
+		function update_year($year_id, $year_name, $year_start, $year_end)
+		{
+			$data = array(
+                'year_name' => $year_name,
+                'year_start' => $year_start,
+                'year_end' => $year_end,
+             );
+
+ 			$this->db->update('years', $data, "year_id = $year_id"); 
+		}
+		
+		function get_inactive_years()
+		{
+			$query = $this->db->get_where('years', "year_isactive = 0");
+			$result = $query->result_array();
+			return $result;
+		}
+		
+		function get_active_year()
+		{
+			$query = $this->db->get_where('years', "year_isactive = 1");
+			$result = $query->result_array();
+			return $result;
+		}
+		
+		function set_active_year($year_id)
+		{
+			//first we need to set all years as inactive
+			$this->db->set('year_isactive', '0', FALSE); 
+			$this->db->update('years');
+			
+			//then we need to set the selected year to active
+			
+			$data = array(
+			'year_isactive' => '1'
+			); 
+			$this->db->update('years', $data, "year_id = $year_id"); 
+		}
 }

@@ -8,9 +8,9 @@
 
 			<div class="span10 well">
 			<center>
-				<div class="alert alert-info"><h3>Rooms</h3></div>
+				<div class="alert alert-info"><h3>Rooms &amp; Resources</h3></div>
 			</center>
-			<h4>Click on a room to edit it</h4>
+			<h4>Click on a room/resource to edit it</h4>
 			<br>
 
 				<?php foreach ($rooms as $room){ ?>
@@ -36,7 +36,7 @@
 				
 				<div class="span10">
 					<br>
-					<a class="btn btn-primary" href="add_room"><i class="icon-plus"></i> Add a new room</a>
+					<a class="btn btn-primary" href="add_room"><i class="icon-plus"></i> Add a new room / resource</a>
 
 				</div>
 				

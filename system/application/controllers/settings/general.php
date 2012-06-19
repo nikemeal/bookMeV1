@@ -29,7 +29,8 @@ class General extends CI_Controller
 		$data['allow_local_login'] = $this->Settings_model->get_allow_local_login();
 		$data['bg_colour'] = $this->Settings_model->get_bg_colour();
 		$data['booking_count'] = $this->Settings_model->get_booking_count();				
-		
+		$data['inactive_years'] = $this->Settings_model->get_inactive_years();
+		$data['active_year'] = $this->Settings_model->get_active_year();
 		//load body with data
 		$this->load->view('settings/settings_general', $data);
 	}
@@ -42,6 +43,8 @@ class General extends CI_Controller
 		$this->Settings_model->update_school_name($school_name);
 		$this->Settings_model->update_allow_local_login($allow_local_login);
 		$this->Settings_model->update_bg_colour($bg_colour);
+		$year_id = $this->input->post('year_id');
+		$this->Settings_model->set_active_year($year_id);
 		/*
 		 * need some form of error checking to see if all DB updates were successful.
 		 * if not then load an error page detailing why, otherwise load the relevant 
