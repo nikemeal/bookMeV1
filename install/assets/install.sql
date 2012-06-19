@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jun 14, 2012 at 02:33 PM
+-- Generation Time: Jun 19, 2012 at 06:32 AM
 -- Server version: 5.5.20
 -- PHP Version: 5.3.10
 
@@ -28,8 +28,11 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `block_bookings` (
   `block_booking_id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`block_booking_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  `subject_id` int(11) NOT NULL,
+  `booking_classname` varchar(255) NOT NULL,
+  PRIMARY KEY (`block_booking_id`),
+  KEY `subjectid` (`subject_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 
@@ -53,16 +56,7 @@ CREATE TABLE IF NOT EXISTS `bookings` (
   KEY `periodid` (`period_id`),
   KEY `roomid` (`room_id`),
   KEY `blockbookingid` (`block_booking_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
-
---
--- Dumping data for table `bookings`
---
-
-INSERT INTO `bookings` (`booking_id`, `subject_id`, `period_id`, `room_id`, `booking_username`, `booking_displayname`, `booking_classname`, `booking_isblock`, `block_booking_id`, `booking_date`) VALUES
-(1, 3, 2, 3, 'bookme_staff', 'BookMe Local Staff', 'U6', 0, NULL, '2012-05-28'),
-(2, 5, 4, 3, 'bookme_staff', 'BookMe Local Staff', 'L5', 1, NULL, '2012-05-31'),
-(3, 4, 4, 3, 'bookme_admin', 'Admin', 'U6', 1, NULL, '2012-06-12');
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=30 ;
 
 -- --------------------------------------------------------
 
@@ -179,7 +173,7 @@ CREATE TABLE IF NOT EXISTS `subjects` (
   `subject_colour` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `subject_use_shading` tinyint(1) NOT NULL,
   PRIMARY KEY (`subject_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `subjects`
@@ -189,20 +183,27 @@ INSERT INTO `subjects` (`subject_id`, `subject_name`, `subject_colour`, `subject
 (2, 'Maths', 'FFED94', 1),
 (3, 'English', '7869DB', 1),
 (4, 'Chemistry', 'C8FF59', 1),
-(5, 'ICT', 'FFBFBA', 1);
+(5, 'ICT', 'FFBFBA', 1),
+(6, 'PE', 'BDFFBF', 1);
 
 --
 -- Constraints for dumped tables
 --
 
 --
+-- Constraints for table `block_bookings`
+--
+ALTER TABLE `block_bookings`
+  ADD CONSTRAINT `block_bookings_ibfk_1` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`) ON UPDATE NO ACTION;
+
+--
 -- Constraints for table `bookings`
 --
 ALTER TABLE `bookings`
-  ADD CONSTRAINT `bookings_ibfk_6` FOREIGN KEY (`block_booking_id`) REFERENCES `block_bookings` (`block_booking_id`) ON UPDATE NO ACTION,
   ADD CONSTRAINT `bookings_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`) ON UPDATE NO ACTION,
   ADD CONSTRAINT `bookings_ibfk_3` FOREIGN KEY (`period_id`) REFERENCES `periods` (`period_id`) ON UPDATE NO ACTION,
-  ADD CONSTRAINT `bookings_ibfk_5` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`room_id`) ON UPDATE NO ACTION;
+  ADD CONSTRAINT `bookings_ibfk_5` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`room_id`) ON UPDATE NO ACTION,
+  ADD CONSTRAINT `bookings_ibfk_6` FOREIGN KEY (`block_booking_id`) REFERENCES `block_bookings` (`block_booking_id`) ON UPDATE NO ACTION;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
