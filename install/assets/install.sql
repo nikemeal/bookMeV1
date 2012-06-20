@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jun 19, 2012 at 03:11 PM
+-- Generation Time: Jun 20, 2012 at 10:55 PM
 -- Server version: 5.5.20
 -- PHP Version: 5.3.10
 
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `block_bookings` (
   PRIMARY KEY (`block_booking_id`),
   KEY `subjectid` (`subject_id`),
   KEY `yearid` (`year_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 -- --------------------------------------------------------
 
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `bookings` (
   KEY `periodid` (`period_id`),
   KEY `roomid` (`room_id`),
   KEY `blockbookingid` (`block_booking_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=30 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=103 ;
 
 -- --------------------------------------------------------
 
@@ -161,7 +161,7 @@ INSERT INTO `settings` (`setting_name`, `setting_value`) VALUES
 ('ldap_standard_users', ''),
 ('ldap_admin_users', ''),
 ('bg_colour', '699A83'),
-('bookme_version', '0.5alpha');
+('bookme_version', '1.0alpha');
 
 -- --------------------------------------------------------
 

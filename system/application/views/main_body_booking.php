@@ -20,7 +20,7 @@ if ($authenticated == 1) {
 				
 					<div class="span10 well">
 			
-			<div class="alert alert-info"><h4>Click on a room to make a booking for it</h4></div>
+			<div class="alert alert-info"><h4>Click on a room or resource to make a booking for it</h4></div>
 			<br>
 
 				<?php foreach ($rooms as $room){ ?>

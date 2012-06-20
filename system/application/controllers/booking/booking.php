@@ -389,4 +389,166 @@ class Booking extends CI_Controller
 			redirect($previous_url, 'refresh');
 		}
 	}
+	
+function process_edit_booking()
+	{
+		//this is the page the user came from, so we can send them back there when done
+		$data['previous_url'] = $_POST['url'];
+		
+		//lets check how many cells have been selected
+		$initialcount = count($_POST);
+
+		//if there are no cells selected (user possibly hit button by mistake) 
+		//show error modal and return them to previous page
+		if ($initialcount == '1')
+		{
+			$data['error_reason'] = "no bookings selected";
+			$this->load->view('booking/booking_error', $data);
+		}
+		
+		//if there is at least 1 booking, we carry on
+		elseif ($initialcount > '1')
+		{
+			//now we know there are cells selected we can count them
+			$deletecount = count($_POST['booking']);
+			
+			//if there is more than one cell selected, throw an error
+			//as we don't want multiple deletions taking place
+			if ($deletecount > 1)
+			{
+				$data['error_reason'] = "multiple cells selected";
+				$this->load->view('booking/booking_error', $data);	
+			}
+			//if there is only one cell selected, we can continue
+			else
+			{
+				//check to see if the selected cell is bookable
+				if ($_POST['booking']['0']['bookable'])
+				{
+					//if it is, tell the user they cannot delete
+					//empty cells!
+					$data['error_reason'] = "cell is empty";
+					$this->load->view('booking/booking_error', $data);
+				}
+				else 
+				{
+					//cell is not empty, so we carry on
+					//now we need to get details of the selected cell
+					$booking_id = $_POST['booking']['0']['booking_id'];
+					$booking = $this->Booking_model->get_single_booking_info($booking_id);
+					
+					//is the booking a single booking or part of a block booking
+					
+					//this is a single booking
+					if (!($booking['0']['booking_isblock']))
+					{
+						//check if the username of the booking and the username logged
+						//in are the same, or if the username logged in is an admin
+						
+						//if username and session name match or admin is logged in
+						if ($booking['0']['booking_username'] == $this->session->userdata('username') || $this->session->userdata('accesslevel') == "admin")
+						{
+							//show booking edit form with info already filled in
+							$data['classname'] = $booking['0']['booking_classname'];
+							$data['username'] = $booking['0']['booking_username'];
+							$data['displayname'] = $booking['0']['booking_displayname'];
+							$subjectname = $this->Settings_model->get_subject_info($booking['0']['subject_id']);
+							$subject = $subjectname['subject_name'];
+							//we now need to get a list of the subjects, with the one in the booking
+							//at the top of the list
+							$query = $this->db->query
+							("
+							SELECT subjects.subject_id, subjects.subject_name
+							FROM subjects
+							ORDER BY CASE subject_name
+							WHEN ".$this->db->escape($subject)."
+							THEN 1 
+							ELSE 4 
+							END 
+							");
+							$data['subjects'] = $query->result_array();
+							$data['booking_id'] = $booking_id;
+							$data['bookingtype'] = "single";
+							$this->load->view('booking/booking_edit', $data);
+						}
+						else 
+						{
+							$data['error_reason'] = "not your booking";
+							$this->load->view('booking/booking_error', $data);
+						}
+					}
+					else 
+					{
+						//this is a block booking
+						if ($this->session->userdata('accesslevel') !== "admin")
+						{
+							//if the user isn't an admin, error out as we don't
+							//want non admin users editing block bookings
+							$data['error_reason'] = "not admin block delete";
+							$this->load->view('booking/booking_error', $data);
+						}
+						else 
+						{
+							//the user is an admin, so we can now check if they want 
+							//to edit an instance or the whole 
+							$data['classname'] = $booking['0']['booking_classname'];
+							$data['username'] = $booking['0']['booking_username'];
+							$data['displayname'] = $booking['0']['booking_displayname'];
+							$subjectname = $this->Settings_model->get_subject_info($booking['0']['subject_id']);
+							$subject = $subjectname['subject_name'];
+							//we now need to get a list of the subjects, with the one in the booking
+							//at the top of the list
+							$query = $this->db->query
+							("
+							SELECT subjects.subject_id, subjects.subject_name
+							FROM subjects
+							ORDER BY CASE subject_name
+							WHEN ".$this->db->escape($subject)."
+							THEN 1 
+							ELSE 4 
+							END 
+							");
+							$data['subjects'] = $query->result_array();
+							$data['booking_id'] = $booking_id;
+							$data['bookingtype'] = "block";
+							$this->load->view('booking/booking_edit', $data);
+						}
+					}
+				}
+				
+			}
+			
+		}
+		
+	}
+	
+	function edit_booking()
+	{
+		$previous_url = $_POST['previous_url'];
+		
+		$booking_classname = $_POST['booking_classname'];
+		$subject_id = $_POST['subject_id'];
+		$booking_username = $_POST['booking_username'];
+		$booking_displayname = $_POST['booking_displayname'];
+		$booking_id = $_POST['booking_id'];
+		
+		//first we need to check what type of booking is being returned from the
+		//booking_edit view
+		
+		//if single, edit that single entry from the bookings table
+		if ($_POST['edit_type'] == "single")
+		{
+			$this->Booking_model->edit_single_booking($booking_id, $booking_classname, $subject_id, $booking_username, $booking_displayname);
+			redirect($previous_url, 'refresh');
+		}
+		elseif ($_POST['edit_type'] == "block")
+		{
+			//edit the whole block booking and block_booking_id
+			$booking = $this->Booking_model->get_single_booking_info($booking_id);
+			$block_booking_id = $booking['0']['block_booking_id'];
+			
+			$this->Booking_model->edit_block_booking($booking_classname, $subject_id, $booking_username, $booking_displayname, $block_booking_id);
+			redirect($previous_url, 'refresh');
+		}
+	}
 }

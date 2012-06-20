@@ -20,7 +20,7 @@
 							}
 							elseif ($error_reason == "not admin block delete")
 							{
-								echo "<h3>Only administrator users can delete block bookings</h3>";
+								echo "<h3>Only administrator users can edit/delete block bookings</h3>";
 							}
 							elseif ($error_reason == "not your booking")
 							{

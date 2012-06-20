@@ -95,4 +95,36 @@ class Booking_model extends CI_Model {
 		$this->db->delete('bookings', array('block_booking_id' => $block_booking_id));
 		$this->db->delete('block_bookings', array('block_booking_id' => $block_booking_id));
 	}
+	
+	function edit_single_booking($booking_id, $booking_classname, $subject_id, $booking_username, $booking_displayname)
+	{
+		$data = array(
+                'booking_classname' => $booking_classname,
+                'subject_id' => $subject_id,
+                'booking_username' => $booking_username,
+                'booking_displayname' => $booking_displayname
+             );
+ 
+		$this->db->where('booking_id', $booking_id);
+ 		$this->db->update('bookings', $data); 
+	}
+	
+	function edit_block_booking($booking_classname, $subject_id, $booking_username, $booking_displayname, $block_booking_id)
+	{
+		$data = array(
+                'booking_classname' => $booking_classname,
+                'subject_id' => $subject_id,
+                'booking_username' => $booking_username,
+                'booking_displayname' => $booking_displayname
+             );
+ 		$this->db->where('block_booking_id', $block_booking_id);
+ 		$this->db->update('bookings', $data);
+ 		
+ 		$data = array(
+ 				'booking_classname' => $booking_classname,
+                'subject_id' => $subject_id
+ 			);
+ 		$this->db->where('block_booking_id', $block_booking_id);
+ 		$this->db->update('block_bookings', $data);
+	}
 }

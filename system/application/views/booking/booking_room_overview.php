@@ -38,7 +38,7 @@
 					}
 					else
 					{
-						echo 'style="height:10px"';
+						echo 'style="height:10px;"';
 					}
 					?>
 					>
@@ -112,6 +112,7 @@
 							echo '<center><br><br><i class="icon-plus"></i></center>';
 							echo '</div>';
 						}
+						
 			
 					   /*
 						* not needed just yet as users not logged in cannot see the booking pages
@@ -145,14 +146,17 @@
 						<button type="submit" class="btn btn-success">Book selected period(s)</button>
       				</form>
       				
-      				<form  method="post" action="<?php echo site_url('booking/booking/process_delete_booking'); ?>" id="delete">
+      				<form  method="post" action="<?php echo site_url('booking/booking/process_edit_booking'); ?>" id="edit">
 						<input type="hidden" name="url" value="<?php echo current_url()?>">
-						<button  class="btn btn-danger">Delete selected booking/s</button>
+						<button  class="btn btn-info">Edit selected booking</button>
       				</form>
       				
+      				<form  method="post" action="<?php echo site_url('booking/booking/process_delete_booking'); ?>" id="delete">
+						<input type="hidden" name="url" value="<?php echo current_url()?>">
+						<button  class="btn btn-danger">Delete selected booking</button>
+      				</form>
       				
-      				
-      			
+
 		
 				</div>
 			
@@ -214,18 +218,30 @@
 		                    bookable_id.setAttribute("value", data.bookable);
 		                    bookable_id.setAttribute("class", "js-added"); 
 		                    document.getElementById("add").appendChild(bookable_id);
-		                    var bookable_id1 = document.createElement("input"); 
-		                    bookable_id1.setAttribute("type", "hidden"); 
-		                    bookable_id1.setAttribute("name", "booking["+count+"][bookable]"); 
-		                    bookable_id1.setAttribute("value", data.bookable);
-		                    bookable_id1.setAttribute("class", "js-added"); 
-		                    document.getElementById("delete").appendChild(bookable_id1);
-		                    var booking_id = document.createElement("input"); 
-		                    booking_id.setAttribute("type", "hidden"); 
-		                    booking_id.setAttribute("name", "booking["+count+"][booking_id]"); 
-		                    booking_id.setAttribute("value", data.bookingid);
-		                    booking_id.setAttribute("class", "js-added"); 
-		                    document.getElementById("delete").appendChild(booking_id);
+		                    var bookable_id_delete = document.createElement("input"); 
+		                    bookable_id_delete.setAttribute("type", "hidden"); 
+		                    bookable_id_delete.setAttribute("name", "booking["+count+"][bookable]"); 
+		                    bookable_id_delete.setAttribute("value", data.bookable);
+		                    bookable_id_delete.setAttribute("class", "js-added"); 
+		                    document.getElementById("delete").appendChild(bookable_id_delete);
+		                    var booking_id_delete = document.createElement("input"); 
+		                    booking_id_delete.setAttribute("type", "hidden"); 
+		                    booking_id_delete.setAttribute("name", "booking["+count+"][booking_id]"); 
+		                    booking_id_delete.setAttribute("value", data.bookingid);
+		                    booking_id_delete.setAttribute("class", "js-added"); 
+		                    document.getElementById("delete").appendChild(booking_id_delete);
+		                    var bookable_id_edit = document.createElement("input"); 
+		                    bookable_id_edit.setAttribute("type", "hidden"); 
+		                    bookable_id_edit.setAttribute("name", "booking["+count+"][bookable]"); 
+		                    bookable_id_edit.setAttribute("value", data.bookable);
+		                    bookable_id_edit.setAttribute("class", "js-added"); 
+		                    document.getElementById("edit").appendChild(bookable_id_edit);
+		                    var booking_id_edit = document.createElement("input"); 
+		                    booking_id_edit.setAttribute("type", "hidden"); 
+		                    booking_id_edit.setAttribute("name", "booking["+count+"][booking_id]"); 
+		                    booking_id_edit.setAttribute("value", data.bookingid);
+		                    booking_id_edit.setAttribute("class", "js-added"); 
+		                    document.getElementById("edit").appendChild(booking_id_edit);
 		                    count = count + 1;
 		               }); 
 		 	       }); 
