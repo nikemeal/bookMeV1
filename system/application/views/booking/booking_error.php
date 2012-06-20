@@ -18,6 +18,26 @@
 							{
 								echo "<h3>Period already booked</h3>";
 							}
+							elseif ($error_reason == "not admin block delete")
+							{
+								echo "<h3>Only administrator users can delete block bookings</h3>";
+							}
+							elseif ($error_reason == "not your booking")
+							{
+								echo "<h3>This booking does not belong to you</h3>";
+							}
+							elseif ($error_reason == "multiple cells selected")
+							{
+								echo "<h3>You selected multiple bookings to delete</h3>";
+							}
+							elseif ($error_reason == "no bookings selected")
+							{
+								echo "<h3>You didn't select any bookings</h3>";
+							}
+							elseif ($error_reason == "cell is empty")
+							{
+								echo "<h3>You selected an empty cell</h3>";
+							}
 						?>
 					</div>
 					<div>

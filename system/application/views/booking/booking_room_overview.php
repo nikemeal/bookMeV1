@@ -65,18 +65,10 @@
 						foreach ($bookings as $booking) 
 						{
 							$bookable = 1;
-							// Find all bookings that are block bookings for this item.
-							if ($booking['booking_isblock'] == true) 
-							{
-								// Split down the date to figure out which day the block booking should
-								// appear on, i.e. Fri which would return the number 5. Because our loop starts
-								// at 0, we need to subtract one from the figure
-								list($tmpyear,$tmpmonth,$tmpday) = explode('-', $booking['booking_date']);
-								$daynum = date('w',mktime(0,0,0,$tmpmonth,$tmpday,$tmpyear)) - 1;
-							}
+							
 							// If the current loop matches the exact and period, or is block booking and
 							// matches the day number and period, we echo it to the table 
-							if ($booking['period_id'] == $period['period_id'] && $booking['booking_date'] == $newdate || $booking['booking_isblock'] == true && $booking['period_id'] == $period['period_id'] && $daynum == $i)
+							if ($booking['period_id'] == $period['period_id'] && $booking['booking_date'] == $newdate )
 							{
 							// Find out if the user wants booked lessons to be shaded differently
 								if ($booking['subject_use_shading'] == 1)
@@ -91,28 +83,20 @@
 
 								
 								
-								echo '<div class="selectable" data-day="'.$i.'" data-period="'.$period['period_id'].'" data-room="'.$room_id.'" data-bookable="0" style="height:100%;">';
+								echo '<div class="selectable" data-day="'.$i.'" data-period="'.$period['period_id'].'" data-bookingid="'.$booking['booking_id'].'" data-room="'.$room_id.'" data-date="'.$newdate.'" data-bookable="0" style="height:100%;">';
+								if ($booking['booking_isblock'] == true)
+								{
+									echo "<b>";
+								}
 								echo $booking['booking_classname'].'<br />'.$booking['subject_name'].'<br />'.$booking['booking_displayname'];
 								if ($booking['booking_isblock'] == true)
 								{
-									//echo '<div>';
+									
 									echo '<br><i class="icon-retweet"></i>';
-									//echo '</div>';
+									
 								}
 								echo '</div>';
-						
-								//if ($this->session->userdata('authenticated'))
-								//{
-//									if ($this->session->userdata('accesslevel') == 'admin' || $this->session->userdata('username') == $booking['booking_username'])
-									//{
-										//echo '<div>';
-										//echo '<a href="delete" title="Delete Booking">';
-										//echo '<i class="icon-minus pull-right"></i>';
-										//echo '</a>';
-									//}
-								//}
-						
-						
+					
 								// This cell is not bookable now, so we mark it as such and break
 								$bookable = 0;
 								break; // No point in keep looping, we've already found our booking for today
@@ -161,7 +145,11 @@
 						<button type="submit" class="btn btn-success">Book selected period(s)</button>
       				</form>
       				
-      				<button  class="btn btn-danger">Delete selected booking/s</button>
+      				<form  method="post" action="<?php echo site_url('booking/booking/process_delete_booking'); ?>" id="delete">
+						<input type="hidden" name="url" value="<?php echo current_url()?>">
+						<button  class="btn btn-danger">Delete selected booking/s</button>
+      				</form>
+      				
       				
       				
       			
@@ -225,7 +213,19 @@
 		                    bookable_id.setAttribute("name", "booking["+count+"][bookable]"); 
 		                    bookable_id.setAttribute("value", data.bookable);
 		                    bookable_id.setAttribute("class", "js-added"); 
-		                    document.getElementById("add").appendChild(bookable_id); 
+		                    document.getElementById("add").appendChild(bookable_id);
+		                    var bookable_id1 = document.createElement("input"); 
+		                    bookable_id1.setAttribute("type", "hidden"); 
+		                    bookable_id1.setAttribute("name", "booking["+count+"][bookable]"); 
+		                    bookable_id1.setAttribute("value", data.bookable);
+		                    bookable_id1.setAttribute("class", "js-added"); 
+		                    document.getElementById("delete").appendChild(bookable_id1);
+		                    var booking_id = document.createElement("input"); 
+		                    booking_id.setAttribute("type", "hidden"); 
+		                    booking_id.setAttribute("name", "booking["+count+"][booking_id]"); 
+		                    booking_id.setAttribute("value", data.bookingid);
+		                    booking_id.setAttribute("class", "js-added"); 
+		                    document.getElementById("delete").appendChild(booking_id);
 		                    count = count + 1;
 		               }); 
 		 	       }); 

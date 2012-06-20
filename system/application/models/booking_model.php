@@ -61,7 +61,7 @@ class Booking_model extends CI_Model {
 		return $result;
 	}
 	
-	function add_booking($subject_id, $period_id, $room_id, $booking_username, $booking_displayname, $booking_classname, $booking_date, $booking_isblock='0', $block_booking_id='')
+	function add_booking($subject_id, $period_id, $room_id, $booking_username, $booking_displayname, $booking_classname, $booking_date, $booking_isblock='0', $block_booking_id=null)
 	{
 		$data = array(
 		'subject_id' => $subject_id,
@@ -71,10 +71,28 @@ class Booking_model extends CI_Model {
 		'booking_displayname' => $booking_displayname,
 		'booking_classname' => $booking_classname,
 		'booking_date' => $booking_date,
-		'booking_isblock' => $booking_isblock
+		'booking_isblock' => $booking_isblock,
+		'block_booking_id' => $block_booking_id
 		);
 		$result = $this->db->insert('bookings',$data);
 		return $result;
 	}
 	
+	function get_single_booking_info($booking_id)
+	{
+		$query = $this->db->get_where('bookings', "booking_id = $booking_id");
+		$result = $query->result_array();
+		return $result;
+	}
+	
+	function delete_single_booking($booking_id)
+	{
+		$this->db->delete('bookings', array('booking_id' => $booking_id)); 
+	}
+	
+	function delete_block_booking($block_booking_id)
+	{
+		$this->db->delete('bookings', array('block_booking_id' => $block_booking_id));
+		$this->db->delete('block_bookings', array('block_booking_id' => $block_booking_id));
+	}
 }

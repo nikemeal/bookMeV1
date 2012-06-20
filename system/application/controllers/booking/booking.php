@@ -19,11 +19,6 @@ class Booking extends CI_Controller
 		$this->load->view('main_menu', array( 'school_name' => $this->Settings_model->get_school_name()));
 	}
 	
-	/*
-	 * as and when bookings controller is tidied up and separated out, the following views need to be edited too:
-	 * main_body_booking.php -> a href link changed to reflect subfolder/class 
-	 */
-	
 	function index()
 	{
 		echo "Index function of bookings";
@@ -75,8 +70,6 @@ class Booking extends CI_Controller
 		$data['periods'] = $this->Settings_model->get_all_periods();
 		$data['datepicker'] = $date;
 		
-		// in future the block bookings won't be added as a single item so 
-		// the checks done for what a block booking is will need to change
 		$data['bookings'] = $this->Booking_model->get_bookings($room_id,$data['date'],$enddate);
 		
 		// Load the view passing in all collected data
@@ -144,12 +137,6 @@ class Booking extends CI_Controller
 			}
 			else 
 			{
-				/*
-				 * 1. get list of bookings
-				 * 2. check to see if any are already booked - if so, fail with error
-				 * 3. if all are ok, add each to new [booking] array with $count number
-				 * 4. pass new array to $data to load into page
-				 */
 				$count = '1';
 				foreach ($_POST['booking'] as $bookings)
 				{
@@ -209,8 +196,8 @@ class Booking extends CI_Controller
 			 	//this is a block booking
 			 	
 			 	//add an entry to the block_bookings table with some info on the booking
-			 	$active_year = $this->Settings_model_get_active_year();
-			 	$year_id = $active_year['year_id'];
+			 	$active_year = $this->Settings_model->get_active_year();
+			 	$year_id = $active_year['0']['year_id'];
 			 	$block_array = array
 				 	(
 				 		'subject_id' => $subject_id,
@@ -218,21 +205,24 @@ class Booking extends CI_Controller
 				 		'year_id' => $year_id
 				 	);
 			 	$this->db->insert('block_bookings',$block_array);
+			 	
 			 	//get the id from that insert to use in the main booking
 			  	$block_booking_id = $this->db->insert_id();
 			 	$booking_isblock = '1';
 			 	
-			 	/////////////////
-			 	//1. get end of active year date
-			 	//2. while loop to add booking until booking date > end_date
-			 	//3. use add_date to add 7 days on to booking_date
-			 	
-			 	for ($i=0; $i == 60; $i++)
+			 	//create date objects for the booking date and end of year date
+			 	$booking_date = date_create($booking_date);
+			 	$end_date = date_create($active_year['0']['year_end']);
+
+			 	while ($booking_date <= $end_date)
 				{
-					$this->Booking_model->add_booking($subject_id, $period_id, $room_id, $booking_username, $booking_displayname, $booking_classname, $booking_date, $booking_isblock, $block_booking_id);
+					//convert the booking date to a string, add it to the 
+					//booking table and increase the date by 7 days
+					$date_to_add = $booking_date->format('Y-m-d');
+					$this->Booking_model->add_booking($subject_id, $period_id, $room_id, $booking_username, $booking_displayname, $booking_classname, $date_to_add, $booking_isblock, $block_booking_id);
+					date_add($booking_date, date_interval_create_from_date_string('7 days'));
 				}
-			 	//////////////////
-				
+			 				 
 			 	//redirect back to the booking_overview page they came from
 				redirect($previous_url, 'refresh');
 			 }
@@ -254,6 +244,148 @@ class Booking extends CI_Controller
 			}
 			//redirect back to the booking_overview page they came from
 			$previous_url = $_POST['previous_url'];
+			redirect($previous_url, 'refresh');
+		}
+	}
+	
+	function process_delete_booking()
+	{
+		//this is the page the user came from, so we can send them back there when done
+		$data['previous_url'] = $_POST['url'];
+		
+		//lets check how many cells have been selected
+		$initialcount = count($_POST);
+
+		//if there are no cells selected (user possibly hit button by mistake) 
+		//show error modal and return them to previous page
+		if ($initialcount == '1')
+		{
+			$data['error_reason'] = "no bookings selected";
+			$this->load->view('booking/booking_error', $data);
+		}
+		
+		//if there is at least 1 booking, we carry on
+		elseif ($initialcount > '1')
+		{
+			//now we know there are cells selected we can count them
+			$deletecount = count($_POST['booking']);
+			
+			//if there is more than one cell selected, throw an error
+			//as we don't want multiple deletions taking place
+			if ($deletecount > 1)
+			{
+				$data['error_reason'] = "multiple cells selected";
+				$this->load->view('booking/booking_error', $data);	
+			}
+			//if there is only one cell selected, we can continue
+			else
+			{
+				//check to see if the selected cell is bookable
+				if ($_POST['booking']['0']['bookable'])
+				{
+					//if it is, tell the user they cannot delete
+					//empty cells!
+					$data['error_reason'] = "cell is empty";
+					$this->load->view('booking/booking_error', $data);
+				}
+				else 
+				{
+					//cell is not empty, so we carry on
+					//now we need to get details of the selected cell
+					$booking_id = $_POST['booking']['0']['booking_id'];
+					$booking = $this->Booking_model->get_single_booking_info($booking_id);
+					
+					//is the booking a single booking or part of a block booking
+					
+					//this is a single booking
+					if (!($booking['0']['booking_isblock']))
+					{
+						//check if the username of the booking and the username logged
+						//in are the same, or if the username logged in is an admin
+						
+						//if username and session name match or admin is logged in
+						if ($booking['0']['booking_username'] == $this->session->userdata('username') || $this->session->userdata('accesslevel') == "admin")
+						{
+							//show booking delete form with info 
+							$data['classname'] = $booking['0']['booking_classname'];
+							$data['username'] = $booking['0']['booking_username'];
+							$data['displayname'] = $booking['0']['booking_displayname'];
+							$periodname = $this->Settings_model->get_period_info($booking['0']['period_id']);
+							$data['periodname'] = $periodname['period_name'];
+							$roomname = $this->Settings_model->get_room_info($booking['0']['room_id']);
+							$data['roomname'] = $roomname['room_name'];
+							$subjectname = $this->Settings_model->get_subject_info($booking['0']['subject_id']);
+							$data['subjectname'] = $subjectname['subject_name'];
+							$data['prettydate'] = $this->Booking_model->get_pretty_date($booking['0']['booking_date']);
+							$data['booking_id'] = $booking_id;
+							$data['delete_type'] = "single";
+							$this->load->view('booking/booking_delete', $data);
+						}
+						else 
+						{
+							$data['error_reason'] = "not your booking";
+							$this->load->view('booking/booking_error', $data);
+						}
+					}
+					else 
+					{
+						//this is a block booking
+						if ($this->session->userdata('accesslevel') !== "admin")
+						{
+							//if the user isn't an admin, error out as we don't
+							//want non admin users delete block bookings
+							$data['error_reason'] = "not admin block delete";
+							$this->load->view('booking/booking_error', $data);
+						}
+						else 
+						{
+							//the user is an admin, so we can now check if they want 
+							//to delete an instance or the whole 
+							$data['classname'] = $booking['0']['booking_classname'];
+							$data['username'] = $booking['0']['booking_username'];
+							$data['displayname'] = $booking['0']['booking_displayname'];
+							$periodname = $this->Settings_model->get_period_info($booking['0']['period_id']);
+							$data['periodname'] = $periodname['period_name'];
+							$roomname = $this->Settings_model->get_room_info($booking['0']['room_id']);
+							$data['roomname'] = $roomname['room_name'];
+							$subjectname = $this->Settings_model->get_subject_info($booking['0']['subject_id']);
+							$data['subjectname'] = $subjectname['subject_name'];
+							$data['prettydate'] = $this->Booking_model->get_pretty_date($booking['0']['booking_date']);
+							$data['booking_id'] = $booking_id;
+							$data['delete_type'] = "block";
+							$this->load->view('booking/booking_delete', $data);
+						}
+					}
+				}
+				
+			}
+			
+		}
+		
+	}
+	
+	function delete_booking()
+	{
+		$previous_url = $_POST['previous_url'];
+		
+		//first we need to check what type of booking is being returned from the
+		//booking_delete view
+		
+		//if single, remove that single entry from the bookings table
+		if ($_POST['delete_type'] == "single" || $_POST['delete_type'] == "block-single")
+		{
+			$booking_id = $_POST['booking_id'];
+			$this->Booking_model->delete_single_booking($booking_id);
+			redirect($previous_url, 'refresh');
+		}
+		elseif ($_POST['delete_type'] == "block-all")
+		{
+			//delete the whole block booking and block_booking_id
+			$booking_id = $_POST['booking_id'];
+			$booking = $this->Booking_model->get_single_booking_info($booking_id);
+			$block_booking_id = $booking['0']['block_booking_id'];
+			
+			$this->Booking_model->delete_block_booking($block_booking_id);
 			redirect($previous_url, 'refresh');
 		}
 	}

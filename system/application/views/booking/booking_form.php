@@ -37,6 +37,16 @@
             					
                 				<?php if ($accesslevel == 'admin') {?>
             					<br>
+            					<label class="control-label" for="block_username">Username</label>
+            					<div class="controls">
+								<input type="text" name="booking_username" value="<?php echo $this->session->userdata('username');?>">
+            					</div>
+            					<br>
+            					<label class="control-label" for="block_displayname">Display name</label>
+            					<div class="controls">
+            						 <input type="text" name="booking_displayname" value="<?php echo $this->session->userdata('fullname');?>">
+            					</div>
+            					<br>
             					<label class="control-label" for="block_booking">Block Booking?</label>
             					<div class="controls">
             						 <input type="checkbox" id="booking_isblock" name="booking_isblock" value="true">
@@ -46,8 +56,10 @@
             			
             				<input type="hidden" name="period_id" value="<?php echo $period_id;?>">
             				<input type="hidden" name="room_id" value="<?php echo $room_id;?>">  
-            				<input type="hidden" name="booking_username" value="<?php echo $this->session->userdata('username');?>">
+            				<?php if($accesslevel !== 'admin'){?>
+							<input type="hidden" name="booking_username" value="<?php echo $this->session->userdata('username');?>">
             				<input type="hidden" name="booking_displayname" value="<?php echo $this->session->userdata('fullname');?>">
+							<?php }	?>
             				<input type="hidden" name="booking_date" value="<?php echo $booking_date;?>">
             				<input type="hidden" name="booking_type" value="<?php echo $booking_type;?>">
             				<input type="hidden" name="previous_url" value="<?php echo $previous_url;?>">  
@@ -76,7 +88,7 @@
 					&nbsp;
 				</div>
 			</div>
-			
+
 		</div>
 	</div>
 </div>
