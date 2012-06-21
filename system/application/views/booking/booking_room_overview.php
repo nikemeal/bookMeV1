@@ -148,12 +148,12 @@
       				
       				<form  method="post" action="<?php echo site_url('booking/booking/process_edit_booking'); ?>" id="edit">
 						<input type="hidden" name="url" value="<?php echo current_url()?>">
-						<button  class="btn btn-info">Edit selected booking</button>
+						<button type="submit" class="btn btn-info">Edit selected booking</button>
       				</form>
       				
       				<form  method="post" action="<?php echo site_url('booking/booking/process_delete_booking'); ?>" id="delete">
 						<input type="hidden" name="url" value="<?php echo current_url()?>">
-						<button  class="btn btn-danger">Delete selected booking</button>
+						<button type="submit" class="btn btn-danger">Delete selected booking</button>
       				</form>
       				
 

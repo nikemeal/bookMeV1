@@ -20,7 +20,7 @@
 							}
 							elseif ($error_reason == "not admin block delete")
 							{
-								echo "<h3>Only administrator users can edit/delete block bookings</h3>";
+								echo "<h3>Only administrator users can edit / delete block bookings</h3>";
 							}
 							elseif ($error_reason == "not your booking")
 							{
@@ -28,7 +28,7 @@
 							}
 							elseif ($error_reason == "multiple cells selected")
 							{
-								echo "<h3>You selected multiple bookings to delete</h3>";
+								echo "<h3>You selected multiple bookings to edit / delete</h3>";
 							}
 							elseif ($error_reason == "no bookings selected")
 							{
