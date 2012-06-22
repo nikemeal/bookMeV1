@@ -6,7 +6,9 @@
 	<![endif]-->
 	
 	<title>BookMe - Booking System</title>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta http-equiv="X-UA-Compatible" content="IE=9" >
+
+	
 	<link rel="stylesheet" href="<?php echo base_url(); ?>css/bootstrap.css">
 	<link rel="stylesheet" href="<?php echo base_url(); ?>css/bootstrap-responsive.css">
 	<link rel="stylesheet" href="<?php echo base_url(); ?>css/jquery-ui.css">

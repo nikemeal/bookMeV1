@@ -23,6 +23,16 @@ General Instructions
 local logins off once LDAP is successfully working
 
 
+Known Bugs
+---------------------
+
+There is an issue with the multi-booking part of BookMe and IE8.  This is due to
+Microsoft enabling compatibility view on all intranet pages.
+A domain wide fix can be applied (but is rather drastic), so the decision was made
+to get BookMe working 100% for IE9.
+IE8 will still work with 99% of BookMe, it is only the multi-booking (booking multiple
+periods at once in the same week) there is an issue with.
+
 Thanks to
 ---------------------
 
