@@ -15,9 +15,14 @@
 	<link rel="stylesheet" href="<?php echo base_url(); ?>css/jquery-ui-timepicker-addon.css">
 		
 
-	<style type="text/css">body {background-color: #<?php echo $bg_colour;?>;}</style>
+	<style type="text/css">
+		body {background-color: #<?php echo $bg_colour;?>;}
+		label.error { float: none; color: red; padding-left: .5em; vertical-align: top; }
+	</style>
+	
 	
 	<script src="<?php echo base_url(); ?>javascript/jquery.js"></script>
+	<script src="<?php echo base_url(); ?>javascript/jquery.validate.js"></script>
 	<script src="<?php echo base_url(); ?>javascript/jquery-ui.js"></script>
 	<script src="<?php echo base_url(); ?>javascript/jquery-ui-timepicker-addon.js"></script>
 	<script src="<?php echo base_url(); ?>javascript/bootstrap-dropdown.js"></script>

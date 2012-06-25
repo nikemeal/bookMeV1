@@ -14,18 +14,18 @@
 			<div class="alert alert-error"><?php echo $error; ?></div>
 			<?php }?>
 			
-				<form class="form-horizontal" method="post" action="submit_new_room" enctype="multipart/form-data">
+				<form class="form-horizontal" id="room" method="post" action="submit_new_room" enctype="multipart/form-data">
         			<fieldset>
           				<div class="control-group">
             				<label class="control-label" for="input01">Room / resource name</label>
             				<div class="controls">
-              					<input type="text" class="input-xlarge" id="input01" name="room_name">
+              					<input type="text" class="input-xlarge required" id="input01" name="room_name">
               					<p class="help-block"><i class="icon-question-sign"rel="tooltip" title="The name of the room or resource which will be seen by all users when making bookings"></i></p>
             				</div>
             				<br>
             				<label class="control-label" for="input02">Computer count</label>
             				<div class="controls">
-              					<input type="text" class="input-xlarge " id="input02" name="pc_count">
+              					<input type="text" class="input-xlarge" id="input02" name="pc_count">
               					<p class="help-block"><i class="icon-question-sign"rel="tooltip" title="How many computers are available to the user when they book this room / resource?"></i></p>
             				</div>
             				<br>
@@ -49,6 +49,7 @@
 				<script type="text/javascript"> 
   					$(document).ready(function () { 
     				$("[rel=tooltip]").tooltip(); 
+    				$("#room").validate();
   					}); 
 				</script> 
 

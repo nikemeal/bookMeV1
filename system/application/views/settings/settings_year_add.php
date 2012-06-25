@@ -14,24 +14,24 @@
 			<div class="alert alert-error"><?php echo $error; ?></div>
 			<?php }?>
 			
-				<form class="form-horizontal" method="post" action="submit_new_year">
+				<form class="form-horizontal" id="year" method="post" action="submit_new_year">
         			<fieldset>
           				<div class="control-group">
             				<label class="control-label" for="input01">Year name</label>
             				<div class="controls">
-              					<input type="text" class="input-xlarge" id="input01" name="year_name">
+              					<input type="text" class="input-xlarge required" id="input01" name="year_name">
               					<p class="help-block"><i class="icon-question-sign"rel="tooltip" title="The name of the academic year"></i></p>
             				</div>
             				<br>
             				<label class="control-label" for="input02">Year start date</label>
             				<div class="controls">
-              					<input type="text" class="input-xlarge " id="year_start" name="year_start">
+              					<input type="text" class="input-xlarge required" id="year_start" name="year_start">
               					<p class="help-block"><i class="icon-question-sign"rel="tooltip" title="What day does the academic year start?  This will mark the first bookable day in the year"></i></p>
             				</div>
             				<br>
             				<label class="control-label" for="input02">Year end date</label>
             				<div class="controls">
-              					<input type="text" class="input-xlarge " id="year_end" name="year_end">
+              					<input type="text" class="input-xlarge required" id="year_end" name="year_end">
               					<p class="help-block"><i class="icon-question-sign"rel="tooltip" title="What day does the academic year end?  This will mark the last bookable day in the year"></i></p>
             				</div>
             				<br>
@@ -69,6 +69,7 @@
   					$(document).ready(function () 
   		  			{ 
   	    				$("[rel=tooltip]").tooltip(); 
+  	    				$("#year").validate();
   	  				});
 				</script>
 

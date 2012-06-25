@@ -31,6 +31,7 @@ class General extends CI_Controller
 		$data['booking_count'] = $this->Settings_model->get_booking_count();				
 		$data['inactive_years'] = $this->Settings_model->get_inactive_years();
 		$data['active_year'] = $this->Settings_model->get_active_year();
+		$data['book_ahead'] = $this->Settings_model->get_users_book_ahead();
 		//load body with data
 		$this->load->view('settings/settings_general', $data);
 	}
@@ -45,11 +46,9 @@ class General extends CI_Controller
 		$this->Settings_model->update_bg_colour($bg_colour);
 		$year_id = $this->input->post('year_id');
 		$this->Settings_model->set_active_year($year_id);
-		/*
-		 * need some form of error checking to see if all DB updates were successful.
-		 * if not then load an error page detailing why, otherwise load the relevant 
-		 * settings update page
-		 */
+		$book_ahead = $this->input->post('book_ahead');
+		$this->Settings_model->update_book_ahead($book_ahead);
+
 		$this->load->view('settings/settings_general_update');
 	}
 	

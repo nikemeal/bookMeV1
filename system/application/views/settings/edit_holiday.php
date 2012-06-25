@@ -11,12 +11,12 @@
 				<div class="alert alert-info"><h3>Edit holiday - <?php echo $holiday_name; ?></h3></div>
 			</center>
 			
-				<form class="form-horizontal" method="post" action="../update_holiday">
+				<form class="form-horizontal" id="holiday" method="post" action="../update_holiday">
         			<fieldset>
           				<div class="control-group">
             				<label class="control-label" for="input01">Holiday name</label>
             				<div class="controls">
-              					<input type="text" class="input-xlarge" value="<?php echo $holiday_name; ?>" id="input01" name="holiday_name">
+              					<input type="text" class="input-xlarge required" value="<?php echo $holiday_name; ?>" id="input01" name="holiday_name">
               					<p class="help-block"><i class="icon-question-sign"rel="tooltip" title="The name of the holiday which will show up in the booking view"></i></p>
             				</div>
             				<br>
@@ -28,7 +28,7 @@
  							?>
             				<label class="control-label" for="input02">Holiday start date</label>
             				<div class="controls">
-              					<input type="text" class="input-xlarge " value="<?php echo $start_date; ?>" id="holiday_start" name="holiday_start">
+              					<input type="text" class="input-xlarge required" value="<?php echo $start_date; ?>" id="holiday_start" name="holiday_start">
               					<p class="help-block"><i class="icon-question-sign"rel="tooltip" title="What day does the holiday start?  This will mark the first unbookable day in the holiday"></i></p>
             				</div>
             				<br>
@@ -40,7 +40,7 @@
  							?>
             				<label class="control-label" for="input02">Holiday end date</label>
             				<div class="controls">
-              					<input type="text" class="input-xlarge " value="<?php echo $end_date; ?>" id="holiday_end" name="holiday_end">
+              					<input type="text" class="input-xlarge required" value="<?php echo $end_date; ?>" id="holiday_end" name="holiday_end">
               					<p class="help-block"><i class="icon-question-sign"rel="tooltip" title="What day does the holiday end?  This will mark the last unbookable day in the holiday"></i></p>
             				</div>
             				<br>
@@ -104,6 +104,7 @@
 				<script type="text/javascript" language="JavaScript">
 					$('#deletebox').on('shown', function () {
 					});
+					$("#holiday").validate();
 				</script>
 			
 			<div class="span1">

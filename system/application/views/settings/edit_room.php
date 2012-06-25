@@ -15,12 +15,12 @@
 				<div class="alert alert-info"><h3>Edit room - <?php echo $room_name; ?></h3></div>
 			</center>
 			
-				<form class="form-horizontal" method="post" action="../update_room" enctype="multipart/form-data">
+				<form class="form-horizontal" id="room" method="post" action="../update_room" enctype="multipart/form-data">
         			<fieldset>
           				<div class="control-group">
             				<label class="control-label" for="input01">Room name</label>
             				<div class="controls">
-              					<input type="text" class="input-xlarge" id="input01" name="room_name" value="<?php echo $room_name;?>">
+              					<input type="text" class="input-xlarge required" id="input01" name="room_name" value="<?php echo $room_name;?>">
               					<p class="help-block"><i class="icon-question-sign"rel="tooltip" title="The name of the room which will be seen by all users when making bookings"></i></p>
             				</div>
             				<br>
@@ -71,6 +71,7 @@
   					$(document).ready(function () { 
     				$("[rel=tooltip]").tooltip(); 
   					}); 
+  					$("#room").validate();
 				</script> 
 				<div id="deletebox" class="modal hide fade">
 					<div class="modal-body">

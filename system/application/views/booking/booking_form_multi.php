@@ -9,7 +9,7 @@
 			<center>
 				<div class="alert alert-info"><h3>Booking multi-information</h3></div>
 			</center>
-				<form class="form" method="post" action="<?php echo site_url('booking/booking/add_booking'); ?>">
+				<form class="form" id="booking" method="post" action="<?php echo site_url('booking/booking/add_booking'); ?>">
         			<fieldset>
           				<div class="control-group">
             				<label class="control-label" for="booking_classname">Class</label>

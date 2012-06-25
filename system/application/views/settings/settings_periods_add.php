@@ -14,24 +14,24 @@
 			<div class="alert alert-error"><?php echo $error; ?></div>
 			<?php }?>
 			
-				<form class="form-horizontal" method="post" action="submit_new_period">
+				<form class="form-horizontal" id="period" method="post" action="submit_new_period">
         			<fieldset>
           				<div class="control-group">
             				<label class="control-label" for="input01">Period name</label>
             				<div class="controls">
-              					<input type="text" class="input-xlarge" id="input01" name="period_name">
+              					<input type="text" class="input-xlarge required" id="input01" name="period_name">
               					<p class="help-block"><i class="icon-question-sign"rel="tooltip" title="The name of the period which will show up in the booking view"></i></p>
             				</div>
             				<br>
             				<label class="control-label" for="input02">Period start time</label>
             				<div class="controls">
-              					<input type="text" class="input-xlarge " id="periodstart" name="period_start">
+              					<input type="text" class="input-xlarge required" id="periodstart" name="period_start">
               					<p class="help-block"><i class="icon-question-sign"rel="tooltip" title="When does the period start?  This is displayed next to the period name to remind users, and is used to order the periods"></i></p>
             				</div>
             				<br>
             				<label class="control-label" for="input02">Period end time</label>
             				<div class="controls">
-              					<input type="text" class="input-xlarge " id="periodend" name="period_end">
+              					<input type="text" class="input-xlarge required" id="periodend" name="period_end">
               					<p class="help-block"><i class="icon-question-sign"rel="tooltip" title="When does the period end?  This is displayed next to the period name to remind users, and is used to order the periods"></i></p>
             				</div>
             				<br>
@@ -61,6 +61,7 @@
   					}); 
   					$('#periodstart').timepicker({});
   					$('#periodend').timepicker({});
+  					$("#period").validate();
 				</script> 
 				
 				

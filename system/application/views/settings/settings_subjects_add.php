@@ -14,12 +14,12 @@
 			<div class="alert alert-error"><?php echo $error; ?></div>
 			<?php }?>
 			
-				<form class="form-horizontal" method="post" action="submit_new_subject">
+				<form class="form-horizontal" id="subject" method="post" action="submit_new_subject">
         			<fieldset>
           				<div class="control-group">
             				<label class="control-label" for="input01">Subject name</label>
             				<div class="controls">
-              					<input type="text" class="input-xlarge" id="input01" name="subject_name">
+              					<input type="text" class="input-xlarge required" id="input01" name="subject_name">
               					<p class="help-block"><i class="icon-question-sign"rel="tooltip" title="The name of the subject which will show up in the booking and add booking view"></i></p>
             				</div>
             				<br>
@@ -53,6 +53,7 @@
   					}); 
   					$('#periodstart').timepicker({});
   					$('#periodend').timepicker({});
+  					$("#subject").validate();
 				</script> 
 				
 				

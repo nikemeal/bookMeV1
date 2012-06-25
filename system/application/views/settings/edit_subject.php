@@ -11,12 +11,12 @@
 				<div class="alert alert-info"><h3>Edit subject - <?php echo $subject_name; ?></h3></div>
 			</center>
 			
-				<form class="form-horizontal" method="post" action="../update_subject">
+				<form class="form-horizontal" id="subject" method="post" action="../update_subject">
         			<fieldset>
           				<div class="control-group">
             				<label class="control-label" for="input01">Subject name</label>
             				<div class="controls">
-              					<input type="text" class="input-xlarge" id="input01" value="<?php echo $subject_name;?>" name="subject_name">
+              					<input type="text" class="input-xlarge required" id="input01" value="<?php echo $subject_name;?>" name="subject_name">
               					<p class="help-block"><i class="icon-question-sign"rel="tooltip" title="The name of the subject which will show up in the booking and add booking view"></i></p>
             				</div>
             				<br>
@@ -59,6 +59,7 @@
   				$(document).ready(function () { 
     			$("[rel=tooltip]").tooltip(); 
   				}); 
+  				$("#subject").validate();
 			</script> 
 			<div id="deletebox" class="modal hide fade">
 					<div class="modal-body">

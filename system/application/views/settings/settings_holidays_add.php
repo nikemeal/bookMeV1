@@ -14,24 +14,24 @@
 			<div class="alert alert-error"><?php echo $error; ?></div>
 			<?php }?>
 			
-				<form class="form-horizontal" method="post" action="submit_new_holiday">
+				<form class="form-horizontal" id="holiday" method="post" action="submit_new_holiday">
         			<fieldset>
           				<div class="control-group">
             				<label class="control-label" for="input01">Holiday name</label>
             				<div class="controls">
-              					<input type="text" class="input-xlarge" id="input01" name="holiday_name">
+              					<input type="text" class="input-xlarge required" id="input01" name="holiday_name">
               					<p class="help-block"><i class="icon-question-sign"rel="tooltip" title="The name of the holiday which will show up in the booking view"></i></p>
             				</div>
             				<br>
             				<label class="control-label" for="input02">Holiday start date</label>
             				<div class="controls">
-              					<input type="text" class="input-xlarge " id="holiday_start" name="holiday_start">
+              					<input type="text" class="input-xlarge required" id="holiday_start" name="holiday_start">
               					<p class="help-block"><i class="icon-question-sign"rel="tooltip" title="What day does the holiday start?  This will mark the first unbookable day in the holiday"></i></p>
             				</div>
             				<br>
             				<label class="control-label" for="input02">Holiday end date</label>
             				<div class="controls">
-              					<input type="text" class="input-xlarge " id="holiday_end" name="holiday_end">
+              					<input type="text" class="input-xlarge required" id="holiday_end" name="holiday_end">
               					<p class="help-block"><i class="icon-question-sign"rel="tooltip" title="What day does the holiday end?  This will mark the last unbookable day in the holiday"></i></p>
             				</div>
             				<br>
@@ -69,6 +69,7 @@
   					$(document).ready(function () 
   		  			{ 
   	    				$("[rel=tooltip]").tooltip(); 
+  	    				$("#holiday").validate();
   	  				});
 				</script>
 

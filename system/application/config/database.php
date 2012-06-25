@@ -38,8 +38,6 @@
 $db['default']['username'] = "";
 $db['default']['password'] = "";
 $db['default']['database'] = "";
-
-// The following values can probably stay the same.
 $db['default']['hostname'] = "";
 $db['default']['dbdriver'] = "mysql";
 $db['default']['dbprefix'] = "";

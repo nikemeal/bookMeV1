@@ -123,6 +123,16 @@ class Settings_model extends CI_Model {
  			return $result; 
 		}
 		
+		function get_users_book_ahead()
+		{
+			$this->db->select('setting_value as book_ahead from settings');
+ 			$this->db->where('setting_name = \'user_book_in_advance\'');
+			$query = $this->db->get();
+ 			$row = $query->row_array();
+			$result = $row['book_ahead'];
+ 			return $result; 
+		}
+		
 		function update_school_name($school_name)
 		{
 			$data = array('setting_value' => $school_name,);
@@ -139,6 +149,12 @@ class Settings_model extends CI_Model {
 		{
 			$data = array('setting_value' => $bg_colour,);
 			$this->db->update('settings',$data, 'setting_name = \'bg_colour\'');
+		}
+		
+		function update_book_ahead($book_ahead)
+		{
+			$data = array('setting_value' => $book_ahead,);
+			$this->db->update('settings',$data, 'setting_name = \'user_book_in_advance\'');
 		}
 		
 		function add_room($room_name, $pc_count, $image, $image_tn)

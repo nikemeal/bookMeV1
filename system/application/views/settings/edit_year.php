@@ -11,12 +11,12 @@
 				<div class="alert alert-info"><h3>Edit academic year - <?php echo $year_name; ?></h3></div>
 			</center>
 			
-				<form class="form-horizontal" method="post" action="../update_year">
+				<form class="form-horizontal" id="year" method="post" action="../update_year">
         			<fieldset>
           				<div class="control-group">
             				<label class="control-label" for="input01">Year name</label>
             				<div class="controls">
-              					<input type="text" class="input-xlarge" value="<?php echo $year_name; ?>" id="input01" name="year_name">
+              					<input type="text" class="input-xlarge required" value="<?php echo $year_name; ?>" id="input01" name="year_name">
               					<p class="help-block"><i class="icon-question-sign"rel="tooltip" title="The name of the academic year"></i></p>
             				</div>
             				<br>
@@ -80,6 +80,7 @@
   					$(document).ready(function () 
   		  			{ 
   	    				$("[rel=tooltip]").tooltip(); 
+  	    				$("#year").validate();
   	  				});
 			</script> 
 			<div id="deletebox" class="modal hide fade">

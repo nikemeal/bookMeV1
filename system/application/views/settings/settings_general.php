@@ -9,7 +9,7 @@
 			<center>
 				<div class="alert alert-info"><h3>General Settings</h3></div>
 			</center>
-				<form class="form-horizontal" method="post" action="submit_general_settings">
+				<form class="form-horizontal" id="general" method="post" action="submit_general_settings">
         			<fieldset>
           				<div class="control-group">
             				<label class="control-label" for="input01">School name</label>
@@ -57,11 +57,16 @@
 	                		            	echo '<option value="'.$year['year_id'].'">'.$year['year_name'].'</option>';
 	                					}
                 					?>	         					
-                				
-                					
                 				    </select>
+                				    <p class="help-block"><i class="icon-question-sign"rel="tooltip" title="What is the current active academic year?  This will determine which year block bookings are made"></i></p>
 					            	
             					</div>
+							<br>
+							<label class="control-label">Users can book ahead</label>
+      						<div class="controls">
+              					<input class="input" value="<?php echo $book_ahead;?>" type="number" name="book_ahead">
+              					<p class="help-block"><i class="icon-question-sign"rel="tooltip" title="How many weeks ahead can standard users book?  Set to -1 for unlimited"></i></p>
+							</div>
 							<br>
             				<label class="control-label" for="disabledInput">BookMe version</label>
       						<div class="controls">
@@ -86,6 +91,7 @@
 				<script type="text/javascript"> 
   					$(document).ready(function () { 
     				$("[rel=tooltip]").tooltip(); 
+    				$('#general').validate(); 
   					}); 
 				</script> 
 				<div id="deletebox" class="modal hide fade">

@@ -69,9 +69,13 @@ class Booking extends CI_Controller
 		$data['room_id'] = $room_id;
 		$data['periods'] = $this->Settings_model->get_all_periods();
 		$data['datepicker'] = $date;
-		
+		$data['holidays'] = $this->Booking_model->get_all_holidays();
 		$data['bookings'] = $this->Booking_model->get_bookings($room_id,$data['date'],$enddate);
 		
+		//lastly we need to see if the user can book x weeks ahead
+		$book_ahead = $this->Settings_model->get_users_book_ahead();
+		$data['book_ahead'] = $book_ahead;
+				
 		// Load the view passing in all collected data
 
 		$this->load->view('booking/booking_room_overview', $data);

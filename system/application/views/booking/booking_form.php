@@ -10,7 +10,7 @@
 			<center>
 				<div class="alert alert-info"><h3>Booking information</h3></div>
 			</center>
-				<form class="form" method="post" action="<?php echo site_url('booking/booking/add_booking'); ?>">
+				<form class="form" id="booking" method="post" action="<?php echo site_url('booking/booking/add_booking'); ?>">
         			<fieldset>
           				<div class="control-group">
             				<label class="control-label" for="booking_classname">Class</label>
@@ -39,12 +39,12 @@
             					<br>
             					<label class="control-label" for="block_username">Username</label>
             					<div class="controls">
-								<input type="text" name="booking_username" value="<?php echo $this->session->userdata('username');?>">
+								<input type="text" name="booking_username" class="required" value="<?php echo $this->session->userdata('username');?>">
             					</div>
             					<br>
             					<label class="control-label" for="block_displayname">Display name</label>
             					<div class="controls">
-            						 <input type="text" name="booking_displayname" value="<?php echo $this->session->userdata('fullname');?>">
+            						 <input type="text" name="booking_displayname" class="required" value="<?php echo $this->session->userdata('fullname');?>">
             					</div>
             					<br>
             					<label class="control-label" for="block_booking">Block Booking?</label>
@@ -92,3 +92,9 @@
 		</div>
 	</div>
 </div>
+<script>
+	$(document).ready(function () 
+  	{ 
+  		$("#booking").validate();
+  	});
+</script>

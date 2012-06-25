@@ -1,3 +1,4 @@
+<?php $accesslevel = $this->session->userdata('accesslevel'); ?>
 <style>
 
 .ui-selecting { background: #FECA40; }
@@ -10,7 +11,6 @@
 		<div class="row-fluid">
 
 			<div class="span12">
-
 				<center><h4 class="span10">Bookings for the week commencing <?php echo $week_commencing;?></h4></center>
 				<br><br>
 				<table class="table span10 table-bordered" id="selectable">
@@ -108,23 +108,59 @@
 						// we will show an add link, allowing the user to book this available space
 						if ($bookable == 1 && $period['period_bookable'] == true && $this->session->userdata('authenticated'))
 						{
-							echo 'style="height:90px"><div data-day="'.$i.'" data-date="'.$newdate.'" data-period="'.$period['period_id'].'" data-room="'.$room_id.'" data-bookable="1" class="selectable" style="height:100%;">';
-							echo '<center><br><br><i class="icon-plus"></i></center>';
-							echo '</div>';
+							//check against each holiday date
+							$today = date_create($newdate);
+							$is_holiday = '0';
+							foreach ($holidays as $holiday)
+							{
+								$holiday_start = date_create($holiday['holiday_start']);
+								$holiday_end = date_create($holiday['holiday_end']);
+								if ($today >= $holiday_start && $today <= $holiday_end)
+								{
+									$is_holiday = '1';
+									break;
+								}
+							}
+							$booking_date = date_create($this->uri->segment(5));
+							if (!($booking_date))
+								{
+									$booking_date = date_create(date('Y-m-d'));
+								}
+							$room_id = $this->uri->segment(4);
+							$today = date('Y-m-d', mktime(0,0,0,date('m'), date('d')-date('w')+7, date('Y')));
+							$end_week = date_create($today);
+							$book_ahead_date = date_add($end_week, date_interval_create_from_date_string( $book_ahead.' weeks'));
+							
+							if ($book_ahead >= 0)
+							{
+								$allow_all_bookings = '0';
+														}
+							elseif ($book_ahead == -1)
+							{
+								$allow_all_bookings = '1';
+							}
+							
+							if ($is_holiday == '1')
+							{
+								echo 'style="height:90px"><div data-day="'.$i.'" data-date="'.$newdate.'" data-period="'.$period['period_id'].'" data-room="'.$room_id.'" data-bookable="0" style="height:100%;">';
+								echo '<center><br><b>Period cannot be booked as it is during a holiday</b></center>';
+								echo '</div>';
+							}
+							elseif ($booking_date > $book_ahead_date && $allow_all_bookings == 0 && $accesslevel !== 'admin')
+							{
+								echo 'style="height:90px"><div data-day="'.$i.'" data-date="'.$newdate.'" data-period="'.$period['period_id'].'" data-room="'.$room_id.'" data-bookable="0" style="height:100%;">';
+								echo '<center><br><b>You can only book '. $book_ahead . ' week/s ahead</b></center>';
+								echo '</div>';	
+							}
+							else 
+							{
+								echo 'style="height:90px"><div data-day="'.$i.'" data-date="'.$newdate.'" data-period="'.$period['period_id'].'" data-room="'.$room_id.'" data-bookable="1" class="selectable" style="height:100%;">';
+								echo '<center><br><br><i class="icon-plus"></i></center>';
+								echo '</div>';	
+							}	
+								
 						}
 						
-			
-					   /*
-						* not needed just yet as users not logged in cannot see the booking pages
-						* this might change in the future so non-authenticated users can still
-						* see the timetable
-						* 
-						*
-						*elseif ($bookable == 1 && $period['period_bookable'] == true && !$this->session->userdata('authenticated'))
-						*{
-						*	echo '<div style="color:#CCC;"><small><i>You need to login to book this session</i></small></div>';
-						*} 
-						*/
 						echo '</td>';
 					}
 					?>
@@ -159,12 +195,12 @@
 
 		
 				</div>
-			
 			</div>
-			
-		</div>
 	</div>
 </div>
+
+
+
 
 
 	<script>
@@ -273,4 +309,3 @@
 		$(".js-added").remove();
 	}	
 	</script>
-

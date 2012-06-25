@@ -127,4 +127,11 @@ class Booking_model extends CI_Model {
  		$this->db->where('block_booking_id', $block_booking_id);
  		$this->db->update('block_bookings', $data);
 	}
+	
+	function get_all_holidays()
+	{
+		$query = $this->db->get('holidays');
+		$result = $query->result_array();
+		return $result;
+	}
 }
