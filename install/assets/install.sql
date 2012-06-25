@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jun 20, 2012 at 10:55 PM
+-- Generation Time: Jun 25, 2012 at 10:54 PM
 -- Server version: 5.5.20
 -- PHP Version: 5.3.10
 
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `block_bookings` (
   PRIMARY KEY (`block_booking_id`),
   KEY `subjectid` (`subject_id`),
   KEY `yearid` (`year_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `bookings` (
   KEY `periodid` (`period_id`),
   KEY `roomid` (`room_id`),
   KEY `blockbookingid` (`block_booking_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=103 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=8 ;
 
 -- --------------------------------------------------------
 
@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `holidays` (
 --
 
 INSERT INTO `holidays` (`holiday_id`, `holiday_name`, `holiday_start`, `holiday_end`) VALUES
-(2, 'Summer Break', '2012-07-09', '2012-08-30'),
+(2, 'Summer Break', '2012-07-22', '2012-08-30'),
 (3, 'June Half Term', '2012-06-04', '2012-06-08');
 
 -- --------------------------------------------------------
@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS `periods` (
   `period_end` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `period_bookable` tinyint(1) NOT NULL,
   PRIMARY KEY (`period_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=14 ;
 
 --
 -- Dumping data for table `periods`
@@ -109,7 +109,7 @@ INSERT INTO `periods` (`period_id`, `period_name`, `period_start`, `period_end`,
 (7, 'Lunch', '12:30', '14:05', 0),
 (8, 'P5', '14:05', '14:50', 1),
 (9, 'P6', '14:50', '15:35', 1),
-(11, 'P1', '08:00', '10:00', 1),
+(11, 'P1', '08:00', '21:10    ', 1),
 (12, 'P7', '15:35', '16:00', 1);
 
 -- --------------------------------------------------------
@@ -161,7 +161,9 @@ INSERT INTO `settings` (`setting_name`, `setting_value`) VALUES
 ('ldap_standard_users', ''),
 ('ldap_admin_users', ''),
 ('bg_colour', '699A83'),
+('user_book_in_advance', '-1'),
 ('bookme_version', '1.0alpha');
+
 
 -- --------------------------------------------------------
 
@@ -220,8 +222,8 @@ INSERT INTO `years` (`year_id`, `year_name`, `year_start`, `year_end`, `year_isa
 -- Constraints for table `block_bookings`
 --
 ALTER TABLE `block_bookings`
-  ADD CONSTRAINT `block_bookings_ibfk_2` FOREIGN KEY (`year_id`) REFERENCES `years` (`year_id`) ON UPDATE NO ACTION,
-  ADD CONSTRAINT `block_bookings_ibfk_1` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`) ON UPDATE NO ACTION;
+  ADD CONSTRAINT `block_bookings_ibfk_1` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`) ON UPDATE NO ACTION,
+  ADD CONSTRAINT `block_bookings_ibfk_2` FOREIGN KEY (`year_id`) REFERENCES `years` (`year_id`) ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `bookings`
