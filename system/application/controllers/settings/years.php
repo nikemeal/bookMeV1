@@ -24,6 +24,7 @@ class Years extends CI_Controller
 		if ($data['year_count'] == 0)
 		{
 			$this->load->view('settings/settings_year_add', array('error' => ' ' ));
+			$this->load->view('template/footer');
 		} else 
 
 		//else get the list of holidays in the database and show them
@@ -33,6 +34,7 @@ class Years extends CI_Controller
 			$data['years'] = $result;
 		
 			$this->load->view('settings/settings_year_edit',$data);
+			$this->load->view('template/footer');
 		}
 	}
 	
@@ -54,6 +56,7 @@ class Years extends CI_Controller
 			
 		//then load the view
 		$this->load->view('settings/settings_year_update');
+		$this->load->view('template/footer');
 	}
 	
 	function edit_year()
@@ -61,6 +64,7 @@ class Years extends CI_Controller
 		$year_id = $this->uri->segment(4);
 		$data = $this->Settings_model->get_year_info($year_id);
 		$this->load->view('settings/edit_year', $data);
+		$this->load->view('template/footer');
 	}
 	
 	function update_year()
@@ -81,11 +85,13 @@ class Years extends CI_Controller
 		
 		//load the view
 		$this->load->view('settings/settings_year_update');
+		$this->load->view('template/footer');
 	}
 	
 	function add_year()
 	{
 		$this->load->view('settings/settings_year_add', array('error' => ' ' ));
+		$this->load->view('template/footer');
 	}
 	
 	function year_delete()
@@ -95,6 +101,7 @@ class Years extends CI_Controller
 		$query = $this->db->delete('years', array('year_id' => $year_id)); 
 		
 		$this->load->view('settings/settings_year_update');	
+		$this->load->view('template/footer');
 	}
 
 }

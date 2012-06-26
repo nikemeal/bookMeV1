@@ -34,6 +34,7 @@ class General extends CI_Controller
 		$data['book_ahead'] = $this->Settings_model->get_users_book_ahead();
 		//load body with data
 		$this->load->view('settings/settings_general', $data);
+		$this->load->view('template/footer');
 	}
 	
 	function submit_general_settings()
@@ -50,6 +51,7 @@ class General extends CI_Controller
 		$this->Settings_model->update_book_ahead($book_ahead);
 
 		$this->load->view('settings/settings_general_update');
+		$this->load->view('template/footer');
 	}
 	
 	function deleteallbookings()
@@ -58,6 +60,7 @@ class General extends CI_Controller
 		{
 		$result['success'] = $this->Settings_model->wipebookings();
 		$this->load->view('settings/delete_all_bookings_result', $result);
+		$this->load->view('template/footer');
 		}
 	}
 	

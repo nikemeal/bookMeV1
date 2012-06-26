@@ -24,6 +24,7 @@ class Holidays extends CI_Controller
 		if ($data['holiday_count'] == 0)
 		{
 			$this->load->view('settings/settings_holidays_add', array('error' => ' ' ));
+			$this->load->view('template/footer');
 		} else 
 
 		//else get the list of holidays in the database and show them
@@ -33,6 +34,7 @@ class Holidays extends CI_Controller
 			$data['holidays'] = $result;
 		
 			$this->load->view('settings/settings_holidays_edit',$data);
+			$this->load->view('template/footer');
 		}
 	}
 	
@@ -54,6 +56,7 @@ class Holidays extends CI_Controller
 			
 		//then load the view
 		$this->load->view('settings/settings_holidays_update');
+		$this->load->view('template/footer');
 	}
 	
 	function edit_holiday()
@@ -61,6 +64,7 @@ class Holidays extends CI_Controller
 		$holiday_id = $this->uri->segment(4);
 		$data = $this->Settings_model->get_holiday_info($holiday_id);
 		$this->load->view('settings/edit_holiday', $data);
+		$this->load->view('template/footer');
 	}
 	
 	function update_holiday()
@@ -81,11 +85,13 @@ class Holidays extends CI_Controller
 		
 		//load the view
 		$this->load->view('settings/settings_holidays_update');
+		$this->load->view('template/footer');
 	}
 	
 	function add_holiday()
 	{
 		$this->load->view('settings/settings_holidays_add', array('error' => ' ' ));
+		$this->load->view('template/footer');
 	}
 	
 	function holiday_delete()
@@ -95,6 +101,7 @@ class Holidays extends CI_Controller
 		$query = $this->db->delete('holidays', array('holiday_id' => $holiday_id)); 
 		
 		$this->load->view('settings/settings_holidays_update');	
+		$this->load->view('template/footer');
 	}
 	
 }

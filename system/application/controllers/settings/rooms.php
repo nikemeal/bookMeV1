@@ -26,6 +26,7 @@ function room_settings()
 		if ($data['room_count'] == 0)
 		{
 			$this->load->view('settings/settings_rooms_add', array('error' => ' ' ));
+			$this->load->view('template/footer');
 		} else 
 		//else get the list of rooms in the database and show them
 		{
@@ -34,6 +35,7 @@ function room_settings()
 			$data['rooms'] = $result;
 
 			$this->load->view('settings/settings_rooms_edit',$data);
+			$this->load->view('template/footer');
 		}
 	}
 	
@@ -64,6 +66,7 @@ function room_settings()
 			 */ 
 			$error = array('error' => $this->upload->display_errors());
 			$this->load->view('settings/settings_rooms_add', $error);
+			$this->load->view('template/footer');
 		}
 			else
 		{
@@ -94,6 +97,7 @@ function room_settings()
 			
 			//then load the view
 			$this->load->view('settings/settings_rooms_update');
+			$this->load->view('template/footer');
 		}
 
 		}else 
@@ -111,12 +115,14 @@ function room_settings()
 			
 			//load the view
 			$this->load->view('settings/settings_rooms_update');
+			$this->load->view('template/footer');
 		}
 	}
 	
 	function add_room()
 	{
 		$this->load->view('settings/settings_rooms_add', array('error' => ' ' ));
+		$this->load->view('template/footer');
 	}
 	
 	function edit_room()
@@ -124,6 +130,7 @@ function room_settings()
 		$room_id = $this->uri->segment(4);
 		$data = $this->Settings_model->get_room_info($room_id);
 		$this->load->view('settings/edit_room', $data);
+		$this->load->view('template/footer');
 	}
 	
 	function update_room()
@@ -158,6 +165,7 @@ function room_settings()
 			
 			//all done, so lets load the view
 			$this->load->view('settings/settings_rooms_update');
+			$this->load->view('template/footer');
 
 		} else {
 
@@ -185,6 +193,7 @@ function room_settings()
 			 	*/ 
 				$error = array('error' => $this->upload->display_errors());
 				$this->load->view('settings/settings_rooms_add', $error);
+				$this->load->view('template/footer');
 			}
 			else
 			{
@@ -216,6 +225,7 @@ function room_settings()
 			
 				//then load the view
 				$this->load->view('settings/settings_rooms_update');
+				$this->load->view('template/footer');
 			}
 		}
 		else 
@@ -234,6 +244,7 @@ function room_settings()
 			
 			//load the view
 			$this->load->view('settings/settings_rooms_update');
+			$this->load->view('template/footer');
 		}
 		}
 	}
@@ -244,6 +255,7 @@ function room_settings()
 		$room_id = $this->uri->segment(4);
 		$query = $this->db->delete('rooms', array('room_id' => $room_id)); 
 		$this->load->view('settings/settings_rooms_update');	
+		$this->load->view('template/footer');
 	}
 
 }

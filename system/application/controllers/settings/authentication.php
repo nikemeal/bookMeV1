@@ -31,6 +31,7 @@ function auth_settings()
 		$data['ldap_admin_users'] = $this->Settings_model->get_ldap_admin_users();
 		
 		$this->load->view('settings/settings_auth', $data);
+		$this->load->view('template/footer');
 	}
 	
 	function submit_auth_settings()

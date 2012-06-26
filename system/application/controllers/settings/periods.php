@@ -25,12 +25,14 @@ class Periods extends CI_Controller
 		if ($data['period_count'] == 0)
 		{
 			$this->load->view('settings/settings_periods_add', array('error' => ' ' ));
+			$this->load->view('template/footer');
 		} else 
 		//else get the list of periods in the database, order them
 		//by period_start ascending and show them
 		{
 			$data['periods'] = $this->Settings_model->get_all_periods();
 			$this->load->view('settings/settings_periods_edit',$data);
+			$this->load->view('template/footer');
 		}
 	}
 	
@@ -45,6 +47,7 @@ class Periods extends CI_Controller
 			
 		//then load the view
 		$this->load->view('settings/settings_periods_update');
+		$this->load->view('template/footer');
 	}
 	
 	function edit_period()
@@ -52,6 +55,7 @@ class Periods extends CI_Controller
 		$period_id = $this->uri->segment(4);
 		$data = $this->Settings_model->get_period_info($period_id);
 		$this->load->view('settings/edit_period', $data);
+		$this->load->view('template/footer');
 	}
 	
 	function update_period()
@@ -65,11 +69,13 @@ class Periods extends CI_Controller
 		
 		//load the view
 		$this->load->view('settings/settings_periods_update');
+		$this->load->view('template/footer');
 	}
 	
 	function add_period()
 	{
 		$this->load->view('settings/settings_periods_add', array('error' => ' ' ));
+		$this->load->view('template/footer');
 	}
 	
 	function period_delete()
@@ -79,6 +85,7 @@ class Periods extends CI_Controller
 		$query = $this->db->delete('periods', array('period_id' => $period_id)); 
 		
 		$this->load->view('settings/settings_periods_update');	
+		$this->load->view('template/footer');
 	}
 	
 }

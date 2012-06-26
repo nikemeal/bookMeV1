@@ -34,6 +34,7 @@ class Main extends CI_Controller
 			$result = $query->result_array();
 			$info['rooms'] = $result;
 			$this->load->view('main_body_booking', $info);
+			$this->load->view('template/footer');
 		}
 		else
 		{
@@ -43,6 +44,7 @@ class Main extends CI_Controller
 			 * until then, if not logged in, show main page blank
 			 */
 			$this->load->view('main_body', $data);	
+			$this->load->view('template/footer');
 		}
 	}
 	

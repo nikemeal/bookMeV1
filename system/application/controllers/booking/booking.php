@@ -79,6 +79,7 @@ class Booking extends CI_Controller
 		// Load the view passing in all collected data
 
 		$this->load->view('booking/booking_room_overview', $data);
+		$this->load->view('template/footer');
 
 	}
 	
@@ -97,6 +98,7 @@ class Booking extends CI_Controller
 		{
 			$data['error_reason'] = "no period selected";
 			$this->load->view('booking/booking_error', $data);
+			$this->load->view('template/footer');
 		}
 		
 		//if there is at least 1 booking, we carry on
@@ -117,6 +119,7 @@ class Booking extends CI_Controller
 					{
 						$data['error_reason'] = "period already booked";
 						$this->load->view('booking/booking_error', $data);
+						$this->load->view('template/footer');
 					}
 					else 
 					{
@@ -135,6 +138,7 @@ class Booking extends CI_Controller
  						$data['booking_dayname'] = $this->Booking_model->get_dayname($bookings['day']);
  						$data['booking_type'] = "single";
 						$this->load->view('booking/booking_form', $data);
+						$this->load->view('template/footer');
 					}
 
 				}	
@@ -162,12 +166,14 @@ class Booking extends CI_Controller
 					{
 						$data['error_reason'] = "period already booked";
 						$this->load->view('booking/booking_error', $data);	
+						$this->load->view('template/footer');
 					}
 					
  					
 				}
 				$data['booking_type'] = "multi";
 				$this->load->view('booking/booking_form_multi', $data);
+				$this->load->view('template/footer');
 			}
 		}
 	}
@@ -266,6 +272,7 @@ class Booking extends CI_Controller
 		{
 			$data['error_reason'] = "no bookings selected";
 			$this->load->view('booking/booking_error', $data);
+			$this->load->view('template/footer');
 		}
 		
 		//if there is at least 1 booking, we carry on
@@ -280,6 +287,7 @@ class Booking extends CI_Controller
 			{
 				$data['error_reason'] = "multiple cells selected";
 				$this->load->view('booking/booking_error', $data);	
+				$this->load->view('template/footer');
 			}
 			//if there is only one cell selected, we can continue
 			else
@@ -291,6 +299,7 @@ class Booking extends CI_Controller
 					//empty cells!
 					$data['error_reason'] = "cell is empty";
 					$this->load->view('booking/booking_error', $data);
+					$this->load->view('template/footer');
 				}
 				else 
 				{
@@ -324,11 +333,13 @@ class Booking extends CI_Controller
 							$data['booking_id'] = $booking_id;
 							$data['delete_type'] = "single";
 							$this->load->view('booking/booking_delete', $data);
+							$this->load->view('template/footer');
 						}
 						else 
 						{
 							$data['error_reason'] = "not your booking";
 							$this->load->view('booking/booking_error', $data);
+							$this->load->view('template/footer');
 						}
 					}
 					else 
@@ -340,6 +351,7 @@ class Booking extends CI_Controller
 							//want non admin users delete block bookings
 							$data['error_reason'] = "not admin block delete";
 							$this->load->view('booking/booking_error', $data);
+							$this->load->view('template/footer');
 						}
 						else 
 						{
@@ -358,6 +370,7 @@ class Booking extends CI_Controller
 							$data['booking_id'] = $booking_id;
 							$data['delete_type'] = "block";
 							$this->load->view('booking/booking_delete', $data);
+							$this->load->view('template/footer');
 						}
 					}
 				}
@@ -408,6 +421,7 @@ function process_edit_booking()
 		{
 			$data['error_reason'] = "no bookings selected";
 			$this->load->view('booking/booking_error', $data);
+			$this->load->view('template/footer');
 		}
 		
 		//if there is at least 1 booking, we carry on
@@ -422,6 +436,7 @@ function process_edit_booking()
 			{
 				$data['error_reason'] = "multiple cells selected";
 				$this->load->view('booking/booking_error', $data);	
+				$this->load->view('template/footer');
 			}
 			//if there is only one cell selected, we can continue
 			else
@@ -433,6 +448,7 @@ function process_edit_booking()
 					//empty cells!
 					$data['error_reason'] = "cell is empty";
 					$this->load->view('booking/booking_error', $data);
+					$this->load->view('template/footer');
 				}
 				else 
 				{
@@ -474,11 +490,13 @@ function process_edit_booking()
 							$data['booking_id'] = $booking_id;
 							$data['bookingtype'] = "single";
 							$this->load->view('booking/booking_edit', $data);
+							$this->load->view('template/footer');
 						}
 						else 
 						{
 							$data['error_reason'] = "not your booking";
 							$this->load->view('booking/booking_error', $data);
+							$this->load->view('template/footer');
 						}
 					}
 					else 
@@ -490,6 +508,7 @@ function process_edit_booking()
 							//want non admin users editing block bookings
 							$data['error_reason'] = "not admin block delete";
 							$this->load->view('booking/booking_error', $data);
+							$this->load->view('template/footer');
 						}
 						else 
 						{
@@ -516,6 +535,7 @@ function process_edit_booking()
 							$data['booking_id'] = $booking_id;
 							$data['bookingtype'] = "block";
 							$this->load->view('booking/booking_edit', $data);
+							$this->load->view('template/footer');
 						}
 					}
 				}

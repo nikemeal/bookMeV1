@@ -25,6 +25,7 @@ function subject_settings()
 		if ($data['subject_count'] == 0)
 		{
 			$this->load->view('settings/settings_subjects_add', array('error' => ' ' ));
+			$this->load->view('template/footer');
 		} else 
 
 		//else get the list of subjects in the database and show them
@@ -33,6 +34,7 @@ function subject_settings()
 			$result = $query->result_array();
 			$data['subjects'] = $result;
 			$this->load->view('settings/settings_subjects_edit',$data);
+			$this->load->view('template/footer');
 		}
 	}
 	
@@ -46,6 +48,7 @@ function subject_settings()
 			
 		//then load the view
 		$this->load->view('settings/settings_subjects_update');
+		$this->load->view('template/footer');
 	}
 	
 	function edit_subject()
@@ -53,6 +56,7 @@ function subject_settings()
 		$subject_id = $this->uri->segment(4);
 		$data = $this->Settings_model->get_subject_info($subject_id);
 		$this->load->view('settings/edit_subject', $data);
+		$this->load->view('template/footer');
 	}
 	
 	function update_subject()
@@ -65,11 +69,13 @@ function subject_settings()
 		
 		//load the view
 		$this->load->view('settings/settings_subjects_update');
+		$this->load->view('template/footer');
 	}
 	
 	function add_subject()
 	{
 		$this->load->view('settings/settings_subjects_add', array('error' => ' ' ));
+		$this->load->view('template/footer');
 	}
 	
 	function subject_delete()
@@ -79,6 +85,7 @@ function subject_settings()
 		$query = $this->db->delete('subjects', array('subject_id' => $subject_id)); 
 		
 		$this->load->view('settings/settings_subjects_update');	
+		$this->load->view('template/footer');
 	}
 	
 }

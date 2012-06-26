@@ -96,6 +96,7 @@ function processlogin()
 		{
 			//user has failed authentication - show why
 			$this->load->view('login_failed');
+			$this->load->view('template/footer');
 		}
 	}
 	
