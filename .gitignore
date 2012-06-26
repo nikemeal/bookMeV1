@@ -2,5 +2,5 @@
 .settings
 .buildpath
 .project
-todo.php
+.gitignore
 Thumbs.db

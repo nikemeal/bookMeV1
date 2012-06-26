@@ -103,7 +103,7 @@
 					<br><br>
 						<form class="well" action="<?php echo site_url(); ?>/settings/general/deleteallbookings" method="post" id="deleteallbookings" name="delete">
 						<input type="hidden" name="action" value="delete_all_bookings">
-							Clicking OK will wipe ALL the bookings in the database.  
+							Clicking OK will wipe ALL the bookings in the database.  This cannot be undone and is completely destructive 
 					<br><br>
 							Other settings such as holidays, periods, 
 							subjects, etc. will be kept
