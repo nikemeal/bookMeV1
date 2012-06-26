@@ -47,7 +47,7 @@ if($_POST) {
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<link rel="stylesheet" href="../css/bootstrap.css">
+		<link rel="stylesheet" href="../css/bootstrap.css" />
 		<script src="../javascript/jquery.js"></script>
 		<script src="../javascript/bootstrap-tooltip.js"></script>
 		<script src="../javascript/bootstrap-popover.js"></script>
@@ -77,15 +77,15 @@ if($_POST) {
 						<div class="control-group">
           					<label class="control-label" for="hostname">Hostname</label>
            					<div class="controls">
-              					<input type="text" class="input-xlarge" value="localhost" id="hostname" name="hostname">
-              					<p class="help-block"><i class="icon-question-sign"rel="tooltip" title="The hostname MySQL is installed on, typically localhost"></i></p>
+              					<input type="text" class="input-xlarge" value="localhost" id="hostname" name="hostname" />
+              					<p class="help-block"><i class="icon-question-sign" rel="tooltip" title="The hostname MySQL is installed on, typically localhost"></i></p>
             				</div>
           				</div>
           
 						<div class="control-group">
           					<label class="control-label" for="username">Username</label>
            					<div class="controls">
-              					<input type="text" class="input-xlarge" id="username" name="username">
+              					<input type="text" class="input-xlarge" id="username" name="username" />
               					<p class="help-block"><i class="icon-question-sign"rel="tooltip" title="The username you created for BookMe in MySQL"></i></p>
             				</div>
           				</div>
@@ -93,7 +93,7 @@ if($_POST) {
           				<div class="control-group">
           					<label class="control-label" for="password">Password</label>
            					<div class="controls">
-              					<input type="text" class="input-xlarge" id="password" name="password">
+              					<input type="text" class="input-xlarge" id="password" name="password" />
               					<p class="help-block"><i class="icon-question-sign"rel="tooltip" title="The password you created for BookMe in MySQL"></i></p>
             				</div>
           				</div>
@@ -101,7 +101,7 @@ if($_POST) {
           				<div class="control-group">
           					<label class="control-label" for="database">Database name</label>
            					<div class="controls">
-              					<input type="text" class="input-xlarge" id="database" name="database">
+              					<input type="text" class="input-xlarge" id="database" name="database" />
               					<p class="help-block"><i class="icon-question-sign"rel="tooltip" title="The name you gave the database for BookMe"></i></p>
             				</div>
           				</div>
