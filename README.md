@@ -33,6 +33,11 @@ to get BookMe working 100% for IE9.
 IE8 will still work with 99% of BookMe, it is only the multi-booking (booking multiple
 periods at once in the same week) there is an issue with.
 
+When running through the install script, after clicking Install you may get an error
+mentioning BG_COLOUR not found.  This is because the install script has forwarded on to
+the actual site before the databse has been imported.  
+Refreshing the page (F5) fixes this
+
 Thanks to
 ---------------------
 
