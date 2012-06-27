@@ -84,7 +84,7 @@ class adLDAP {
     * 
     * @var string
     */   
-	protected $accountSuffix = "@dhs.internal";
+	protected $accountSuffix = "";
     
     /**
     * The base dn for your domain
@@ -93,7 +93,7 @@ class adLDAP {
     * 
     * @var string
     */
-	protected $baseDn = "DC=dhs,DC=internal"; 
+	protected $baseDn = ""; 
     
     /** 
     * Port used to talk to the domain controllers. 
@@ -108,7 +108,7 @@ class adLDAP {
     * 
     * @var array
     */
-    protected $domainControllers = array("dhs-dc.dhs.internal");
+    protected $domainControllers = array("");
 	
     /**
     * Optional account with higher privileges for searching
@@ -117,8 +117,8 @@ class adLDAP {
     * @var string
     * @var string
     */
-	protected $adminUsername = "administrator";
-    protected $adminPassword = "akmnDHS1$";
+	protected $adminUsername = "";
+    protected $adminPassword = "";
     
     /**
     * AD does not return the primary group. http://support.microsoft.com/?kbid=321360
