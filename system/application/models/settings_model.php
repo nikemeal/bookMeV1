@@ -8,9 +8,6 @@ class Settings_model extends CI_Model {
 		function __construct()
 		{
 			parent::__construct();
-			//uncomment the lines below when finished testing
-			//require ('application/libraries/adLDAP.php');
-			//$this->adldap = new adldap();
 		}
 		
 		function get_school_name()
@@ -91,6 +88,46 @@ class Settings_model extends CI_Model {
  			$row = $query->row_array();
 			$result = $row['ldap_admin_users'];
  			return $result; 
+		}
+		
+		function get_all_ldap_groups()
+		{
+			$this->load->library('adLDAP');
+			$this->adldap = new adldap();
+			$ldap_groups = $this->adldap->group()->allSecurity();
+			return $ldap_groups;
+		}
+		
+		function save_ldap_admin_groups($groups)
+		{
+			$user = '';
+			// For each 'users' group chosen, stack it into a string seperated by a semi-colon
+			foreach ($groups as $group) 
+			{
+				$user .= $group.';';
+			}
+			
+			$data = array('setting_value' => $user);
+			$this->db->update('settings',$data, 'setting_name = \'ldap_admin_users\'');
+		}
+		
+		function save_ldap_standard_groups($groups)
+		{
+			$user = '';
+			// For each 'users' group chosen, stack it into a string seperated by a semi-colon
+			foreach ($groups as $group) 
+			{
+				$user .= $group.';';
+			}
+			
+			$data = array('setting_value' => $user);
+			$this->db->update('settings',$data, 'setting_name = \'ldap_standard_users\'');
+		}
+		
+		function split_semi_colon($string)
+		{
+			$data = explode(';',$string);
+			return $data;
 		}
 		
 		function get_bookme_version()

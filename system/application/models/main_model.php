@@ -8,9 +8,6 @@ class Main_model extends CI_Model {
 		function __construct()
 		{
 			parent::__construct();
-			//uncomment the lines below when finished testing
-			//require ('application/libraries/adLDAP.php');
-			//$this->adldap = new adldap();
 		}
 		
 		/*

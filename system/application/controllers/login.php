@@ -34,33 +34,23 @@ function processlogin()
  		$row = $query->row_array();
 		$allow_local_login = $row['allow_local_login'];
 		
-		if ($_POST['username'] == 'bookme_admin' && $allow_local_login == false)
+		//local usernames OK but local login not allowed
+		if ($_POST['username'] == 'bookme_admin' && $allow_local_login == false xor $_POST['username'] == 'bookme_staff' && $allow_local_login == false)
 		{
 			$this->session->set_userdata('local_login', 'denied');
 			$this->session->set_userdata('authenticated', false);
 		}
-		elseif ($_POST['username'] == 'bookme_staff' && $allow_local_login == false)
-		{
-			$this->session->set_userdata('local_login', 'denied');
-			$this->session->set_userdata('authenticated', false);
-		}
-		elseif ($_POST['username'] == 'bookme_admin' && $_POST['password'] == 'cr3ation' && $allow_local_login == true)
+		//local username and password OK and local login allowed
+		elseif ($_POST['username'] == 'bookme_admin' && $_POST['password'] == 'cr3ation' && $allow_local_login == true xor $_POST['username'] == 'bookme_staff' && $_POST['password'] == 'cr3ation' && $allow_local_login == true)
 		{
 			$this->session->set_userdata('authenticated', true);
 			$this->session->set_userdata('accesslevel', 'admin');
 			$this->session->set_userdata('fullname', 'BookMe Local Admin');
 			$this->session->set_userdata('username', 'bookme_admin');
 			redirect('/', 'refresh');
-		}  
-		elseif ($_POST['username'] == 'bookme_staff' && $_POST['password'] == 'cr3ation' && $allow_local_login == true)
-		{			
-			$this->session->set_userdata('authenticated', true);
-			$this->session->set_userdata('accesslevel', 'staff');
-			$this->session->set_userdata('fullname', 'BookMe Local Staff');
-			$this->session->set_userdata('username', 'bookme_staff');
-			redirect('/', 'refresh');
-		} 
-		else 
+		}
+		//otherwise let's check the name against LDAP  
+		else
 		{
 		$this->Main_model->authenticate_user($_POST['username'],$_POST['password']);
 		}
@@ -72,23 +62,13 @@ function processlogin()
 		$authenticated = $this->session->userdata('authenticated');
 		if ($authenticated == 1) 
 		{
+			//the user is authenticated so lets get their details
 			$this->Main_model->get_user_details($_POST['username']);	
 			$groups = $this->Main_model->get_user_groups($_POST['username']);
 			//need function to check group membership before redirecting
-			//this will need to be cleaned up for the future
-			$group1 = "Domain Admins";
-			$group2 = "Junior Teaching Staff - Security Group";
-			$ingroup1 = $this->Main_model->user_ingroup($_POST['username'],$group1);
-			$ingroup2 = $this->Main_model->user_ingroup($_POST['username'],$group2);	 
-			if ($ingroup1 == 1) 
-			{
-				$this->session->set_userdata('accesslevel', 'admin');
-			}
-			if ($ingroup2 == 1) 
-			{
-				$this->session->set_userdata('accesslevel', 'staff');
-			}
-			//end of function that needs to be cleaned up
+		
+			
+	
 			redirect('/', 'refresh');
 		}
 		
