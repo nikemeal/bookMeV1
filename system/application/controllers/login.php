@@ -65,11 +65,31 @@ function processlogin()
 			//the user is authenticated so lets get their details
 			$this->Main_model->get_user_details($_POST['username']);	
 			$groups = $this->Main_model->get_user_groups($_POST['username']);
-			//need function to check group membership before redirecting
-		
 			
+			//need to check and see 
+			$ldap_standard_users = $this->Settings_model->get_ldap_standard_users();
+			$ldap_admin_users = $this->Settings_model->get_ldap_admin_users();
+			$ldap_standard_users = $this->Settings_model->split_semi_colon($ldap_standard_users);
+			$ldap_admin_users = $this->Settings_model->split_semi_colon($ldap_admin_users);
+			
+			//first check standard user membership and set to 'staff' if yes
+			$standard_user_check = $this->Settings_model->user_ingroup($_POST['username'],$ldap_standard_users);
+			if ($standard_user_check == 1)
+			{
+				$this->session->set_userdata('accesslevel', 'staff');
+			}
+			//then check admin membership and set to 'admin' if yes.  if admin member
+			//is also member of staff, this will override staff and set to admin
+			$admin_user_check = $this->Settings_model->user_ingroup($_POST['username'],$ldap_admin_users);
+			if ($admin_user_check == 1)
+			{
+				$this->session->set_userdata('accesslevel', 'admin');
+			}
+			$authenticated = $this->session->userdata('authenticated'); 
+			$accesslevel = $this->session->userdata('accesslevel');
+			echo $authenticated . ' ' . $accesslevel;
 	
-			redirect('/', 'refresh');
+			//redirect('/', 'refresh');
 		}
 		
 		else 

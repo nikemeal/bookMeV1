@@ -1,2 +1,2 @@
 <?php 
-redirect('/settings/periods/period_settings;/', 'refresh');
+redirect('/settings/periods/period_settings/', 'refresh');

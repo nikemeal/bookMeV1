@@ -1,3 +1,3 @@
 <?php 
 $this->load->helper('url');
-redirect('/settings/subjects/subject_settings;/', 'refresh');
+redirect('/settings/subjects/subject_settings/', 'refresh');

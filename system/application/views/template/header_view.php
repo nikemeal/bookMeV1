@@ -32,6 +32,6 @@
 	<script src="<?php echo base_url(); ?>javascript/bootstrap-transition.js"></script>
 	<script src="<?php echo base_url(); ?>javascript/bootstrap-tooltip.js"></script>
 	<script src="<?php echo base_url(); ?>javascript/bootstrap-popover.js"></script>
-	<script src="<?php echo base_url(); ?>javascript/jscolor.js"></script>
+	<script src="<?php echo base_url(); ?>javascript/jscolor/jscolor.js"></script>
 </head>
 <body>
