@@ -20,7 +20,7 @@ General Instructions
 4. Enter the details of the MySQL database you created earlier and click install
 
 5. Log in using bookme_admin/cr3ation to set initial settings.  Remember to turn
-local logins off once LDAP is successfully working
+local logins off once LDAP is successfully working (for security purposes)
 
 
 Known Bugs
@@ -37,7 +37,9 @@ Thanks to
 First and foremost thanks to webman and hightower/slim_jims for the amazing help
 and guidance during all of this.
 
-[CI Installer] by Mike Crittenden [http://github.com/mikecrittenden/ci-installer/]
+[CI Installer] by Mike Crittenden [http://github.com/mikecrittenden/ci-installer]
+
+[adLDAP] by Scott Barnett & Richard Hyland [http://adldap.sourceforge.net]
 
 [jQuery timepicker addon] by Trent Richardson [http://trentrichardson.com]
 

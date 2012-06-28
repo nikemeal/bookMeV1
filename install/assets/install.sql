@@ -2,7 +2,8 @@
 -- version 3.4.10.1
 -- http://www.phpmyadmin.net
 --
--- Generation Time: Jun 28, 2012 at 02:41 PM
+-- Host: localhost
+-- Generation Time: Jun 28, 2012 at 09:59 PM
 -- Server version: 5.5.20
 -- PHP Version: 5.3.10
 
@@ -28,12 +29,16 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `block_bookings` (
   `block_booking_id` int(11) NOT NULL AUTO_INCREMENT,
   `subject_id` int(11) NOT NULL,
-  `booking_classname` varchar(255) NOT NULL,
+  `booking_classname` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `year_id` int(11) NOT NULL,
+  `room_id` int(11) NOT NULL,
+  `period_id` int(11) NOT NULL,
   PRIMARY KEY (`block_booking_id`),
   KEY `subjectid` (`subject_id`),
-  KEY `yearid` (`year_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  KEY `yearid` (`year_id`),
+  KEY `periodid` (`period_id`),
+  KEY `roomid` (`room_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -57,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `bookings` (
   KEY `periodid` (`period_id`),
   KEY `roomid` (`room_id`),
   KEY `blockbookingid` (`block_booking_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -71,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `holidays` (
   `holiday_start` date NOT NULL,
   `holiday_end` date NOT NULL,
   PRIMARY KEY (`holiday_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -86,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `periods` (
   `period_end` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `period_bookable` tinyint(1) NOT NULL,
   PRIMARY KEY (`period_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -101,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `rooms` (
   `room_image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `room_image_tn` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`room_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -144,7 +149,7 @@ CREATE TABLE IF NOT EXISTS `subjects` (
   `subject_colour` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `subject_use_shading` tinyint(1) NOT NULL,
   PRIMARY KEY (`subject_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -154,13 +159,13 @@ CREATE TABLE IF NOT EXISTS `subjects` (
 
 CREATE TABLE IF NOT EXISTS `years` (
   `year_id` int(11) NOT NULL AUTO_INCREMENT,
-  `year_name` varchar(255) NOT NULL,
+  `year_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `year_start` date NOT NULL,
   `year_end` date NOT NULL,
   `year_isactive` tinyint(1) NOT NULL,
   PRIMARY KEY (`year_id`),
   KEY `yearid` (`year_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
 -- Constraints for dumped tables
@@ -170,17 +175,19 @@ CREATE TABLE IF NOT EXISTS `years` (
 -- Constraints for table `block_bookings`
 --
 ALTER TABLE `block_bookings`
-  ADD CONSTRAINT `block_bookings_ibfk_1` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`) ON UPDATE NO ACTION,
-  ADD CONSTRAINT `block_bookings_ibfk_2` FOREIGN KEY (`year_id`) REFERENCES `years` (`year_id`) ON UPDATE NO ACTION;
+  ADD CONSTRAINT `block_bookings_ibfk_6` FOREIGN KEY (`period_id`) REFERENCES `periods` (`period_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `block_bookings_ibfk_3` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `block_bookings_ibfk_4` FOREIGN KEY (`year_id`) REFERENCES `years` (`year_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `block_bookings_ibfk_5` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`room_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `bookings`
 --
 ALTER TABLE `bookings`
-  ADD CONSTRAINT `bookings_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`) ON UPDATE NO ACTION,
-  ADD CONSTRAINT `bookings_ibfk_3` FOREIGN KEY (`period_id`) REFERENCES `periods` (`period_id`) ON UPDATE NO ACTION,
-  ADD CONSTRAINT `bookings_ibfk_5` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`room_id`) ON UPDATE NO ACTION,
-  ADD CONSTRAINT `bookings_ibfk_6` FOREIGN KEY (`block_booking_id`) REFERENCES `block_bookings` (`block_booking_id`) ON UPDATE NO ACTION;
+  ADD CONSTRAINT `bookings_ibfk_10` FOREIGN KEY (`block_booking_id`) REFERENCES `block_bookings` (`block_booking_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `bookings_ibfk_7` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `bookings_ibfk_8` FOREIGN KEY (`period_id`) REFERENCES `periods` (`period_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `bookings_ibfk_9` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`room_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
