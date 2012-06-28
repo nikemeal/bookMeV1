@@ -28,6 +28,16 @@ function processlogin()
 		 * if login success, load login success view then redirect back to main 
 		 * page which should now show other info 
 		 */
+		$this->load->library('encrypt');
+				$ldap_conn_info = array
+				(
+				'domain_controllers' => array($this->Settings_model->get_ldap_server()),
+				'account_suffix' => $this->Settings_model->get_ldap_account_suffix(),
+				'base_dn' => $this->Settings_model->get_ldap_basedn(),
+				'admin_username' => $this->Settings_model->get_ldap_username(),
+				'admin_password' => $this->encrypt->decode($this->Settings_model->get_ldap_password())
+				);
+		
 		$this->db->select('setting_value as allow_local_login from settings');
  		$this->db->where('setting_name = \'allow_local_login\'');
 		$query = $this->db->get();
@@ -41,7 +51,7 @@ function processlogin()
 			$this->session->set_userdata('authenticated', false);
 		}
 		//local username and password OK and local login allowed
-		elseif ($_POST['username'] == 'bookme_admin' && $_POST['password'] == 'cr3ation' && $allow_local_login == true xor $_POST['username'] == 'bookme_staff' && $_POST['password'] == 'cr3ation' && $allow_local_login == true)
+		elseif ($_POST['username'] == 'bookme_admin' && $_POST['password'] == 'cr3ation' && $allow_local_login == true)
 		{
 			$this->session->set_userdata('authenticated', true);
 			$this->session->set_userdata('accesslevel', 'admin');
@@ -49,11 +59,42 @@ function processlogin()
 			$this->session->set_userdata('username', 'bookme_admin');
 			redirect('/', 'refresh');
 		}
+		elseif ($_POST['username'] == 'bookme_staff' && $_POST['password'] == 'cr3ation' && $allow_local_login == true)
+		{
+			$this->session->set_userdata('authenticated', true);
+			$this->session->set_userdata('accesslevel', 'staff');
+			$this->session->set_userdata('fullname', 'BookMe Local Staff');
+			$this->session->set_userdata('username', 'bookme_staff');
+			redirect('/', 'refresh');
+		}
+		//local username OK but password wrong
+		elseif ($_POST['username'] == 'bookme_admin' && $_POST['password'] !== 'cr3ation' && $allow_local_login == true xor $_POST['username'] == 'bookme_staff' && !$_POST['password'] !== 'cr3ation' && $allow_local_login == true)
+		{
+			$this->session->set_userdata('authenticated', false);
+		}
 		//otherwise let's check the name against LDAP  
 		else
 		{
-		$this->Main_model->authenticate_user($_POST['username'],$_POST['password']);
+			//need to see if all ldap settings are filled in, if not, give error
+			$ldap_servers = $this->Settings_model->get_ldap_server();
+			$ldap_account_suffix = $this->Settings_model->get_ldap_account_suffix();
+			$ldap_basedn = $this->Settings_model->get_ldap_basedn();
+			$ldap_username = $this->Settings_model->get_ldap_username();
+			$ldap_password = $this->Settings_model->get_ldap_password();
+			if (empty($ldap_servers) || empty($ldap_account_suffix) || empty($ldap_basedn) || empty($ldap_username) || empty($ldap_password))
+			{
+				$this->session->set_userdata('deny_reason', 'ldapnotset');
+			}
+			else 
+			{
+				$authenticate = $this->Main_model->authenticate_user($_POST['username'],$_POST['password'], $ldap_conn_info);
+				if (!($authenticate == 0) || !($authenticate == 1))
+				{
+					$this->session->set_userdata('ldap_error', $authenticate);
+				}
+			}
 		}
+		
 		/*
 		 * If user is authenticated, let's get their group membership and then
 		 * check that membership against the allowed groups
@@ -63,33 +104,41 @@ function processlogin()
 		if ($authenticated == 1) 
 		{
 			//the user is authenticated so lets get their details
-			$this->Main_model->get_user_details($_POST['username']);	
-			$groups = $this->Main_model->get_user_groups($_POST['username']);
+			$this->Main_model->get_user_details($_POST['username'], $ldap_conn_info);	
+			$groups = $this->Main_model->get_user_groups($_POST['username'], $ldap_conn_info);
 			
-			//need to check and see 
+			//get arrays for the standard and admin groups set in the DB
 			$ldap_standard_users = $this->Settings_model->get_ldap_standard_users();
 			$ldap_admin_users = $this->Settings_model->get_ldap_admin_users();
 			$ldap_standard_users = $this->Settings_model->split_semi_colon($ldap_standard_users);
 			$ldap_admin_users = $this->Settings_model->split_semi_colon($ldap_admin_users);
 			
 			//first check standard user membership and set to 'staff' if yes
-			$standard_user_check = $this->Settings_model->user_ingroup($_POST['username'],$ldap_standard_users);
+			$standard_user_check = $this->Main_model->user_ingroup($_POST['username'],$ldap_standard_users, $ldap_conn_info);
 			if ($standard_user_check == 1)
 			{
 				$this->session->set_userdata('accesslevel', 'staff');
 			}
+			
 			//then check admin membership and set to 'admin' if yes.  if admin member
 			//is also member of staff, this will override staff and set to admin
-			$admin_user_check = $this->Settings_model->user_ingroup($_POST['username'],$ldap_admin_users);
+			$admin_user_check = $this->Main_model->user_ingroup($_POST['username'],$ldap_admin_users, $ldap_conn_info);
 			if ($admin_user_check == 1)
 			{
 				$this->session->set_userdata('accesslevel', 'admin');
 			}
-			$authenticated = $this->session->userdata('authenticated'); 
-			$accesslevel = $this->session->userdata('accesslevel');
-			echo $authenticated . ' ' . $accesslevel;
-	
-			//redirect('/', 'refresh');
+			
+			//if the user is not a member of any of the groups, error out with reason
+			if (!($this->session->userdata('accesslevel')))
+			{
+				$this->session->set_userdata('deny_reason', 'notingroup');
+				$this->load->view('login_failed');
+				$this->load->view('template/footer');
+			}
+			else 
+			{
+				redirect('/', 'refresh');	
+			}
 		}
 		
 		else 

@@ -29,49 +29,93 @@ class Main_model extends CI_Model {
 		 * If the authentication is successful, true is returned, otherwise
 		 * false is returned
 		 */
-		function authenticate_user($username, $password)
+		function authenticate_user($username, $password, $ldap_conn_info)
 		{	
-			$this->load->library('adLDAP');
-			$this->adldap = new adldap();
-			$authenticated = $this->adldap->user()->authenticate($username, $password);
+		try 
+			{
+				require_once('adldap/adLDAP.php');
+				$adldap = new adldap($ldap_conn_info);
+			}
+			catch (adLDAPException $e) 
+			{
+   				return $e->getMessage();
+   				exit();   
+			}
+			
+			$authenticated = $adldap->user()->authenticate($username, $password);
 			if ($authenticated == 1) {
 				$this->session->set_userdata('authenticated', true);
 			}
 			return $authenticated;
 		} 
 		
-		function get_user_details($username)
+		function get_user_details($username, $ldap_conn_info)
 		{
-			$this->load->library('adLDAP');
-			$this->adldap = new adldap();
-			$userinfo = $this->adldap->user()->info($username, array("samaccountname","displayname","mail"));
+			try 
+			{
+				require_once('adldap/adLDAP.php');
+				$adldap = new adldap($ldap_conn_info);
+			}
+			catch (adLDAPException $e) 
+			{
+   				return $e->getMessage();
+   				exit();   
+			}
+		
+			$userinfo = $adldap->user()->info($username, array("samaccountname","displayname","mail"));
 			$fullname = $userinfo[0]["displayname"][0];
 			$username = $userinfo[0]["samaccountname"][0];
-			$email = $userinfo[0]["mail"][0];
+			
+			if (!empty($userinfo[0]["mail"][0]))
+			{
+				$email = $userinfo[0]["mail"][0];
+			}else 
+			{
+				$email = null;
+			}
 			$this->session->set_userdata('fullname', $fullname);
 			$this->session->set_userdata('username', $username);
 			$this->session->set_userdata('email', $email);
 		}
 		
-		function get_user_groups($username)
+		function get_user_groups($username, $ldap_conn_info)
 		{
 			/*
 			 * check which groups the user is a member of
 			 */
-			$this->load->library('adLDAP');
-			$this->adldap = new adldap();
-			$groups = $this->adldap->user()->groups($username, false);
+		try 
+			{
+				require_once('adldap/adLDAP.php');
+				$adldap = new adldap($ldap_conn_info);
+			}
+			catch (adLDAPException $e) 
+			{
+   				return $e->getMessage();
+   				exit();   
+			}
+			$groups = $adldap->user()->groups($username, false);
 			return $groups;
 		}
 		
-		function user_ingroup($username,$groups)
+		function user_ingroup($username,$groups, $ldap_conn_info)
 		{
+		try 
+			{
+				require_once('adldap/adLDAP.php');
+				$adldap = new adldap($ldap_conn_info);
+			}
+			catch (adLDAPException $e) 
+			{
+   				return $e->getMessage();
+   				exit();   
+			}
 			$ingroup = 0;
 			foreach ($groups as $group)
 			{
-				$ingroup = $this->adldap->user()->ingroup($username,$group,false);
+				$ingroup = $adldap->user()->ingroup($username,$group,false);
 				if ($ingroup)
 				{
+					$ingroup = 1;
 					break;
 				}
 			}

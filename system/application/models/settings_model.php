@@ -3,8 +3,6 @@
 class Settings_model extends CI_Model {
  
 	
-		private $adldap;
-		
 		function __construct()
 		{
 			parent::__construct();
@@ -22,11 +20,11 @@ class Settings_model extends CI_Model {
 		
 		function get_ldap_server()
 		{
-			$this->db->select('setting_value as ldap_server from settings');
- 			$this->db->where('setting_name = \'ldap_server\'');
+			$this->db->select('setting_value as ldap_servers from settings');
+ 			$this->db->where('setting_name = \'ldap_servers\'');
 			$query = $this->db->get();
  			$row = $query->row_array();
-			$result = $row['ldap_server'];
+			$result = $row['ldap_servers'];
  			return $result; 
 		}
 		
@@ -90,12 +88,37 @@ class Settings_model extends CI_Model {
  			return $result; 
 		}
 		
-		function get_all_ldap_groups()
+		function get_all_ldap_groups($ldap_conn_info)
 		{
-			$this->load->library('adLDAP');
-			$this->adldap = new adldap();
-			$ldap_groups = $this->adldap->group()->allSecurity();
+		try 
+			{
+				include('adldap/adLDAP.php');
+				$adldap = new adldap($ldap_conn_info);
+			}
+			catch (adLDAPException $e) 
+			{
+   				$error =  $e->getMessage();
+   				return false;
+   				exit();   
+			}
+			
+			$ldap_groups = $adldap->group()->allSecurity();
 			return $ldap_groups;
+		}
+		
+		function test_ldap_settings($ldap_conn_info)
+		{
+			try 
+			{
+				include('adldap/adLDAP.php');
+				$adldap = new adldap($ldap_conn_info);
+			}
+			catch (adLDAPException $e) 
+			{
+   				return $e->getMessage();
+   				exit();   
+			}
+			return "Success";
 		}
 		
 		function save_ldap_admin_groups($groups)
@@ -128,6 +151,33 @@ class Settings_model extends CI_Model {
 		{
 			$data = explode(';',$string);
 			return $data;
+		}
+		
+		function update_ldap_servers($ldap_servers)
+		{
+			$data = array('setting_value' => $ldap_servers,);
+			$this->db->update('settings',$data, 'setting_name = \'ldap_servers\'');
+		}
+		
+		function update_ldap_account_suffix($ldap_account_suffix)
+		{
+			$data = array('setting_value' => $ldap_account_suffix,);
+			$this->db->update('settings',$data, 'setting_name = \'ldap_account_suffix\'');
+		}
+		function update_ldap_basedn($ldap_basedn)
+		{
+			$data = array('setting_value' => $ldap_basedn,);
+			$this->db->update('settings',$data, 'setting_name = \'ldap_basedn\'');
+		}
+		function update_ldap_username($ldap_username)
+		{
+			$data = array('setting_value' => $ldap_username,);
+			$this->db->update('settings',$data, 'setting_name = \'ldap_username\'');
+		}
+		function update_ldap_password($ldap_password)
+		{
+			$data = array('setting_value' => $ldap_password,);
+			$this->db->update('settings',$data, 'setting_name = \'ldap_password\'');
 		}
 		
 		function get_bookme_version()
