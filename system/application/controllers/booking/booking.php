@@ -67,6 +67,7 @@ class Booking extends CI_Controller
 		$data['week_commencing'] = date('jS \o\f F Y', mktime(0,0,0,$displaymonth, $displayday, $displayyear));
  		
 		$data['room_id'] = $room_id;
+		$data['room_name'] = $this->Booking_model->get_roomname($room_id);
 		$data['periods'] = $this->Settings_model->get_all_periods();
 		$data['datepicker'] = $date;
 		$data['holidays'] = $this->Booking_model->get_all_holidays();

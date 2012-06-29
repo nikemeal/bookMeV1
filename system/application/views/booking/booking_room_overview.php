@@ -10,7 +10,7 @@
 
 			<div class="span12">
 				<center>
-					<h4 class="span10">Bookings for the week commencing <?php echo $week_commencing;?></h4>
+					<h4 class="span10"><?php echo $room_name;?> - Bookings for the week commencing <?php echo $week_commencing;?></h4>
 				</center>
 				<br><br>
 				<table class="table span10 table-bordered" id="selectable">

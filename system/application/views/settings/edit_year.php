@@ -59,7 +59,7 @@
 			<script>
 					$(function() 
 					{
-					var dates = $( "#holiday_start, #holiday_end" ).datepicker(
+					var dates = $( "#year_start, #year_end" ).datepicker(
 						{
 							dateFormat: "dd-mm-yy",
 							defaultDate: "+1w",
@@ -67,7 +67,7 @@
 							numberOfMonths: 2,
 							onSelect: function( selectedDate ) 
 								{
-									var option = this.id == "holiday_start" ? "minDate" : "maxDate",
+									var option = this.id == "year_start" ? "minDate" : "maxDate",
 									instance = $( this ).data( "datepicker" ),
 									date = $.datepicker.parseDate(
 									instance.settings.dateFormat ||

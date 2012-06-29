@@ -61,6 +61,14 @@ class Booking_model extends CI_Model {
 		return $result;
 	}
 	
+	function get_roomname($room_id)
+	{
+		$query = $this->db->get_where('rooms', "room_id = $room_id");
+		$row = $query->row_array();
+		$result = $row['room_name'];
+		return $result;
+	}
+	
 	function add_booking($subject_id, $period_id, $room_id, $booking_username, $booking_displayname, $booking_classname, $booking_date, $booking_isblock='0', $block_booking_id=null)
 	{
 		$data = array(
