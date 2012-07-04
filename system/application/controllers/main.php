@@ -30,6 +30,7 @@ class Main extends CI_Controller
 		 */
 		if ($data['year_count'] > 0 && $data['room_count'] > 0 && $data['period_count'] > 0 && $data['subject_count'] > 0)
 		{
+			$this->db->order_by("room_name", "asc"); 
 			$query = $this->db->get('rooms');
 			$result = $query->result_array();
 			$info['rooms'] = $result;

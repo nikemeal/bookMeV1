@@ -213,7 +213,9 @@ class Booking extends CI_Controller
 				 	(
 				 		'subject_id' => $subject_id,
 				 		'booking_classname' => $booking_classname,
-				 		'year_id' => $year_id
+				 		'year_id' => $year_id,
+				 		'room_id' => $room_id,
+				 		'period_id' => $period_id
 				 	);
 			 	$this->db->insert('block_bookings',$block_array);
 			 	

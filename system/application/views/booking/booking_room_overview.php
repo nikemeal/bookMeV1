@@ -1,19 +1,50 @@
 <?php $accesslevel = $this->session->userdata('accesslevel'); ?>
 <style>
-	.ui-selecting { background: #FECA40; }
 	.ui-selected { background: #F39814;  }
 </style>
 
 <div class="row-fluid">
 	<div class="span12">
 		<div class="row-fluid">
-
-			<div class="span12">
+			
+			<div >
 				<center>
-					<h4 class="span10"><?php echo $room_name;?> - Bookings for the week commencing <?php echo $week_commencing;?></h4>
+					<h4><?php echo $room_name;?> - Bookings for the week commencing <?php echo $week_commencing;?> - <input type="hidden" alt="click here"id="datepicker"></h4>
 				</center>
-				<br><br>
-				<table class="table span10 table-bordered" id="selectable">
+			</div>
+			
+			<br>
+			
+			<div class="span3">
+				&nbsp;
+			</div>
+					
+			<div class="span2">
+				<form  method="post" action="<?php echo site_url('booking/booking/process_booking'); ?>" id="add">
+					<input type="hidden" name="url" value="<?php echo current_url()?>">
+					<button type="submit" class="btn btn-success">Book selected period(s)</button>
+    			</form>
+   			</div>
+     				
+    		<div class="span2">
+    			<form  method="post" action="<?php echo site_url('booking/booking/process_edit_booking'); ?>" id="edit">
+					<input type="hidden" name="url" value="<?php echo current_url()?>">
+					<button type="submit" class="btn btn-info">Edit selected booking</button>
+    			</form>
+    		</div>
+      				
+    		<div class="span2">
+	  			<form  method="post" action="<?php echo site_url('booking/booking/process_delete_booking'); ?>" id="delete">
+					<input type="hidden" name="url" value="<?php echo current_url()?>">
+					<button type="submit" class="btn btn-danger">Delete selected booking</button>
+    			</form>
+    		</div>
+		
+			<div class="span3">
+				&nbsp;
+			</div>
+				
+			<table class="table span12 table-bordered" id="selectable">
 
   				<thead>
    					<tr style="width:100px;">
@@ -169,29 +200,7 @@
 				?>
 				</tbody>
 			</table>
-			
-				<div class="span2">
-					<div id="datepicker">
-					</div>
-					<br>
-					
-					<form  method="post" action="<?php echo site_url('booking/booking/process_booking'); ?>" id="add">
-						<input type="hidden" name="url" value="<?php echo current_url()?>">
-						<button type="submit" class="btn btn-success">Book selected period(s)</button>
-      				</form>
-      				
-      				<form  method="post" action="<?php echo site_url('booking/booking/process_edit_booking'); ?>" id="edit">
-						<input type="hidden" name="url" value="<?php echo current_url()?>">
-						<button type="submit" class="btn btn-info">Edit selected booking</button>
-      				</form>
-      				
-      				<form  method="post" action="<?php echo site_url('booking/booking/process_delete_booking'); ?>" id="delete">
-						<input type="hidden" name="url" value="<?php echo current_url()?>">
-						<button type="submit" class="btn btn-danger">Delete selected booking</button>
-      				</form>
-				</div>
-				
-			</div>
+
 		</div>
 	</div>
 </div>
@@ -229,6 +238,10 @@
 
 		$( "#datepicker" ).datepicker(
 		{
+			showOn: "button",
+			buttonImage: "<?php echo base_url(); ?>img/calendar.png",
+			buttonImageOnly: true,
+			buttonText: 'Click to show the calendar',
 			dateFormat: 'yy-mm-dd',
 			showOtherMonths: true,
 			showButtonPanel: true,

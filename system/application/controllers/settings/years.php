@@ -27,7 +27,7 @@ class Years extends CI_Controller
 			$this->load->view('template/footer');
 		} else 
 
-		//else get the list of holidays in the database and show them
+		//else get the list of years in the database and show them
 		{
 			$query = $this->db->order_by('year_start', 'asc')->get('years');
 			$result = $query->result_array();
@@ -51,9 +51,15 @@ class Years extends CI_Controller
  		$arr =explode("-",$temp_end_date);
  		$arr=array_reverse($arr);
  		$year_end =implode($arr,"-");
-		 		
-		$this->Settings_model->add_year($year_name, $year_start, $year_end);
-			
+ 		$year_isactive = $this->input->post('active_year');
+ 		
+ 		$year_id = $this->Settings_model->add_year($year_name, $year_start, $year_end, $year_isactive);
+
+		if ($year_isactive == 1)
+		{
+			$this->Settings_model->set_active_year($year_id);
+		}	
+	
 		//then load the view
 		$this->load->view('settings/settings_year_update');
 		$this->load->view('template/footer');
@@ -80,8 +86,14 @@ class Years extends CI_Controller
  		$arr =explode("-",$temp_end_date);
  		$arr=array_reverse($arr);
  		$year_end =implode($arr,"-");
+		$year_isactive = $this->input->post('active_year');
 		
-		$this->Settings_model->update_year($year_id, $year_name, $year_start, $year_end);
+		$this->Settings_model->update_year($year_id, $year_name, $year_start, $year_end, $year_isactive);
+		
+		if ($year_isactive == 1)
+		{
+			$this->Settings_model->set_active_year($year_id);
+		}
 		
 		//load the view
 		$this->load->view('settings/settings_year_update');
@@ -98,10 +110,25 @@ class Years extends CI_Controller
 	{
 		$this->load->model('Main_model');
 		$year_id = $this->uri->segment(4);
-		$query = $this->db->delete('years', array('year_id' => $year_id)); 
+		$year_isactive = $this->Settings_model->get_year_info($year_id);
 		
-		$this->load->view('settings/settings_year_update');	
-		$this->load->view('template/footer');
+		//if the year is active, error out until user has changed the active year
+		if ($year_isactive['year_isactive'] == 1)
+		{
+			$data['error'] = 'yes';
+			$this->load->view('settings/settings_year_update', $data);	
+			$this->load->view('template/footer'); 
+
+		}
+		else 
+		{
+			$query = $this->db->delete('years', array('year_id' => $year_id));
+			$this->load->view('settings/settings_year_update');	
+			$this->load->view('template/footer'); 
+		}
+		
+		
+		
 	}
 
 }

@@ -35,7 +35,39 @@
               					<p class="help-block"><i class="icon-question-sign"rel="tooltip" title="What day does the academic year end?  This will mark the last bookable day in the year"></i></p>
             				</div>
             				<br>
+            				
+            				<?php 
+            				$year_count = $this->Settings_model->get_year_count();
+            				if ($year_count == 0)
+            				{
+            					echo '<div class="alert alert-info">This is the first academic year added, so will be set as the active year</div>';
+            					echo '<input type="hidden" name="active_year" value="1">';
+            				} 
+            				else 
+            				{
+            				?>
+            				
+            				<label class="control-label" for="subject_id">Active academic year</label>
+            					<div class="controls">
+              						<select name= "active_year" class="span2">
+	                		            <option value="0">no</option>
+	                		            <option value="1">yes</option>
+		                			</select>
+                				    <p class="help-block"><i class="icon-question-sign"rel="tooltip" title="Is this the current active academic year?  This will determine which year block bookings are made"></i></p>
+					            	
+            					</div>
+            					
+            					
+            				<br>
+            					
+            				<?php 
+            				}
+            				?>
+            			
+            				
+            				
 							<div class="form-actions">
+							
             					<button type="submit" class="btn btn-primary">Add academic year</button>
             					<a class="btn btn-info" href="year_settings">back</a>
             				</div>

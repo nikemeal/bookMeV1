@@ -26,7 +26,7 @@
             				<br>
             				<label class="control-label" for="input02">Computer count</label>
             				<div class="controls">
-              					<input type="text" class="input-xlarge " id="input02" name="pc_count" value="<?php echo $room_pc_count;?>">
+              					<input type="number" class="input-xlarge required" id="input02" name="pc_count" value="<?php echo $room_pc_count;?>">
               					<p class="help-block"><i class="icon-question-sign"rel="tooltip" title="How many computers are available to the user when they book this room?"></i></p>
             				</div>
             				<br>

@@ -44,6 +44,32 @@
               					<p class="help-block"><i class="icon-question-sign"rel="tooltip" title="What day does the academic year end?  This will mark the last bookable day in the year"></i></p>
             				</div>
             				<br>
+            				<label class="control-label" for="subject_id">Active academic year</label>
+            					<div class="controls">
+              						<select name= "active_year" class="span2">
+	                		            <?php
+	                		            if ($year_isactive == 0)
+	                		            {
+	                		            ?>
+	                		            <option value="0">no</option>
+	                		            <option value="1">yes</option>
+	                		            <?php
+	                		            }
+	                		            else
+	                		            {
+	                		            ?>
+	                		            <option value="1">yes</option>
+	                		            <?php
+	                		            }
+	                		            ?>
+	                		           
+		                			</select>
+                				    <p class="help-block"><i class="icon-question-sign"rel="tooltip" title="Is this the current active academic year?  This will determine which year block bookings are made"></i></p>
+					            	
+            					</div>
+            					
+            					
+            				<br>
             				<input type="hidden" name="year_id" value="<?php echo $year_id;?>">
 							<div class="form-actions">
             					<button type="submit" class="btn btn-primary">Update academic year</button>

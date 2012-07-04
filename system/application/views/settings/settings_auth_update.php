@@ -1,7 +1,9 @@
 <?php if (isset($test_ldap)){?>
 <script type="text/javascript" >
 $(document).ready(function() { 
- 
+ 	$('#testldap').modal({
+ 		backdrop: "static"
+ 	});
     $('#testldap').modal('show') 
  
 }); 

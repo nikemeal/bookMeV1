@@ -10,7 +10,12 @@
 			<center>
 				<div class="alert alert-info"><h3>Academic Years</h3></div>
 			</center>
-			<div class="alert alert-danger">don't forget to select an active year in general settings</div>
+						<?php
+			if (isset($error))
+			{
+			echo '<div class="alert alert-danger"><h3>This is the current active year.  Please set another year active before deleting this one</h3></div>';	
+			} 
+			?>
 			<h4>Click on a year to edit it</h4>
 			
 			<br>
@@ -40,7 +45,7 @@
 						<?php 
 							if ($year['year_isactive'])
 							{?>
-							<h5><b><i>This is the current active year</i></b></h5>
+							<h5><b><i><font color="red">This is the current active year</font></i></b></h5>
 						<?php }?>
 						
 						
