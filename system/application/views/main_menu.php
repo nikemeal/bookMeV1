@@ -61,20 +61,37 @@
                 				<li><a href="<?php echo site_url('settings/holidays/holiday_settings'); ?>">Holidays</a></li>
                 			</ul>
             			</li>
+            			
             			<?php } ?>
             			
 					</ul>
+					<div class="pull-right navbar-text"><a data-toggle="modal" href="#aboutme" id="about" data-content="About BookMe"><i class="icon-question-sign icon-white"></i></a></div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div id="loginbox" class="modal hide fade">
+		
+	<div id="aboutme" class="modal hide fade">
+	<div class="modal-body">
+		
+
+		<center>
+			<div class="alert alert-info" >About BookMe</div>
+			<div>
+				<h5>Currently running Version: 1.1.6</h5>
+			</div>
+			<br><br>
+			<button class="btn btn-success" data-dismiss="modal">close</button>	
+		</center>
+	</div>
+</div>
+	
+<div id="loginbox" class="modal hide fade">
 	<div class="modal-body">
 		<button class="close" data-dismiss="modal">×</button>
 		<br><br>
 		<center>
-			<button class="btn btn-danger span5" >Please enter your login details</button>
-		<br><br>
+			<div class="alert alert-danger" >Please enter your login details</div>
 			<form class="well" action="<?php echo base_url().index_page();?>/login/processlogin" method="post" id="processlogin" name="login">
 				<label>Username</label>
 				<input class="span2" id="username" size="16" type="text" name="username">
@@ -83,11 +100,15 @@
 				<input class="span2" id="password" size="16" type="password" name="password">
 					<br>
 					<br>
-				<button type="submit" class="btn">Submit</button>
+				<button type="submit" class="btn btn-success">Submit</button>
 			</form>
 		</center>
 	</div>
 </div>
+
+
+
+
 	<script type="text/javascript" language="JavaScript">
 		$('#loginbox').on('shown', function () {
 		$("input#username").focus();

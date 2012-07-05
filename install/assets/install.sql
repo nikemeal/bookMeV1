@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jun 28, 2012 at 09:59 PM
+-- Generation Time: Jul 05, 2012 at 09:36 PM
 -- Server version: 5.5.20
 -- PHP Version: 5.3.10
 
@@ -134,8 +134,7 @@ INSERT INTO `settings` (`setting_name`, `setting_value`) VALUES
 ('ldap_standard_users', ''),
 ('ldap_admin_users', ''),
 ('bg_colour', '699A83'),
-('user_book_in_advance', '-1'),
-('bookme_version', '1.1.6');
+('user_book_in_advance', '-1');
 
 -- --------------------------------------------------------
 

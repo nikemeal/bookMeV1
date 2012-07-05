@@ -4,3 +4,4 @@
 .project
 .gitignore
 Thumbs.db
+system/application/config/database.php

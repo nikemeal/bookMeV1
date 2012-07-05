@@ -180,16 +180,6 @@ class Settings_model extends CI_Model {
 			$this->db->update('settings',$data, 'setting_name = \'ldap_password\'');
 		}
 		
-		function get_bookme_version()
-		{
-			$this->db->select('setting_value as bookme_version from settings');
- 			$this->db->where('setting_name = \'bookme_version\'');
-			$query = $this->db->get();
- 			$row = $query->row_array();
-			$result = $row['bookme_version'];
- 			return $result; 
-		}
-		
 		function get_bg_colour()
 		{
 			$this->db->select('setting_value as bg_colour from settings');

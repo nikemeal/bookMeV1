@@ -41,7 +41,7 @@
                 					<?php 
                 					}?>
                 				    </select>
-					            	<p class="help-block"><i class="icon-question-sign"rel="tooltip" title="If set to yes, 'bookme_admin' can log in even if LDAP isn't configured.  If set to no, 'bookme_admin' is denied login completely"></i></p>
+					            	<p class="help-block"><i class="icon-question-sign"rel="tooltip" title="If set to yes, 'bookme_admin' and 'bookme_staff' can log in even if LDAP isn't configured.  If set to no, 'bookme_admin' and 'bookme_staff' are denied login completely"></i></p>
             					</div>
           					</div>
             					
@@ -51,11 +51,8 @@
               					<input class="input" value="<?php echo $book_ahead;?>" type="number" name="book_ahead">
               					<p class="help-block"><i class="icon-question-sign"rel="tooltip" title="How many weeks ahead can standard users book?  Set to -1 for unlimited"></i></p>
 							</div>
-							<br>
-            				<label class="control-label" for="disabledInput">BookMe version</label>
-      						<div class="controls">
-              					<input class="input-xlarge disabled" id="disabledInput" value="<?php echo $bookme_version;?>" type="text" disabled>
-							</div>
+
+
 							<div class="form-actions">
             					<button type="submit" class="btn btn-primary">Save changes</button>
             					<a class="btn btn-info" href="<?php echo base_url().index_page();?>">back</a>

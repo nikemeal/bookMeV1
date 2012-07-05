@@ -25,7 +25,6 @@ class General extends CI_Controller
 		 * settings view
 		 */
 		$data['school_name'] = $this->Settings_model->get_school_name();
-		$data['bookme_version'] = $this->Settings_model->get_bookme_version();
 		$data['allow_local_login'] = $this->Settings_model->get_allow_local_login();
 		$data['bg_colour'] = $this->Settings_model->get_bg_colour();
 		$data['booking_count'] = $this->Settings_model->get_booking_count();				
