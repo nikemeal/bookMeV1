@@ -135,7 +135,7 @@ INSERT INTO `settings` (`setting_name`, `setting_value`) VALUES
 ('ldap_admin_users', ''),
 ('bg_colour', '699A83'),
 ('user_book_in_advance', '-1'),
-('bookme_version', '1.1.5');
+('bookme_version', '1.1.6');
 
 -- --------------------------------------------------------
 
