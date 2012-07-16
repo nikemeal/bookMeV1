@@ -30,9 +30,8 @@ function subject_settings()
 
 		//else get the list of subjects in the database and show them
 		{
-			$query = $this->db->get('subjects');
-			$result = $query->result_array();
-			$data['subjects'] = $result;
+			$query = $this->Settings_model->get_all_subjects();
+			$data['subjects'] = $query;
 			$this->load->view('settings/settings_subjects_edit',$data);
 			$this->load->view('template/footer');
 		}

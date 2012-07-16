@@ -79,23 +79,7 @@ $(document).ready(function() {
 <div class="row-fluid">
 	<div class="span12">
 		<div class="row-fluid">
-
 	
-				<div class="span3">&nbsp;</div>
-				<div class="span3 well">
-					<div>
-						
-					</div>
-
-						<p>error info here</p>
-
-
-						
-
-				</div>
-				<div class="span3">&nbsp;</div>
-
-			
 		</div>
 	</div>
 </div>

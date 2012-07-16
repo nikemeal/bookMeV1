@@ -342,7 +342,8 @@ class Settings_model extends CI_Model {
 		
 		function get_all_subjects()
 		{
-			$query = $this->db->get('subjects');
+			$query = $this->db->order_by('subject_name', 'desc')->get('subjects');
+			
 			$result = $query->result_array();
 			return $result;
 		}
