@@ -16,7 +16,7 @@
 				<?php foreach ($holidays as $holiday){ ?>
 
 
-					<a class="btn span4" href="edit_holiday/<?php echo $holiday['holiday_id'];?>"> 
+					<a class="btn span2" href="edit_holiday/<?php echo $holiday['holiday_id'];?>"> 
 						<h5><?php echo $holiday['holiday_name'] ?></h5>
 						
 						<?php
@@ -40,7 +40,7 @@
 						
 
 					</a>
-<div class="span10">&nbsp;</div>
+
 				<?php }?>
 
 				<div class="span10">

@@ -61,7 +61,7 @@
 					{
 					?>
 						<center>
-							<div class="alert alert-info">
+							<div class="alert alert-danger span5">
 								<h4>Cannot show LDAP groups - LDAP settings not configured correctly</h4>
 							</div>
 						</center>
@@ -70,7 +70,7 @@
 					else
 					{ 
       				?>
-      			 <form class="form-horizontal span6" method="post" action="submit_auth_users">
+      			 <form class="form-horizontal span5" method="post" action="submit_auth_users">
         			<fieldset>
       				<center>
 						<div class="alert alert-info">

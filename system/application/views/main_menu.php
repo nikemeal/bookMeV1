@@ -78,7 +78,7 @@
 		<center>
 			<div class="alert alert-info" >About BookMe</div>
 			<div>
-				<h5>Currently running Version: 1.1.6</h5>
+				<h5>Currently running Version: 1.1.7</h5>
 			</div>
 			<br><br>
 			<button class="btn btn-success" data-dismiss="modal">close</button>	

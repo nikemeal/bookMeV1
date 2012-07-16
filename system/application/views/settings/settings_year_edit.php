@@ -23,7 +23,7 @@
 				<?php foreach ($years as $year){ ?>
 
 
-					<a class="btn span4" href="edit_year/<?php echo $year['year_id'];?>"> 
+					<a class="btn span2" href="edit_year/<?php echo $year['year_id'];?>"> 
 						<h5><?php echo $year['year_name'] ?></h5>
 						
 						<?php
@@ -56,7 +56,7 @@
 						
 
 					</a>
-<div class="span10">&nbsp;</div>
+
 				<?php }?>
 
 				<div class="span10">

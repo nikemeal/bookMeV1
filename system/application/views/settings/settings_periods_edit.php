@@ -16,7 +16,7 @@
 				<?php foreach ($periods as $period){ ?>
 
 
-					<a class="btn span4" href="edit_period/<?php echo $period['period_id'];?>"> 
+					<a class="btn span2" href="edit_period/<?php echo $period['period_id'];?>"> 
 						
 						
 						<?php if ($period['period_bookable'] == 1){ ?>
@@ -39,7 +39,7 @@
 							<?php }?>
 						</h5>
 					</a>
-<div class="span10">&nbsp;</div>
+
 				<?php }?>
 
 				<div class="span10">
