@@ -29,6 +29,7 @@
 	<script src="<?php echo base_url(); ?>javascript/jquery-ui-timepicker-addon.js"></script>
 	<script src="<?php echo base_url(); ?>javascript/bootstrap-dropdown.js"></script>
 	<script src="<?php echo base_url(); ?>javascript/bootstrap-modal.js"></script>
+	<script src="<?php echo base_url(); ?>javascript/bootstrap-tab.js"></script>
 	<script src="<?php echo base_url(); ?>javascript/bootstrap-transition.js"></script>
 	<script src="<?php echo base_url(); ?>javascript/bootstrap-tooltip.js"></script>
 	<script src="<?php echo base_url(); ?>javascript/bootstrap-popover.js"></script>

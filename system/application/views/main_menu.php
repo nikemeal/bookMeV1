@@ -61,7 +61,7 @@
                 				<li><a href="<?php echo site_url('settings/holidays/holiday_settings'); ?>">Holidays</a></li>
                 			</ul>
             			</li>
-            			
+            			<li><a href="<?php echo site_url('reports/reports'); ?>"><i class="icon-list-alt icon-white"></i> Reports</a></a></li>
             			<?php } ?>
             			
 					</ul>

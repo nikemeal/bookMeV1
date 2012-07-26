@@ -21,7 +21,7 @@ class Booking extends CI_Controller
 	
 	function index()
 	{
-		echo "Index function of bookings";
+
 	}
 
 	function booking_room_overview($room_id=1, $date='')
