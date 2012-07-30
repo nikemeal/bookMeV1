@@ -56,7 +56,7 @@
             			
             				<input type="hidden" name="period_id" value="<?php echo $period_id;?>">
             				<input type="hidden" name="room_id" value="<?php echo $room_id;?>">  
-            				<?php if($accesslevel !== 'admin'){?>
+            				<?php if(!($accesslevel == 'admin')){?>
 							<input type="hidden" name="booking_username" value="<?php echo $this->session->userdata('username');?>">
             				<input type="hidden" name="booking_displayname" value="<?php echo $this->session->userdata('fullname');?>">
 							<?php }	?>

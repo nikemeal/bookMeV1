@@ -1,3 +1,4 @@
+<?php $accesslevel = $this->session->userdata('accesslevel'); ?>
 <div class="row-fluid">
 	<div class="span12">
 		<div class="row-fluid">
@@ -33,6 +34,19 @@
                 				    </select>
 					            	
             					</div>
+	            				<?php if ($accesslevel == 'admin') {?>
+	            				<br>
+	            				<label class="control-label" for="block_username">Username</label>
+	            				<div class="controls">
+									<input type="text" name="booking_username" class="required" value="<?php echo $this->session->userdata('username');?>">
+	            				</div>
+	            				<br>
+	            				<label class="control-label" for="block_displayname">Display name</label>
+	            				<div class="controls">
+	            					 <input type="text" name="booking_displayname" class="required" value="<?php echo $this->session->userdata('fullname');?>">
+	            				</div>
+	           					<?php }?>
+	           					
           					</div>
           					<?php 
           					$count = '1';
@@ -40,8 +54,10 @@
           					{?>
             				<input type="hidden" name="booking[<?php echo $count;?>][period_id]" value="<?php echo $booking['period_id'];?>">
             				<input type="hidden" name="booking[<?php echo $count;?>][room_id]" value="<?php echo $booking['room_id'];?>">  
+            				<?php if(!($accesslevel == 'admin')){?>
             				<input type="hidden" name="booking[<?php echo $count;?>][booking_username]" value="<?php echo $this->session->userdata('username');?>">
             				<input type="hidden" name="booking[<?php echo $count;?>][booking_displayname]" value="<?php echo $this->session->userdata('fullname');?>">
+            				<?php }	?>
             				<input type="hidden" name="booking[<?php echo $count;?>][booking_date]" value="<?php echo $booking['booking_date'];?>">
             				<input type="hidden" name="booking_type" value="<?php echo $booking_type;?>">
             				<input type="hidden" name="previous_url" value="<?php echo $previous_url;?>">  

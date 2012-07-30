@@ -249,8 +249,24 @@ class Booking extends CI_Controller
 				$subject_id = $_POST['subject_id'];
 				$period_id = $booking['period_id'];
 				$room_id = $booking['room_id'];
-				$booking_username = $booking['booking_username'];
-				$booking_displayname = $booking['booking_displayname'];
+				if (!isset($booking['booking_username']))
+				{
+					$booking_username = $_POST['booking_username'];
+				}
+				else
+				{
+					$booking_username = $booking['booking_username'];	
+				}
+				if (!isset($booking['booking_displayname']))
+				{
+					$booking_displayname = $_POST['booking_displayname'];
+				}
+				else
+				{
+					$booking_displayname = $booking['booking_displayname'];	
+				}
+				
+				
 				$booking_classname = $_POST['booking_classname'];
 				$booking_date = $booking['booking_date'];
 				$this->Booking_model->add_booking($subject_id, $period_id, $room_id, $booking_username, $booking_displayname, $booking_classname, $booking_date);

@@ -23,6 +23,7 @@ if ($authenticated == 1 AND $accesslevel == "admin") {
     					<li class="active"><a href="#dept" data-toggle="tab">Department Reports</a></li>
     					<li><a href="#user" data-toggle="tab">User Reports</a></li>
     				</ul>
+
     			<div class="tab-content">
     				<div class="tab-pane active" id="dept">
     					<table class="span4 table table-striped table-bordered table-condensed">
@@ -43,7 +44,7 @@ if ($authenticated == 1 AND $accesslevel == "admin") {
     				<div class="tab-pane" id="user">
     					<table class="span4 table table-striped table-bordered table-condensed">
 							<thead>
-								<td><strong>Department</strong></td><td><strong># of bookings</strong></td>
+								<td><strong>User</strong> <em>( department)</em></td><td><strong># of bookings</strong></td>
 							</thead>
 							<?php 
 							foreach ($user_report as $report)

@@ -61,9 +61,10 @@
                 				<li><a href="<?php echo site_url('settings/holidays/holiday_settings'); ?>">Holidays</a></li>
                 			</ul>
             			</li>
+            			<!-- 
             			<li><a href="<?php echo site_url('reports/reports'); ?>"><i class="icon-list-alt icon-white"></i> Reports</a></a></li>
             			<?php } ?>
-            			
+            			 -->
 					</ul>
 					<div class="pull-right navbar-text"><a data-toggle="modal" href="#aboutme" id="about" data-content="About BookMe"><i class="icon-question-sign icon-white"></i></a></div>
 				</div>
@@ -78,7 +79,7 @@
 		<center>
 			<div class="alert alert-info" >About BookMe</div>
 			<div>
-				<h5>Currently running Version: 1.1.7</h5>
+				<h5>Currently running Version: 1.1.8</h5>
 			</div>
 			<br><br>
 			<button class="btn btn-success" data-dismiss="modal">close</button>	
