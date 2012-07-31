@@ -49,6 +49,7 @@
            				
            				<!-- if the user is an admin, show the settings options, else hide them -->
            				<?php if ($accesslevel == 'admin') {?>
+           				<li class="divider-vertical"></li>
            				<li class="dropdown">
               				<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-cog icon-white"></i> Settings <b class="caret"></b></a>
               				<ul class="dropdown-menu">
@@ -61,10 +62,9 @@
                 				<li><a href="<?php echo site_url('settings/holidays/holiday_settings'); ?>">Holidays</a></li>
                 			</ul>
             			</li>
-            			<!-- 
             			<li><a href="<?php echo site_url('reports/reports'); ?>"><i class="icon-list-alt icon-white"></i> Reports</a></a></li>
             			<?php } ?>
-            			 -->
+            			
 					</ul>
 					<div class="pull-right navbar-text"><a data-toggle="modal" href="#aboutme" id="about" data-content="About BookMe"><i class="icon-question-sign icon-white"></i></a></div>
 				</div>

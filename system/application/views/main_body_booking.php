@@ -16,12 +16,11 @@ if ($authenticated == 1) {
 				&nbsp;
 			</div>
 
-			
-				
 					<div class="span10 well">
-			
-			<div class="alert alert-info"><h4>Click on a room or resource to make a booking for it</h4></div>
-			<br>
+			<center>
+			<div class="label label-info span4"><font size="2">Click on a room or resource to make a booking for it</font></div>
+			</center>
+			<br><br>
 
 				<?php foreach ($rooms as $room){ ?>
 

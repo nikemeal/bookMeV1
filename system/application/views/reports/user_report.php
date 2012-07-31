@@ -17,57 +17,34 @@ if ($authenticated == 1 AND $accesslevel == "admin") {
 
 			<div class="span7 well">
 			
-			<div class="alert alert-info"><h4><center>Room usage report for <?php echo $room_name; ?> between <?php echo $date_from_readable; ?> and <?php echo $date_to_readable; ?></center></h4></div>
-				<div class="tabbable">
-    				<ul class="nav nav-pills">
-    					<li class="active"><a href="#dept" data-toggle="tab">Department Reports</a></li>
-    					<li><a href="#user" data-toggle="tab">User Reports</a></li>
-    				</ul>
+			<div class="alert alert-info"><h4><center>User usage report between <?php echo $date_from_readable; ?> and <?php echo $date_to_readable; ?></center></h4></div>
 
-    			<div class="tab-content">
-    				<div class="tab-pane active" id="dept">
+
+    				<div>
     					<table class="span4 table table-striped table-bordered table-condensed">
 							<thead>
-								<td><strong>Department</strong></td><td><strong># of bookings</strong></td>
+								<td><strong>User</strong></td><td><strong># of bookings</strong></td>
 							</thead>
 							<?php 
-							foreach ($dept_report as $report)
+							foreach ($user_report as $report)
 							{?>
 								<tr>
-									<td><?php echo $report['Subject'];?></td><td><?php echo $report['Count'];?></td>
+									<td><?php echo $report['Name'];?></td><td><?php echo $report['Count'];?></td>
 								</tr>
 							<?php 
 							}
 							?>
 						</table>
     				</div>
-    				<div class="tab-pane" id="user">
-    					<table class="span4 table table-striped table-bordered table-condensed">
-							<thead>
-								<td><strong>User</strong> <em>(department)</em></td><td><strong># of bookings</strong></td>
-							</thead>
-							<?php 
-							foreach ($user_report as $report)
-							{?>
-								<tr>
-									<td><?php echo $report['Name']." (<em>".$report['Subject']."</em>)";?></td><td><?php echo $report['Count'];?></td>
-								</tr>
-							<?php 
-							}
-							?>
-						</table>
-	    			</div>
-    			</div>
-    		</div>
-	
-			<div class="span3 alert alert-danger"><strong>Total bookings for this period</strong> : <?php echo $dept_report_count['Count']; ?></div>
+    					
+			<div class="span3 alert alert-danger"><strong>Total bookings for this period</strong> : <?php echo $user_report_count['Count']; ?></div>
 
 			</div>
 							
 			<div class="span3 well">
 			<div class="alert alert-info"><h4><center>Select search date</center></h4></div>
 				<div>
-					<form class="form" id="search" method="post" action="<?php echo site_url('reports/reports/room_report/'.$this->uri->segment(4)); ?>">
+					<form class="form" id="search" method="post" action="<?php echo site_url('reports/reports/user_report'); ?>">
 					<label for="from" class="label label-info">From</label>
 					<input type="text" id="from" name="date_from"/>
 					<br><br>

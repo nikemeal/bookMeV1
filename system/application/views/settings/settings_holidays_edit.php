@@ -8,10 +8,13 @@
 
 			<div class="span10 well">
 			<center>
-				<div class="alert alert-info"><h3>Holiday</h3></div>
+				<div class="alert alert-info"><h3>Holidays</h3></div>
+			
+			<div class="label label-info span2">
+			<font size="2">Click on a holiday to edit it</font>
+			</div>
 			</center>
-			<h4>Click on a holiday to edit it</h4>
-			<br>
+			<br><br>
 
 				<?php foreach ($holidays as $holiday){ ?>
 
@@ -45,8 +48,9 @@
 
 				<div class="span10">
 					<br>
-					<a class="btn btn-primary" href="add_holiday"><i class="icon-plus"></i> Add a new holiday</a>
-
+					<div class="form-actions">
+						<a class="btn btn-primary" href="add_holiday"><i class="icon-plus"></i> Add a new holiday</a>
+					</div>
 				</div>
 				
 			</div>

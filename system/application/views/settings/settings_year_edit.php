@@ -9,6 +9,9 @@
 			<div class="span10 well">
 			<center>
 				<div class="alert alert-info"><h3>Academic Years</h3></div>
+			<div class="label label-info span2">
+			<font size="2">Click on a year to edit it</font>
+			</div>
 			</center>
 						<?php
 			if (isset($error))
@@ -16,9 +19,8 @@
 			echo '<div class="alert alert-danger"><h3>This is the current active year.  Please set another year active before deleting this one</h3></div>';	
 			} 
 			?>
-			<h4>Click on a year to edit it</h4>
 			
-			<br>
+			<br><br>
 			
 				<?php foreach ($years as $year){ ?>
 
@@ -47,22 +49,16 @@
 							{?>
 							<h5><b><i><font color="red">This is the current active year</font></i></b></h5>
 						<?php }?>
-						
-						
-					
-						
-						
-						
-						
-
+		
 					</a>
 
 				<?php }?>
 
 				<div class="span10">
 					<br>
-					<a class="btn btn-primary" href="add_year"><i class="icon-plus"></i> Add a new academic year</a>
-
+					<div class="form-actions">
+						<a class="btn btn-primary" href="add_year"><i class="icon-plus"></i> Add a new academic year</a>
+					</div>
 				</div>
 				
 			</div>

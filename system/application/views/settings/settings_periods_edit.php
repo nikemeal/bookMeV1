@@ -9,9 +9,12 @@
 			<div class="span10 well">
 			<center>
 				<div class="alert alert-info"><h3>Periods</h3></div>
+			
+			<div class="label label-info span2">
+			<font size="2">Click on a period to edit it</font>
+			</div>
 			</center>
-			<h4>Click on a period to edit it</h4>
-			<br>
+			<br><br>
 
 				<?php foreach ($periods as $period){ ?>
 
@@ -44,8 +47,9 @@
 
 				<div class="span10">
 					<br>
+					<div class="form-actions">
 					<a class="btn btn-primary" href="add_period"><i class="icon-plus"></i> Add a new period</a>
-
+					</div>
 				</div>
 				
 			</div>

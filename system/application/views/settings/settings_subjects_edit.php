@@ -9,9 +9,12 @@
 			<div class="span10 well">
 			<center>
 				<div class="alert alert-info"><h3>Subjects</h3></div>
+			
+			<div class="label label-info span2">
+			<font size="2">Click on a subject to edit it</font>
+			</div>
 			</center>
-			<h4>Click on a subject to edit it</h4>
-			<br>
+			<br><br>
 
 				<?php foreach ($subjects as $subject){ ?>
 					
@@ -27,8 +30,9 @@
 				
 				<div class="span10">
 					<br>
-					<a class="btn btn-primary" href="add_subject"><i class="icon-plus"></i> Add a new subject</a>
-
+					<div class="form-actions">
+						<a class="btn btn-primary" href="add_subject"><i class="icon-plus"></i> Add a new subject</a>
+					</div>
 				</div>
 				
 			</div>

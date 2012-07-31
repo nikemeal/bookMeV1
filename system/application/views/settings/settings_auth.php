@@ -13,9 +13,10 @@
 				 <form class="form-horizontal span5" method="post" action="submit_auth_settings">
         			<fieldset>
         			<center>
-						<div class="alert alert-info">
-							<h4>LDAP Settings</h4>
+						<div class="label label-info">
+							<font size="2">LDAP Settings</font>
 						</div>
+						<br>
 					</center>
           				<div class="control-group">
             				<label class="control-label" for="input01">LDAP server/s</label>
@@ -61,8 +62,8 @@
 					{
 					?>
 						<center>
-							<div class="alert alert-danger span5">
-								<h4>Cannot show LDAP groups - LDAP settings not configured correctly</h4>
+							<div class="label label-warning span5">
+								<font size="2">Cannot show LDAP groups - LDAP settings not configured correctly</font>
 							</div>
 						</center>
 					<?php 	
@@ -73,9 +74,10 @@
       			 <form class="form-horizontal span5" method="post" action="submit_auth_users">
         			<fieldset>
       				<center>
-						<div class="alert alert-info">
-							<h4>LDAP Groups</h4>
+						<div class="label label-info">
+							<font size="2">LDAP Groups</font>
 						</div>
+						<br>
 					</center>
 					<h2>Select standard groups</h2>
 					Standard users can create single bookings within any item.<br />
