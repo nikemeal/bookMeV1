@@ -18,7 +18,7 @@
               					<p class="help-block"><i class="icon-question-sign"rel="tooltip" title="Used by BookMe for the title in the menu bar above.  Leave blank to remove the '@ YourSchoolName' text"></i></p>
             				</div>
             				<br>
-            				<label class="control-label" for="input02">BookMe background colour</label>
+            				<label class="control-label" for="input02">Background colour</label>
             				<div class="controls">
               					<input type="text" class="input-xlarge color" value="<?php echo $bg_colour;?>" id="input02" name="bg_colour">
               					<p class="help-block"><i class="icon-question-sign"rel="tooltip" title="The background colour on all BookMe pages"></i></p>
@@ -42,6 +42,26 @@
                 					}?>
                 				    </select>
 					            	<p class="help-block"><i class="icon-question-sign"rel="tooltip" title="If set to yes, 'bookme_admin' and 'bookme_staff' can log in even if LDAP isn't configured.  If set to no, 'bookme_admin' and 'bookme_staff' are denied login completely"></i></p>
+            					</div>
+          					</div>
+          					<div class="control-group">
+            					<label class="control-label" for="user_reports">Users can view reports</label>
+            					<div class="controls">
+              						<select name= "user_reports" id="user_reports">
+                					<?php if ($user_reports == 1)
+                					{ ?>
+                					<option value="1">Yes</option>
+                					<option value="0">No</option>
+                					<?php 
+                					} else 
+                					{
+                					?>
+                					<option value="0">No</option>
+                					<option value="1">Yes</option>
+                					<?php 
+                					}?>
+                				    </select>
+					            	<p class="help-block"><i class="icon-question-sign"rel="tooltip" title="If set to yes, standard users can view usage reports. otherwise only admin users can view them"></i></p>
             					</div>
           					</div>
             					

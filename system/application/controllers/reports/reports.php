@@ -17,7 +17,7 @@ class Reports extends CI_Controller
 		$this->load->model('Booking_model');
 		$this->load->model('Reports_model');
 		$this->load->view('template/header_view', array( 'bg_colour' => $this->Settings_model->get_bg_colour()));
-		$this->load->view('main_menu', array( 'school_name' => $this->Settings_model->get_school_name()));
+		$this->load->view('main_menu', array( 'school_name' => $this->Settings_model->get_school_name(), 'user_reports' => $this->Settings_model->get_user_reports()));
 	}
 	
 	function index()

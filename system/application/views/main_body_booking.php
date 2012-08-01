@@ -45,9 +45,7 @@ if ($authenticated == 1) {
 				
 				
 			</div>
-					
-				
-	
+
 			<div class="span1">
 				&nbsp;
 			</div>
@@ -56,36 +54,10 @@ if ($authenticated == 1) {
 	</div>
 </div>
 
-
 <?php 
 }?>
 
-<div id="loginbox" class="modal hide fade">
-	<div class="modal-body">
-		<button class="close" data-dismiss="modal">×</button>
-		<br><br>
-		<center>
-			<button class="btn btn-danger span5" >Please enter your login details</button>
-		<br><br>
-			<form class="well" action="<?php echo site_url(); ?>/main/processlogin" method="post" id="processlogin" name="login">
-				<label>Username</label>
-				<input class="span2" id="username" size="16" type="text" name="username">
-					<br>
-				<label>Password</label>
-				<input class="span2" id="password" size="16" type="password" name="password">
-					<br>
-					<br>
-				<button type="submit" class="btn">Submit</button>
-			</form>
-		</center>
-	</div>
-</div>
-	<script type="text/javascript" language="JavaScript">
-		$('#loginbox').on('shown', function () {
-		$("input#username").focus();
-		});
-		
-	</script>
+
 	
  
 

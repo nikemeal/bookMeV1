@@ -29,6 +29,7 @@ class General extends CI_Controller
 		$data['bg_colour'] = $this->Settings_model->get_bg_colour();
 		$data['booking_count'] = $this->Settings_model->get_booking_count();				
 		$data['book_ahead'] = $this->Settings_model->get_users_book_ahead();
+		$data['user_reports'] = $this->Settings_model->get_user_reports();
 		//load body with data
 		$this->load->view('settings/settings_general', $data);
 		$this->load->view('template/footer');
@@ -38,9 +39,11 @@ class General extends CI_Controller
 	{
 		$school_name = $this->input->post('school_name');
 		$allow_local_login = $this->input->post('allow_local_login');
+		$user_reports = $this->input->post('user_reports');
 		$bg_colour = $this->input->post('bg_colour');
 		$this->Settings_model->update_school_name($school_name);
 		$this->Settings_model->update_allow_local_login($allow_local_login);
+		$this->Settings_model->update_user_reports($user_reports);
 		$this->Settings_model->update_bg_colour($bg_colour);
 		$book_ahead = $this->input->post('book_ahead');
 		$this->Settings_model->update_book_ahead($book_ahead);

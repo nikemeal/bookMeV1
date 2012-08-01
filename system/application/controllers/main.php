@@ -16,7 +16,7 @@ class Main extends CI_Controller
 		$this->load->model('Main_model');
 		$this->load->model('Settings_model');
 		$this->load->view('template/header_view', array( 'bg_colour' => $this->Settings_model->get_bg_colour()));
-		$this->load->view('main_menu', array( 'school_name' => $this->Settings_model->get_school_name()));
+		$this->load->view('main_menu', array( 'school_name' => $this->Settings_model->get_school_name(), 'user_reports' => $this->Settings_model->get_user_reports()));
 	}
 	
 	function index()
@@ -33,16 +33,14 @@ class Main extends CI_Controller
 			$this->db->order_by("room_name", "asc"); 
 			$query = $this->db->get('rooms');
 			$result = $query->result_array();
-			$info['rooms'] = $result;
-			$this->load->view('main_body_booking', $info);
+			$data['rooms'] = $result;
+			$this->load->view('main_body_booking', $data);
 			$this->load->view('template/footer');
 		}
 		else
 		{
 			/*
-			 * perhaps in the future before a user logs in, they can view the rooms
-			 * but not make bookings until they log in.
-			 * until then, if not logged in, show main page blank
+			 * if any of the required settings are missing, load the main body with text informing the user
 			 */
 			$this->load->view('main_body', $data);	
 			$this->load->view('template/footer');

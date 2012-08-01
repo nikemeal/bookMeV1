@@ -4,7 +4,7 @@
 	$accesslevel = $this->session->userdata('accesslevel');
 
 //if yes, show the page
-if ($authenticated == 1 AND $accesslevel == "admin") {
+	if ($authenticated == 1 AND $accesslevel == "admin" OR $authenticated == 1 AND $accesslevel == "staff" AND $user_reports == 1) {
 ?>
 
 <div class="row-fluid">

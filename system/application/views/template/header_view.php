@@ -13,13 +13,13 @@
 	
 	<link rel="stylesheet" href="<?php echo base_url(); ?>css/bootstrap.css">
 	<link rel="stylesheet" href="<?php echo base_url(); ?>css/bootstrap-responsive.css">
+	<link rel="stylesheet" href="<?php echo base_url(); ?>css/bookme.css">
 	<link rel="stylesheet" href="<?php echo base_url(); ?>css/jquery-ui.css">
 	<link rel="stylesheet" href="<?php echo base_url(); ?>css/jquery-ui-timepicker-addon.css">
 		
 
 	<style type="text/css">
 		body {background-color: #<?php echo $bg_colour;?>;}
-		label.error { float: none; color: red; padding-left: .5em; vertical-align: top; }
 	</style>
 	
 	

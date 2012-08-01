@@ -1,78 +1,60 @@
-<br><br><br>
-<br><br><br><div class="row-fluid">
-	<div class="span12">
-		<div class="row-fluid">
+<script type="text/javascript" >
+$(document).ready(function() { 
+ 	$('#loginerror').modal({
+ 		backdrop: "static"
+ 	});
+    $('#loginerror').modal('show') 
+ 
+}); 
+</script>
+				
+<div id="loginerror" class="modal hide fade">
+	<div class="modal-body">
+		<center>
+			<div class="alert alert-danger" ><b>Error</b></div>
 
-			<div class="span4">
-				&nbsp;
-			</div>
-			
-			<div class="span4">
-				<div class="well">
-				
-				<?php 
-				$local_login = $this->session->userdata('local_login');
-				$deny_reason = $this->session->userdata('deny_reason');
-				$ldap_error = $this->session->userdata('ldap_error');
-				if ($local_login == 'denied')
-				{
-				?>
-				Local logins have been disabled
-				<br>
-				Please try again with a network login
-				<br><br>
-				<a class="btn btn-info" href="<?php echo base_url().index_page();?>/login/reset">back</a>
-				<br>
-				
-				<?php 
-				}elseif ($deny_reason == "notingroup")
-				{
-				?>
-					You are not a member of the authorised security groups
-					<br>
-					Please contact your administrator and try again
-					<br><br><a class="btn btn-info" href="<?php echo base_url().index_page();?>/login/reset">back</a>
-					<br>	
-				<?php 
-				}
-				elseif ($deny_reason == "ldapnotset")
-				{
-				?>
-					Active Directory authentication is not completely configured
-					<br>
-					Please contact your administrator and try again later
-					<br><br><a class="btn btn-info" href="<?php echo base_url().index_page();?>/login/reset">back</a>
-					<br>	
-				<?php 
-				}
-				elseif (!empty($ldap_error))
-				{
-					echo $ldap_error;
-				?>
+			<div class="well">
+	
+					<?php
+							
+						$local_login = $this->session->userdata('local_login');
+						$deny_reason = $this->session->userdata('deny_reason');
+						$ldap_error = $this->session->userdata('ldap_error');
 					
-					<br><br><a class="btn btn-info" href="<?php echo base_url().index_page();?>/login/reset">back</a>
-					<br>	
-				<?php 
-				}
-				else
-				{
-				?>
-				Your username or password is incorrect
-				<br>
-				Please try again
-				<br><br><a class="btn btn-info" href="<?php echo base_url().index_page();?>/login/reset">back</a>
-				<br>
-				<?php 		
-				} 
-				?>
-				
-				</div>
+							if ($local_login == 'denied')
+							{
+								echo "<h3>Local login has been disabled</h3>";
+								echo "<br>";
+								echo "Please try logging in with a network login";
+								
+							}
+							elseif ($deny_reason == "notingroup")
+							{
+								echo "<h3>You are not a member of any authorised groups</h3>";
+								echo "<br>";
+								echo "Please contact your administrator to resolve this";
+							}
+							elseif ($deny_reason == "ldapnotset")
+							{
+								echo "<h3>Active Directory configuration not completely configured</h3>";
+								echo "<br>";
+								echo "Please contact your administrator and try again later";
+							}
+							elseif (!empty($ldap_error))
+							{
+								echo $ldap_error;
+							}
+							else
+							{
+								echo "<h3>Username or password is incorrect</h3>";
+								echo "<br>";
+								echo "Please try again";
+							}
+
+						?>
+						<br><br>
+						<a class="btn btn-info" href="<?php echo base_url().index_page();?>/login/reset">back</a>
 			</div>
-			
-			<div class="span4">
-				&nbsp;
-			</div>
-			
-		</div>
+		</center>
 	</div>
-</div>
+</div>			

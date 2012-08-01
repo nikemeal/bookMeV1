@@ -210,6 +210,22 @@ class Settings_model extends CI_Model {
  			return $result; 
 		}
 		
+		function get_user_reports()
+		{
+			$this->db->select('setting_value as user_reports from settings');
+ 			$this->db->where('setting_name = \'user_reports\'');
+			$query = $this->db->get();
+ 			$row = $query->row_array();
+			$result = $row['user_reports'];
+ 			return $result; 
+		}
+		
+		function update_user_reports($user_reports)
+		{
+			$data = array('setting_value' => $user_reports,);
+			$this->db->update('settings',$data, 'setting_name = \'user_reports\'');
+		}
+		
 		function update_school_name($school_name)
 		{
 			$data = array('setting_value' => $school_name,);

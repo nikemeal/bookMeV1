@@ -14,7 +14,7 @@ class Reports_model extends CI_Model {
 			SELECT subjects.subject_name AS Subject, COUNT(*)AS Count
 			FROM bookings
 			LEFT JOIN Subjects ON bookings.subject_id = subjects.subject_id
-			WHERE booking_isblock = 1
+			WHERE booking_isblock = 0
 			AND room_id = '".$room_id."'
 			AND booking_date >='".$date_from."'
 			AND booking_date <='".$date_to."'
@@ -29,7 +29,7 @@ class Reports_model extends CI_Model {
 		$query = $this->db->query("
 			SELECT COUNT(*)AS Count
 			FROM bookings
-			WHERE booking_isblock = 1
+			WHERE booking_isblock = 0
 			AND room_id = '".$room_id."'
 			AND booking_date >='".$date_from."'
 			AND booking_date <='".$date_to."'
@@ -43,7 +43,7 @@ class Reports_model extends CI_Model {
 			SELECT booking_displayname AS Name, subjects.subject_name AS Subject, COUNT(*)AS Count
 			FROM bookings
 			LEFT JOIN Subjects ON bookings.subject_id = subjects.subject_id
-			WHERE booking_isblock = 1
+			WHERE booking_isblock = 0
 			AND room_id = '".$room_id."'
 			AND booking_date >='".$date_from."'
 			AND booking_date <='".$date_to."'
@@ -59,7 +59,7 @@ class Reports_model extends CI_Model {
 			SELECT rooms.room_name AS Room, COUNT(*)AS Count
 			FROM bookings
 			LEFT JOIN Rooms ON bookings.room_id = rooms.room_id
-			WHERE booking_isblock = 1
+			WHERE booking_isblock = 0
 			AND subject_id = '".$subject_id."'
 			AND booking_date >='".$date_from."'
 			AND booking_date <='".$date_to."'
@@ -74,7 +74,7 @@ class Reports_model extends CI_Model {
 		$query = $this->db->query("
 			SELECT COUNT(*)AS Count
 			FROM bookings
-			WHERE booking_isblock = 1
+			WHERE booking_isblock = 0
 			AND subject_id = '".$subject_id."'
 			AND booking_date >='".$date_from."'
 			AND booking_date <='".$date_to."'
@@ -88,7 +88,7 @@ class Reports_model extends CI_Model {
 			SELECT booking_displayname AS Name, rooms.room_name AS Room, COUNT(*)AS Count
 			FROM bookings
 			LEFT JOIN Rooms ON bookings.room_id = rooms.room_id
-			WHERE booking_isblock = 1
+			WHERE booking_isblock = 0
 			AND subject_id = '".$subject_id."'
 			AND booking_date >='".$date_from."'
 			AND booking_date <='".$date_to."'
@@ -103,7 +103,7 @@ class Reports_model extends CI_Model {
 		$query = $this->db->query("
 			SELECT booking_displayname AS Name, COUNT(*)AS Count
 			FROM bookings
-			WHERE booking_isblock = 1
+			WHERE booking_isblock = 0
 			AND booking_date >='".$date_from."'
 			AND booking_date <='".$date_to."'
 			GROUP BY Name
@@ -117,7 +117,7 @@ class Reports_model extends CI_Model {
 		$query = $this->db->query("
 			SELECT COUNT(*)AS Count
 			FROM bookings
-			WHERE booking_isblock = 1
+			WHERE booking_isblock = 0
 			AND booking_date >='".$date_from."'
 			AND booking_date <='".$date_to."'
 		");

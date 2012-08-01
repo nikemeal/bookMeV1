@@ -9,8 +9,8 @@ class Login extends CI_Controller
 		$this->load->model('Main_model');
 		$this->load->model('Settings_model');
 		$this->load->view('template/header_view', array( 'bg_colour' => $this->Settings_model->get_bg_colour()));
-
 		
+
 	}
 	
 	function index()

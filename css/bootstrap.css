@@ -1110,6 +1110,11 @@ table {
 .table-striped tbody tr:nth-child(odd) td, .table-striped tbody tr:nth-child(odd) th {
   background-color: #f9f9f9;
 }
+.table tbody tr:hover td {
+
+  background-color: #e0e0e0;
+
+}
 table .span1 {
   float: none;
   width: 44px;

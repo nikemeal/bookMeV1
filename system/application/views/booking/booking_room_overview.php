@@ -6,45 +6,43 @@
 <div class="row-fluid">
 	<div class="span12">
 		<div class="row-fluid">
-			
-			<div >
-				<center>
-					<h4><?php echo $room_name;?> - Bookings for the week commencing <?php echo $week_commencing;?> - <input type="hidden" alt="click here"id="datepicker"></h4>
-				</center>
+			<div class="row-fluid">
+				<div class="span2">&nbsp;</div>
+				<div class="well span8 alert-info">
+					<center>
+						<h3><?php echo $room_name;?> - Bookings for the week commencing <?php echo $week_commencing;?> - <input type="hidden" alt="click here"id="datepicker"></h3>
+					</center>
+				</div>
 			</div>
-			
-			<br>
-			
-			<div class="span3">
-				&nbsp;
-			</div>
-					
-			<div class="span2">
-				<form  method="post" action="<?php echo site_url('booking/booking/process_booking'); ?>" id="add">
-					<input type="hidden" name="url" value="<?php echo current_url()?>">
-					<button type="submit" class="btn btn-success">Book selected period(s)</button>
-    			</form>
-   			</div>
-     				
-    		<div class="span2">
-    			<form  method="post" action="<?php echo site_url('booking/booking/process_edit_booking'); ?>" id="edit">
-					<input type="hidden" name="url" value="<?php echo current_url()?>">
-					<button type="submit" class="btn btn-info">Edit selected booking</button>
-    			</form>
-    		</div>
-      				
-    		<div class="span2">
-	  			<form  method="post" action="<?php echo site_url('booking/booking/process_delete_booking'); ?>" id="delete">
-					<input type="hidden" name="url" value="<?php echo current_url()?>">
-					<button type="submit" class="btn btn-danger">Delete selected booking</button>
-    			</form>
-    		</div>
+
+			<div class="row-fluid">
+				<div class="span3">&nbsp;</div>
 		
-			<div class="span3">
-				&nbsp;
+				<div class="span2">
+					<form  method="post" action="<?php echo site_url('booking/booking/process_booking'); ?>" id="add">
+						<input type="hidden" name="url" value="<?php echo current_url()?>">
+						<button type="submit" class="btn btn-success"><i class="icon-ok"></i> Book selected period(s)</button>
+	    			</form>
+	   			</div>
+	     				
+	    		<div class="span2">
+	    			<form  method="post" action="<?php echo site_url('booking/booking/process_edit_booking'); ?>" id="edit">
+						<input type="hidden" name="url" value="<?php echo current_url()?>">
+						<button type="submit" class="btn btn-info"><i class="icon-edit"></i> Edit selected booking</button>
+	    			</form>
+	    		</div>
+	      				
+	    		<div class="span2">
+		  			<form  method="post" action="<?php echo site_url('booking/booking/process_delete_booking'); ?>" id="delete">
+						<input type="hidden" name="url" value="<?php echo current_url()?>">
+						<button type="submit" class="btn btn-danger"><i class="icon-remove"></i> Delete selected booking</button>
+	    			</form>
+	    		</div>
 			</div>
-				
-			<table class="table span12 table-bordered" id="selectable">
+		
+			<div class="row-fluid">	
+			<div class="span1">&nbsp;</div>
+			<table class="table-nohover span10 table-bordered" id="selectable">
 
   				<thead>
    					<tr style="width:100px;">
@@ -60,32 +58,18 @@
 				<tbody>
 				<?php foreach ($periods as $period)
 				{
-				?>
-					<tr 
-					<?php
-	 				if ($period['period_bookable'] == true) 
-					{
-						echo 'style="height:60px"';
-					}
-					else
-					{
-						echo 'style="height:10px;"';
-					}
-					?>
-					>
-	
-					<td>		
-					<?php
-					echo '<center><div>'.$period['period_name'].'<br />';
+					
+					$cls = ($period['period_bookable']) ? 'bookable' : 'not-bookable';
+					echo '<tr class="' . $cls . '">';
+									
+					echo '<td><center><div><strong>'.$period['period_name'].'</strong><br />';
 					if ($period['period_bookable'] == true)
 					{
-						echo '<em><small>'.$period['period_start'].' - '.$period['period_end'].'</small></em>';
+						echo '<h6><em>'.$period['period_start'].' - '.$period['period_end'].'</em></h6>';
 					}
-					echo '</div></center>';
-					?>
-					</td>
-		
-					<?php for ($i = 0; $i <= 4; $i++)
+					echo '</div></center></td>';
+
+					for ($i = 0; $i <= 4; $i++)
 					{
 						echo '<td ';
 						$bookable = 1; // Needs to be reset to 1 each time the loop is run
@@ -147,7 +131,7 @@
 								
 								if ($booking['booking_isblock'] == true)
 								{
-									echo '<br><i class="icon-retweet"></i>';
+									echo '<br><i class="icon-repeat"></i>';
 								}
 								
 								echo '</div>';
@@ -199,7 +183,24 @@
 				}
 				?>
 				</tbody>
+				<?php
+				$pcount = count($periods);
+				if ($pcount >= 7)
+				{?>
+					<thead>
+   					<tr style="width:100px;">
+						<th width="6%">&nbsp;</th>
+						<th width="10%"><div>Monday</div></th>
+						<th width="10%"><div>Tuesday</div></th>
+						<th width="10%"><div>Wednesday</div></th>
+						<th width="10%"><div>Thursday</div></th>
+						<th width="10%"><div>Friday</div></th>
+					</tr>
+				</thead>
+				<?php }?>
+				
 			</table>
+		</div>
 
 		</div>
 	</div>

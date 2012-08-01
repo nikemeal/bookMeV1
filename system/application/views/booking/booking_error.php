@@ -3,7 +3,7 @@ $(document).ready(function() {
  	$('#error').modal({
  		backdrop: "static"
  	});
-    $('#testldap').modal('show') 
+    $('#error').modal('show') 
  
 }); 
 </script>
