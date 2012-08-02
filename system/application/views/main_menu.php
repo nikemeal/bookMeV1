@@ -49,6 +49,7 @@
 	            				</li>
 	            				<li><a href="<?php echo site_url('reports/reports'); ?>"><i class="icon-th-list icon-white"></i> Reports</a></a></li>
 	            			<?php } ?>
+	            			<li class="divider-vertical"></li>
 	           				<li><a href="<?php echo site_url(); ?>/login/logout"><i class="icon-eye-close icon-white"></i> Log out</a></li>
 	           				
            				<!-- but if the user isn't logged in, show the login button for them to use -->
